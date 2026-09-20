@@ -26,6 +26,7 @@ var rng: RandomNumberGenerator = RandomNumberGenerator.new()
 func _ready() -> void:
 	add_to_group("damageable")
 	add_to_group("wolves")
+	add_to_group("build_obstacles")
 	current_health = max_health
 	home_position = global_position
 	rng.randomize()
