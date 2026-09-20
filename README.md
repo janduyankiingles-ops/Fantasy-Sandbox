@@ -1,4 +1,4 @@
-# Fantasy Sandbox — V0.0.19.1
+# Fantasy Sandbox — V0.0.19.2
 
 ## Protótipo do novo personagem modular
 
@@ -80,3 +80,8 @@ O gameplay principal da V0.0.18.2 não foi alterado. O protótipo é uma cena se
 ## Hotfix V0.0.19.1
 
 O atalho F8 foi removido porque pode ser interceptado pelo próprio editor do Godot. O protótipo agora é aberto com **P**, capturado em `_input()` antes da interface do jogo. A HUD também mostra esse atalho.
+
+
+## Hotfix V0.0.19.2
+
+A abertura do protótipo pela tecla **P** agora usa `call_deferred()`. A troca de cena acontece somente depois que `_input()` termina, evitando que o nó atual perca o `Viewport` durante o próprio evento de teclado.
