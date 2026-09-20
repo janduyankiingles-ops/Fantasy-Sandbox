@@ -4,7 +4,7 @@
   "channel": "stable",
   "version": "0.0.2",
   "minimum_updater": "1.0.0",
-  "source_commit": "4a44d5bbd9157ac66dea9c69e32e6c5098d27fd6",
+  "source_commit": "9ccfa51e7c7f6ad38bb5c9aef0bae67577c47ac8",
   "files": [
     {
       "path": ".gitignore",
@@ -38,8 +38,8 @@
     },
     {
       "path": "scripts/main.gd",
-      "sha256": "178719fd838afe2af1e9d1c64569cd5c2e149cc3dffc07acbc3ebafb58282595",
-      "url": "https://raw.githubusercontent.com/janduyankiingles-ops/Fantasy-Sandbox/4a44d5bbd9157ac66dea9c69e32e6c5098d27fd6/scripts/main.gd"
+      "sha256": "8931ddf5a733cae5e0cff2b1c90119fbb634d124cf98d004ba59ccb45d69efa6",
+      "url": "https://raw.githubusercontent.com/janduyankiingles-ops/Fantasy-Sandbox/9ccfa51e7c7f6ad38bb5c9aef0bae67577c47ac8/scripts/main.gd"
     },
     {
       "path": "scripts/player.gd",
