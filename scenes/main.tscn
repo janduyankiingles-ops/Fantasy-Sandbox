@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene load_steps=5 format=3]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_main"]
 [ext_resource type="Script" path="res://scripts/world.gd" id="2_world"]
 [ext_resource type="PackedScene" path="res://scenes/player.tscn" id="3_player"]
+[ext_resource type="PackedScene" path="res://scenes/inventory_ui.tscn" id="4_inventory"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_main")
@@ -32,7 +33,7 @@ theme_override_constants/separation = 5
 
 [node name="Title" type="Label" parent="HUD/Panel/Margin/VBox"]
 theme_override_font_sizes/font_size = 20
-text = "FANTASY SANDBOX — V0.0.2"
+text = "FANTASY SANDBOX — V0.0.3"
 
 [node name="PositionLabel" type="Label" parent="HUD/Panel/Margin/VBox"]
 text = "Posição: 0, 0"
@@ -45,7 +46,7 @@ theme_override_font_sizes/font_size = 17
 text = "Madeira: 0    Pedra: 0"
 
 [node name="Controls" type="Label" parent="HUD/Panel/Margin/VBox"]
-text = "WASD/Setas: mover   Shift: correr\nE: coletar recurso   Espaço: ataque"
+text = "WASD/Setas: mover   Shift: correr\nE: coletar   Espaço: ataque   I: inventário"
 
 [node name="InteractionPanel" type="PanelContainer" parent="HUD"]
 visible = false
@@ -72,3 +73,5 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 18
 text = "E - Coletar"
 horizontal_alignment = 1
+
+[node name="InventoryUI" parent="HUD" instance=ExtResource("4_inventory")]
