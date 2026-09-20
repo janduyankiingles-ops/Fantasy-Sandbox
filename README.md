@@ -1,34 +1,42 @@
-# Fantasy Sandbox — V0.0.5
+# Fantasy Sandbox — V0.0.6
 
-Protótipo de RPG sandbox de fantasia em Godot 4.7.x.
+Primeiro passo do loop inicial de gameplay: **crafting básico**.
 
-## Sistema desta versão: ferramentas básicas
+## Como começa
 
-- O jogador começa com **1 Machado** e **1 Picareta**.
-- Hotbar: **3 = Machado** e **4 = Picareta**.
-- Machado causa eficiência 2x em árvores.
-- Picareta causa eficiência 2x em pedras.
-- Mão vazia ou ferramenta errada continua coletando, porém mais devagar.
-- O rendimento total do recurso é preservado; a ferramenta correta reduz a quantidade de golpes necessários.
-- Machado e Picareta aparecem também no inventário visual.
+O jogador inicia sem Machado, Picareta ou Espada. Madeira e Pedra ainda podem ser coletadas com as mãos.
 
-## Ainda não incluído
+## Crafting
 
-- Crafting.
-- Durabilidade.
-- Ferramentas melhores.
-- Equipamentos.
-- Animação própria de machado/picareta.
+Pressione **C** para abrir/fechar a tela de crafting.
 
-## Controles
+Receitas iniciais:
 
-- WASD ou setas: mover.
-- Shift: correr.
-- E: coletar/interagir.
-- Espaço: ataque provisório.
-- I: inventário.
+- Machado: 3 Madeira + 2 Pedra.
+- Picareta: 2 Madeira + 3 Pedra.
+- Espada: 2 Madeira + 4 Pedra.
+
+Nesta versão cada ferramenta pode ser criada uma única vez.
+
+## Hotbar
+
 - 1: Madeira.
 - 2: Pedra.
 - 3: Machado.
 - 4: Picareta.
-- 5 e 6: slots vazios.
+- 5: Espada.
+- 6: vazio.
+
+Antes do crafting, Machado/Picareta/Espada aparecem como x0. Após fabricar, passam para x1.
+
+## Ferramentas
+
+- Machado continua sendo 2x eficiente em árvores.
+- Picareta continua sendo 2x eficiente em pedras.
+- A Espada já pode ser fabricada e selecionada, mas o dano de combate real será implementado no próximo sistema.
+
+## Objetivo do primeiro loop
+
+Coletar recursos -> fabricar ferramentas e espada -> combate com lobos -> XP/loot -> fome/cozimento -> pele/armadura -> construção de base.
+
+A V0.0.6 implementa somente a etapa de **fabricar Machado, Picareta e Espada**.
