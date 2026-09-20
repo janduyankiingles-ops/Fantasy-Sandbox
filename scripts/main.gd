@@ -81,6 +81,12 @@ func _on_craft_requested(item_key: String) -> void:
 
 func _get_item_name(item_key: String) -> String:
 	match item_key:
+		"improvised_axe":
+			return "Machado Improvisado"
+		"improvised_pickaxe":
+			return "Picareta Improvisada"
+		"improvised_knife":
+			return "Faca Improvisada"
 		"axe":
 			return "Machado"
 		"pickaxe":
@@ -93,35 +99,7 @@ func _get_item_name(item_key: String) -> String:
 func _update_inventory() -> void:
 	inventory_label.text = str(player.call("get_inventory_text"))
 
-	var wood_amount: int = int(player.call("get_inventory_amount", "wood"))
-	var stone_amount: int = int(player.call("get_inventory_amount", "stone"))
-	var axe_amount: int = int(player.call("get_inventory_amount", "axe"))
-	var pickaxe_amount: int = int(player.call("get_inventory_amount", "pickaxe"))
-	var sword_amount: int = int(player.call("get_inventory_amount", "sword"))
-
-	inventory_ui.call(
-		"refresh_inventory",
-		wood_amount,
-		stone_amount,
-		axe_amount,
-		pickaxe_amount,
-		sword_amount
-	)
-
-	hotbar_ui.call(
-		"refresh_hotbar",
-		wood_amount,
-		stone_amount,
-		axe_amount,
-		pickaxe_amount,
-		sword_amount
-	)
-
-	crafting_ui.call(
-		"refresh_crafting",
-		wood_amount,
-		stone_amount,
-		axe_amount,
-		pickaxe_amount,
-		sword_amount
-	)
+	var snapshot: Dictionary = player.call("get_inventory_snapshot")
+	inventory_ui.call("refresh_inventory", snapshot)
+	hotbar_ui.call("refresh_hotbar", snapshot)
+	crafting_ui.call("refresh_crafting", snapshot)
