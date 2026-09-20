@@ -2,9 +2,9 @@
   "schema": 2,
   "app": "Fantasy Sandbox",
   "channel": "stable",
-  "version": "0.0.22",
+  "version": "0.0.23",
   "minimum_updater": "1.1.0",
-  "source_commit": "1fffee1cbceddb0462733715300a6ddbd62de95d",
+  "source_commit": "6df2b486d34473b98f6638390bce0ea7ab2fa9e9",
   "files": [
     {
       "path": ".gitignore",
@@ -16,7 +16,7 @@
     },
     {
       "path": "README.md",
-      "sha256": "37287fa6a5a336b3e01a4a594fe40d42cb14773ba49b033259b5bb21397a068e"
+      "sha256": "9547369690bc34e94d94fa76c1e47a33c95dba957b99bbb08cad72a135b6e94e"
     },
     {
       "path": "project.godot",
@@ -24,11 +24,11 @@
     },
     {
       "path": "scenes/main.tscn",
-      "sha256": "c22f277ac0ff69c18f078345f82507b442bd8077bfecaa7057e38c0f8ecae7f8"
+      "sha256": "7a488f9e048fcb89b81a1b6a2ee9961e4c09722ff539e2ad59f2496b325a9bd6"
     },
     {
       "path": "scenes/player.tscn",
-      "sha256": "754054305e3b723e40cde737817ddfd60012ad1b99d3aa74461f92518b86d017"
+      "sha256": "357d1c952e9c00b46ae33e204a1df4e12243d85fc997e62d5a7e55d6177d0bf6"
     },
     {
       "path": "scenes/inventory_ui.tscn",
@@ -197,6 +197,74 @@
     {
       "path": "scripts/player_original_visual.gd",
       "sha256": "6c620a5fab12d5bd38a5b1f22950faa9a114886c501e62261de85d92e99d4232"
+    },
+    {
+      "path": "scripts/player_v023_visual.gd",
+      "sha256": "9f919dc6f9df99b1916b2f1f3058e1b7bdba6d7907a32655285f6c166dd9535e"
+    },
+    {
+      "path": "assets/player_v023/idle_down.png",
+      "sha256": "9c65f9b6c3b3db7a928a208b567e4cb4925fe10f616ab60eb473c9b8c423e1fc"
+    },
+    {
+      "path": "assets/player_v023/idle_left.png",
+      "sha256": "ee1b16c56e5e2073061a67d5f793bd491b205053760482af0b00e1bdce4cfb11"
+    },
+    {
+      "path": "assets/player_v023/idle_up.png",
+      "sha256": "c72ddd0cea493838db49a0a623805229edd285b55529c90bcdec2e3c2bbd9754"
+    },
+    {
+      "path": "assets/player_v023/idle_right.png",
+      "sha256": "0bb803028c7d5a5a52fe389714c6e16ea4095015b4e76e84fc61c16d21d7d6ca"
+    },
+    {
+      "path": "assets/player_v023/walk_down.png",
+      "sha256": "0e827153b7ae4166f11b85f91830417e66a2cdb380bab47d8785d9f437b8fc77"
+    },
+    {
+      "path": "assets/player_v023/walk_left.png",
+      "sha256": "4d7ab80519d85eb45591bd7c8a6c6d008e0508624b20d54cecfe5037c6578289"
+    },
+    {
+      "path": "assets/player_v023/walk_up.png",
+      "sha256": "bc6f626bbb397b501d03a2dc084b720c9d7df5e9b0269d743756edb49f839b45"
+    },
+    {
+      "path": "assets/player_v023/walk_right.png",
+      "sha256": "9a6b7e7e742611e8930e15a272d8481430fa454d699ffeb05cc360c2f83ce01c"
+    },
+    {
+      "path": "assets/player_v023/attack_down.png",
+      "sha256": "262797be60c168438cd9942e0344edfc8b34cef72332487253234e0452ebc09b"
+    },
+    {
+      "path": "assets/player_v023/attack_left.png",
+      "sha256": "bd353c69e24b4add4a98473eafab38ca987c0e607310ce5fd955d6d86ce49ff8"
+    },
+    {
+      "path": "assets/player_v023/attack_up.png",
+      "sha256": "19b51ded47d70345c31f9a8ef7cfaa58ae36a347d02be0d1a3dd070c0f659217"
+    },
+    {
+      "path": "assets/player_v023/attack_right.png",
+      "sha256": "55b776db8ea557d941a6383ada8f5565f3169ef215c941d8ed68bf707c51fa91"
+    },
+    {
+      "path": "assets/player_v023/gather_down.png",
+      "sha256": "f58f8482192b46521e5b956b5bbc48ae48383e2360bd92465a7c9a02e1dd1777"
+    },
+    {
+      "path": "assets/player_v023/gather_left.png",
+      "sha256": "cdda67224e2c12d58841887526f3e77194f43d606449e5fe3d0498731c1a4972"
+    },
+    {
+      "path": "assets/player_v023/gather_up.png",
+      "sha256": "97a43bd0f4584ade650785b361d5f99fd5971658cf6a3c50277d04e235389b19"
+    },
+    {
+      "path": "assets/player_v023/gather_right.png",
+      "sha256": "19f80273bbd39dc591fd93faee825fa5d4b6aacab5d255fb683060ca8fb6f3db"
     }
   ],
   "delete": [
