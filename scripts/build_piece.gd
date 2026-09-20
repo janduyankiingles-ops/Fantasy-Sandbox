@@ -10,6 +10,7 @@ func setup(new_piece_type: String, new_rotation_quarters: int) -> void:
 
 func _ready() -> void:
 	add_to_group("build_pieces")
+	add_to_group("build_obstacles")
 	_create_collision()
 	queue_redraw()
 
