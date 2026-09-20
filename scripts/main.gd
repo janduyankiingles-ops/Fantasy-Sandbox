@@ -7,6 +7,7 @@ extends Node2D
 @onready var interaction_panel: PanelContainer = $HUD/InteractionPanel
 @onready var interaction_label: Label = $HUD/InteractionPanel/Margin/InteractionLabel
 @onready var inventory_ui: Control = $HUD/InventoryUI as Control
+@onready var hotbar_ui: Control = $HUD/HotbarUI as Control
 
 func _ready() -> void:
 	player.connect("inventory_changed", Callable(self, "_update_inventory"))
@@ -15,8 +16,31 @@ func _ready() -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey:
 		var key_event: InputEventKey = event as InputEventKey
-		if key_event.pressed and not key_event.echo and key_event.keycode == KEY_I:
+		if not key_event.pressed or key_event.echo:
+			return
+
+		if key_event.keycode == KEY_I:
 			inventory_ui.call("toggle_inventory")
+			get_viewport().set_input_as_handled()
+			return
+
+		var selected_slot: int = -1
+		match key_event.keycode:
+			KEY_1:
+				selected_slot = 0
+			KEY_2:
+				selected_slot = 1
+			KEY_3:
+				selected_slot = 2
+			KEY_4:
+				selected_slot = 3
+			KEY_5:
+				selected_slot = 4
+			KEY_6:
+				selected_slot = 5
+
+		if selected_slot >= 0:
+			hotbar_ui.call("select_slot", selected_slot)
 			get_viewport().set_input_as_handled()
 
 func _process(_delta: float) -> void:
@@ -45,4 +69,6 @@ func _update_inventory() -> void:
 
 	var wood_amount: int = int(player.call("get_inventory_amount", "wood"))
 	var stone_amount: int = int(player.call("get_inventory_amount", "stone"))
+
 	inventory_ui.call("refresh_inventory", wood_amount, stone_amount)
+	hotbar_ui.call("refresh_hotbar", wood_amount, stone_amount)
