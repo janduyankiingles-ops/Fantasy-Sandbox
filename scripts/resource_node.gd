@@ -1,6 +1,6 @@
 extends StaticBody2D
 
-@export_enum("tree", "rock") var resource_type: String = "tree"
+@export_enum("tree", "rock", "stick", "small_stone", "vine") var resource_type: String = "tree"
 @export var hit_points: int = 3
 @export var amount_per_hit: int = 1
 @export var final_bonus: int = 2
@@ -22,14 +22,19 @@ func setup(type_name: String) -> void:
 	queue_redraw()
 
 func _configure_for_type() -> void:
-	if resource_type == "rock":
-		hit_points = 4
-		amount_per_hit = 1
-		final_bonus = 2
-	else:
-		hit_points = 3
-		amount_per_hit = 1
-		final_bonus = 2
+	match resource_type:
+		"rock":
+			hit_points = 4
+			amount_per_hit = 1
+			final_bonus = 2
+		"tree":
+			hit_points = 3
+			amount_per_hit = 1
+			final_bonus = 2
+		_:
+			hit_points = 1
+			amount_per_hit = 1
+			final_bonus = 0
 
 func _create_collision() -> void:
 	if get_node_or_null("CollisionShape2D") != null:
@@ -39,9 +44,22 @@ func _create_collision() -> void:
 	collision.name = "CollisionShape2D"
 
 	var shape: CircleShape2D = CircleShape2D.new()
-	shape.radius = 23.0 if resource_type == "rock" else 18.0
+	if resource_type == "rock":
+		shape.radius = 23.0
+	elif resource_type == "tree":
+		shape.radius = 18.0
+	else:
+		shape.radius = 9.0
+
 	collision.shape = shape
-	collision.position = Vector2(0, 4 if resource_type == "rock" else 14)
+
+	if resource_type == "rock":
+		collision.position = Vector2(0, 4)
+	elif resource_type == "tree":
+		collision.position = Vector2(0, 14)
+	else:
+		collision.position = Vector2.ZERO
+
 	add_child(collision)
 
 func _process(delta: float) -> void:
@@ -51,17 +69,22 @@ func _process(delta: float) -> void:
 
 func harvest(tool_key: String = "") -> Dictionary:
 	if current_hit_points <= 0:
-		return {
-			"type": resource_type,
-			"amount": 0,
-			"effective_tool": false
-		}
+		return {"type": resource_type, "amount": 0}
+
+	if _is_ground_pickup():
+		current_hit_points = 0
+		call_deferred("queue_free")
+		return {"type": resource_type, "amount": 1}
+
+	if not _can_harvest_large_resource(tool_key):
+		return {"type": resource_type, "amount": 0, "blocked": true}
 
 	var effective_tool: bool = false
-	if resource_type == "tree" and tool_key == "axe":
-		effective_tool = true
-	elif resource_type == "rock" and tool_key == "pickaxe":
-		effective_tool = true
+
+	if resource_type == "tree":
+		effective_tool = tool_key == "axe"
+	elif resource_type == "rock":
+		effective_tool = tool_key == "pickaxe"
 
 	var damage: int = 2 if effective_tool else 1
 	var actual_damage: int = mini(damage, current_hit_points)
@@ -82,22 +105,53 @@ func harvest(tool_key: String = "") -> Dictionary:
 		"effective_tool": effective_tool
 	}
 
-func get_interaction_text(tool_key: String = "") -> String:
-	if resource_type == "tree":
-		if tool_key == "axe":
-			return "E - Cortar Árvore com Machado  (%d/%d)" % [current_hit_points, hit_points]
-		return "E - Coletar Árvore  (Machado recomendado)  (%d/%d)" % [current_hit_points, hit_points]
+func _is_ground_pickup() -> bool:
+	return resource_type == "stick" or resource_type == "small_stone" or resource_type == "vine"
 
-	if tool_key == "pickaxe":
-		return "E - Minerar Pedra com Picareta  (%d/%d)" % [current_hit_points, hit_points]
-	return "E - Coletar Pedra  (Picareta recomendada)  (%d/%d)" % [current_hit_points, hit_points]
+func _can_harvest_large_resource(tool_key: String) -> bool:
+	if resource_type == "tree":
+		return tool_key == "improvised_axe" or tool_key == "axe"
+	if resource_type == "rock":
+		return tool_key == "improvised_pickaxe" or tool_key == "pickaxe"
+	return true
+
+func get_interaction_text(tool_key: String = "") -> String:
+	match resource_type:
+		"stick":
+			return "E - Pegar Graveto"
+		"small_stone":
+			return "E - Pegar Pedra Pequena"
+		"vine":
+			return "E - Pegar Cipó"
+		"tree":
+			if tool_key == "axe":
+				return "E - Cortar Árvore com Machado  (%d/%d)" % [current_hit_points, hit_points]
+			if tool_key == "improvised_axe":
+				return "E - Cortar Árvore com Machado Improvisado  (%d/%d)" % [current_hit_points, hit_points]
+			return "Você precisa de um Machado Improvisado ou Machado"
+		"rock":
+			if tool_key == "pickaxe":
+				return "E - Minerar Rocha com Picareta  (%d/%d)" % [current_hit_points, hit_points]
+			if tool_key == "improvised_pickaxe":
+				return "E - Minerar Rocha com Picareta Improvisada  (%d/%d)" % [current_hit_points, hit_points]
+			return "Você precisa de uma Picareta Improvisada ou Picareta"
+
+	return ""
 
 func _draw() -> void:
 	var flash: bool = flash_time > 0.0
-	if resource_type == "rock":
-		_draw_rock(flash)
-	else:
-		_draw_tree(flash)
+
+	match resource_type:
+		"rock":
+			_draw_rock(flash)
+		"tree":
+			_draw_tree(flash)
+		"stick":
+			_draw_stick()
+		"small_stone":
+			_draw_small_stone()
+		"vine":
+			_draw_vine()
 
 func _draw_tree(flash: bool) -> void:
 	_draw_flat_ellipse(Vector2(0, 27), Vector2(30, 11), Color(0.03, 0.04, 0.03, 0.30))
@@ -131,6 +185,21 @@ func _draw_rock(flash: bool) -> void:
 		Color("4c5551"),
 		3.0
 	)
+
+func _draw_stick() -> void:
+	draw_line(Vector2(-11, 5), Vector2(11, -5), Color("93613b"), 5.0)
+	draw_line(Vector2(2, -1), Vector2(7, -9), Color("93613b"), 3.0)
+
+func _draw_small_stone() -> void:
+	var points: PackedVector2Array = PackedVector2Array([
+		Vector2(-9, 4), Vector2(-5, -6), Vector2(4, -8),
+		Vector2(10, -1), Vector2(6, 7), Vector2(-4, 8)
+	])
+	draw_colored_polygon(points, Color("7e8884"))
+
+func _draw_vine() -> void:
+	draw_arc(Vector2.ZERO, 9.0, -2.5, 2.2, 16, Color("4f8b4f"), 3.0)
+	draw_arc(Vector2(5, 2), 6.0, -1.5, 2.6, 12, Color("65a85f"), 2.0)
 
 func _draw_flat_ellipse(center: Vector2, radius: Vector2, color: Color) -> void:
 	var points: PackedVector2Array = PackedVector2Array()
