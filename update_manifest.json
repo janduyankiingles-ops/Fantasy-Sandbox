@@ -2,9 +2,9 @@
   "schema": 2,
   "app": "Fantasy Sandbox",
   "channel": "stable",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "minimum_updater": "1.1.0",
-  "source_commit": "64f5450e07022bdc25e9b270698140be1d535c3b",
+  "source_commit": "9ed6527bfa1afd850980ee3c1e7b54ec86f5e4f6",
   "files": [
     {
       "path": ".gitignore",
@@ -16,7 +16,7 @@
     },
     {
       "path": "README.md",
-      "sha256": "168d3c399353b4865f8cedd3a253a31c88ff891d260db15b42adfba8d95cbdbb"
+      "sha256": "23b18ed7fb652ac1eb0fed95d2dd9c3d61e202c6ba19e075104faaf9c0910390"
     },
     {
       "path": "project.godot",
@@ -24,7 +24,7 @@
     },
     {
       "path": "scenes/main.tscn",
-      "sha256": "d153c6de046cde778b9480506707d66631986a7c7991c982cab66f67e8fc166f"
+      "sha256": "b9b4655008fb4a4e645350a4ab0f623fb1472c3b3d9b46f39b5535609218c873"
     },
     {
       "path": "scenes/player.tscn",
@@ -32,7 +32,7 @@
     },
     {
       "path": "scenes/inventory_ui.tscn",
-      "sha256": "ff1a43007575225aa6653e84581efd5a994b68baef5f85ad29cd5c5e55631fb3"
+      "sha256": "afcbb246c7318fa36d8ed25777a621093b9a8c7cbe71c162b916ff66c507c10d"
     },
     {
       "path": "scenes/hotbar_ui.tscn",
@@ -48,11 +48,11 @@
     },
     {
       "path": "scripts/main.gd",
-      "sha256": "284ad3eb299c6fe4227493ca98a488681b15fc43870cae41c86a820e3a9ae911"
+      "sha256": "91c16de49c8963a1dedff65a392d76494a7de8d6c6abceeea7a82d53ab7eebc6"
     },
     {
       "path": "scripts/player.gd",
-      "sha256": "022794982bc335fa19ac1f2c640ab0d8e11f47f6add262959723be86dbf09843"
+      "sha256": "6c12231c9ffa9034ed7c4fed27afb012322713e039690cf2f8af9dc31af20e8c"
     },
     {
       "path": "scripts/resource_node.gd",
@@ -64,7 +64,7 @@
     },
     {
       "path": "scripts/inventory_ui.gd",
-      "sha256": "70a4bf1ee2ac9683ab3044dfb984976ee1882d1327b282ed8e14ac72da5044b0"
+      "sha256": "4caf9b3396fbe77b3dd32d41a4e277d62964b95cf9856a731ca1c981167ef532"
     },
     {
       "path": "scripts/hotbar_ui.gd",
@@ -96,7 +96,7 @@
     },
     {
       "path": "scripts/wolf.gd",
-      "sha256": "84420303779e44ed137b4c6c5272d5291c147b1f2401f1cf60a282c801f76f0f"
+      "sha256": "0394be3bbe3aa92af1d6906f0c5f0e96da32e8ab9b557cbf799317f3178aa0d6"
     }
   ],
   "delete": []
