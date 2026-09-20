@@ -1,13 +1,16 @@
 extends AnimatedSprite2D
 
-const ATLAS: Texture2D = preload("res://assets/player/player_atlas.png")
-const CELL_WIDTH: int = 32
-const CELL_HEIGHT: int = 36
+const IDLE_SHEET: Texture2D = preload("res://assets/player/idle.png")
+const WALK_SHEET: Texture2D = preload("res://assets/player/walk.png")
+const ATTACK_SHEET: Texture2D = preload("res://assets/player/attack.png")
+const GATHER_SHEET: Texture2D = preload("res://assets/player/gather.png")
+
+const CELL_SIZE: int = 44
 
 func _ready() -> void:
 	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	position = Vector2(0, -17)
-	scale = Vector2(2.25, 2.25)
+	scale = Vector2(1.75, 1.75)
 	z_index = 1
 	_build_sprite_frames()
 	play("idle_down")
@@ -15,24 +18,30 @@ func _ready() -> void:
 func _build_sprite_frames() -> void:
 	var frames: SpriteFrames = SpriteFrames.new()
 
+	# Ordem real das linhas nas folhas:
+	# 0 = frente, 1 = esquerda, 2 = costas, 3 = direita.
 	_add_direction_animations(frames, "down", 0)
-	_add_direction_animations(frames, "right", 1)
+	_add_direction_animations(frames, "left", 1)
 	_add_direction_animations(frames, "up", 2)
-	_add_direction_animations(frames, "left", 3)
+	_add_direction_animations(frames, "right", 3)
 
 	sprite_frames = frames
 
-func _add_direction_animations(frames: SpriteFrames, direction_name: String, row: int) -> void:
-	_add_animation(frames, "idle_" + direction_name, row, 0, 3, 3.0, true)
-	_add_animation(frames, "walk_" + direction_name, row, 3, 4, 8.0, true)
-	_add_animation(frames, "attack_" + direction_name, row, 7, 4, 18.0, false)
-	_add_animation(frames, "gather_" + direction_name, row, 11, 4, 12.0, false)
+func _add_direction_animations(
+	frames: SpriteFrames,
+	direction_name: String,
+	row: int
+) -> void:
+	_add_animation(frames, "idle_" + direction_name, IDLE_SHEET, row, 4, 4.0, true)
+	_add_animation(frames, "walk_" + direction_name, WALK_SHEET, row, 6, 10.0, true)
+	_add_animation(frames, "attack_" + direction_name, ATTACK_SHEET, row, 6, 26.0, false)
+	_add_animation(frames, "gather_" + direction_name, GATHER_SHEET, row, 5, 15.0, false)
 
 func _add_animation(
 	frames: SpriteFrames,
 	animation_name: String,
+	sheet: Texture2D,
 	row: int,
-	start_column: int,
 	frame_count: int,
 	fps: float,
 	loop_animation: bool
@@ -42,15 +51,15 @@ func _add_animation(
 	frames.set_animation_loop(animation_name, loop_animation)
 
 	for index in range(frame_count):
-		var atlas_frame: AtlasTexture = AtlasTexture.new()
-		atlas_frame.atlas = ATLAS
-		atlas_frame.region = Rect2(
-			float((start_column + index) * CELL_WIDTH),
-			float(row * CELL_HEIGHT),
-			float(CELL_WIDTH),
-			float(CELL_HEIGHT)
+		var frame_texture: AtlasTexture = AtlasTexture.new()
+		frame_texture.atlas = sheet
+		frame_texture.region = Rect2(
+			float(index * CELL_SIZE),
+			float(row * CELL_SIZE),
+			float(CELL_SIZE),
+			float(CELL_SIZE)
 		)
-		frames.add_frame(animation_name, atlas_frame)
+		frames.add_frame(animation_name, frame_texture)
 
 func set_visual_state(state_name: String, facing_direction: Vector2) -> void:
 	var direction_name: String = _get_direction_name(facing_direction)
