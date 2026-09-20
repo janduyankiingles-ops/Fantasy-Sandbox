@@ -1,87 +1,92 @@
-# Fantasy Sandbox — V0.0.19.2
+# Fantasy Sandbox — V0.0.20
 
-## Protótipo do novo personagem modular
+## Personagem Modular V2 — quatro direções
 
-A V0.0.19 inicia uma nova abordagem para o personagem principal.
+O protótipo modular foi aprovado como abordagem e agora recebeu a segunda etapa visual.
 
-Depois dos problemas recorrentes de spritesheet — recortes, deslocamento entre frames e animação parecendo uma imagem congelada — o novo sistema deixa de depender de sequências de imagens para a caminhada.
+O personagem oficial do gameplay ainda não foi substituído. O teste continua acessível pela tecla **P**.
 
-O personagem oficial atual continua intacto.
+## Correção das pernas
+
+As pernas foram redesenhadas para ficarem claramente visíveis abaixo da túnica.
+
+Agora possuem:
+
+- calça mais longa;
+- contorno próprio;
+- iluminação diferente entre as duas pernas;
+- botas maiores e separadas visualmente da calça;
+- sola aparente;
+- movimento alternado durante a caminhada.
+
+A profundidade também muda conforme a orientação.
+
+## Quatro direções
+
+O rig modular agora possui aparência própria para:
+
+- baixo / frente;
+- cima / costas;
+- esquerda / perfil;
+- direita / perfil.
+
+Não são sprites completos diferentes. As mesmas partes continuam sendo usadas, mas cada parte sabe como deve ser desenhada para a orientação atual.
+
+### Frente
+
+Mostra rosto, olhos, nariz, boca, fivela e frente da roupa.
+
+### Costas
+
+O rosto desaparece, o cabelo cobre a parte posterior da cabeça e a roupa recebe detalhes de costas.
+
+### Esquerda e direita
+
+A cabeça ganha perfil com nariz e um olho visível. Tronco, braços, pernas e cachecol também mudam de disposição.
+
+## Caminhada direcional
+
+As quatro direções possuem caminhada modular.
+
+- pernas alternam;
+- braços fazem contramovimento;
+- tronco e cabeça fazem bob de 1 pixel;
+- cachecol reage ao passo;
+- nas laterais braços e pernas também avançam/recuam horizontalmente;
+- a ordem de desenho muda para indicar qual braço/perna está mais próximo da câmera.
+
+Em diagonais, o personagem preserva uma direção coerente para evitar alternância visual rápida.
+
+## Indicador de teste
+
+A cena do protótipo mostra agora:
+
+`Direção visual: BAIXO / CIMA / ESQUERDA / DIREITA`
+
+Isso permite conferir se o rig está selecionando a vista correta.
 
 ## Como testar
 
 1. Abra o jogo normalmente.
 2. Pressione **P**.
-3. Será aberta a cena de demonstração do novo personagem.
-4. Use **WASD** ou as setas para mover.
-5. Pressione **ESC** para voltar ao jogo normal.
+3. Use **S** para olhar/caminhar para baixo.
+4. Use **W** para olhar/caminhar para cima.
+5. Use **A** para esquerda.
+6. Use **D** para direita.
+7. Solte a tecla e confirme que o personagem permanece olhando naquela direção.
+8. Pressione **ESC** para voltar ao jogo.
 
-## Estrutura modular
+## Escopo atual
 
-O protótipo é formado por peças independentes:
+O protótipo possui:
 
-- cabeça e cabelo;
-- tronco;
-- braço esquerdo;
-- braço direito;
-- perna esquerda;
-- perna direita;
-- duas partes do cachecol;
-- sombra.
+- idle em quatro direções;
+- caminhada em quatro direções;
+- pernas visíveis;
+- animação modular sem spritesheet.
 
-As peças são desenhadas diretamente pelo Godot em pixel art.
-
-Não existe PNG, spritesheet ou recorte de atlas nessa demonstração.
-
-## Animação
-
-A caminhada é feita transformando as mesmas peças do personagem.
-
-Durante o movimento:
-
-- pernas se alternam em sentidos opostos;
-- braços acompanham o passo de forma inversa;
-- tronco e cabeça sobem 1 pixel;
-- cachecol reage ao ciclo;
-- sombra acompanha discretamente o movimento.
-
-Todas as posições são arredondadas para pixels inteiros antes de serem aplicadas.
-
-A arte é exibida em escala inteira de **3x**, preservando pixels uniformes.
-
-## Idle
-
-Quando parado, o personagem mantém a mesma anatomia e realiza apenas uma respiração discreta de 1 pixel.
-
-## Objetivo deste protótipo
-
-Nesta etapa existe apenas uma aparência frontal.
-
-Antes de produzir esquerda, direita, costas, ataque, coleta e equipamentos, precisamos validar três pontos:
-
-1. a anatomia permanece consistente enquanto anda;
-2. não existem falhas de recorte;
-3. a animação transmite caminhada de forma clara e agradável.
-
-Se essa técnica for aprovada, ela substituirá gradualmente o sistema antigo sem precisar redesenhar uma imagem completa para cada frame.
-
-## Arquivos novos
-
-- `scenes/player_v2_demo.tscn`
-- `scripts/player_v2_demo.gd`
-- `scripts/player_v2_visual.gd`
-- `scripts/player_v2_part.gd`
+Ataque, coleta e equipamentos serão adicionados ao rig somente depois desta validação.
 
 ## Gameplay
 
-O gameplay principal da V0.0.18.2 não foi alterado. O protótipo é uma cena separada acessível pela tecla **P**.
-
-
-## Hotfix V0.0.19.1
-
-O atalho F8 foi removido porque pode ser interceptado pelo próprio editor do Godot. O protótipo agora é aberto com **P**, capturado em `_input()` antes da interface do jogo. A HUD também mostra esse atalho.
-
-
-## Hotfix V0.0.19.2
-
-A abertura do protótipo pela tecla **P** agora usa `call_deferred()`. A troca de cena acontece somente depois que `_input()` termina, evitando que o nó atual perca o `Viewport` durante o próprio evento de teclado.
+Nenhuma regra do gameplay principal foi alterada.
