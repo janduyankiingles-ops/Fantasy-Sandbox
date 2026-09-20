@@ -9,6 +9,7 @@ signal craft_requested(item_key: String)
 @onready var axe_button: Button = $CraftingPanel/Margin/VBox/Recipes/AxeButton
 @onready var pickaxe_button: Button = $CraftingPanel/Margin/VBox/Recipes/PickaxeButton
 @onready var sword_button: Button = $CraftingPanel/Margin/VBox/Recipes/SwordButton
+@onready var campfire_button: Button = $CraftingPanel/Margin/VBox/Recipes/CampfireButton
 @onready var status_label: Label = $CraftingPanel/Margin/VBox/Status
 
 var snapshot: Dictionary = {}
@@ -19,7 +20,8 @@ var recipe_costs: Dictionary = {
 	"improvised_knife": {"stick": 1, "small_stone": 1, "vine": 1},
 	"axe": {"wood": 3, "stone": 2},
 	"pickaxe": {"wood": 2, "stone": 3},
-	"sword": {"wood": 2, "stone": 4}
+	"sword": {"wood": 2, "stone": 4},
+	"campfire_kit": {"wood": 3, "stone": 3}
 }
 
 func _ready() -> void:
@@ -31,6 +33,7 @@ func _ready() -> void:
 	axe_button.pressed.connect(_on_axe_pressed)
 	pickaxe_button.pressed.connect(_on_pickaxe_pressed)
 	sword_button.pressed.connect(_on_sword_pressed)
+	campfire_button.pressed.connect(_on_campfire_pressed)
 
 	_refresh_buttons()
 
@@ -68,6 +71,7 @@ func _refresh_buttons() -> void:
 	axe_button.disabled = not _can_craft("axe")
 	pickaxe_button.disabled = not _can_craft("pickaxe")
 	sword_button.disabled = not _can_craft("sword")
+	campfire_button.disabled = not _can_craft("campfire_kit")
 
 	improvised_axe_button.text = "Machado Improvisado — 2 Gravetos + 1 Pedra Pequena + 1 Cipó" + _crafted_suffix("improvised_axe")
 	improvised_pickaxe_button.text = "Picareta Improvisada — 2 Gravetos + 2 Pedras Pequenas + 1 Cipó" + _crafted_suffix("improvised_pickaxe")
@@ -75,6 +79,7 @@ func _refresh_buttons() -> void:
 	axe_button.text = "Machado — 3 Madeira + 2 Pedra" + _crafted_suffix("axe")
 	pickaxe_button.text = "Picareta — 2 Madeira + 3 Pedra" + _crafted_suffix("pickaxe")
 	sword_button.text = "Espada — 2 Madeira + 4 Pedra" + _crafted_suffix("sword")
+	campfire_button.text = "Fogueira — 3 Madeira + 3 Pedra" + _crafted_suffix("campfire_kit")
 
 func _can_craft(item_key: String) -> bool:
 	if int(snapshot.get(item_key, 0)) > 0:
@@ -118,3 +123,6 @@ func _on_pickaxe_pressed() -> void:
 
 func _on_sword_pressed() -> void:
 	craft_requested.emit("sword")
+
+func _on_campfire_pressed() -> void:
+	craft_requested.emit("campfire_kit")
