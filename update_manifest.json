@@ -2,9 +2,9 @@
   "schema": 2,
   "app": "Fantasy Sandbox",
   "channel": "stable",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "minimum_updater": "1.1.0",
-  "source_commit": "b8a9a7dfb729ba32e16473a7429a5d7c9189b5a1",
+  "source_commit": "32102b635d358c72b000d590c76449b6dc3a454c",
   "files": [
     {
       "path": ".gitignore",
@@ -16,7 +16,7 @@
     },
     {
       "path": "README.md",
-      "sha256": "ce9217d89dcb8b4435a41ce9181be66b3ca30145977be4374f709d66e43f1df3"
+      "sha256": "a40e8fa3b1bf583dc9e5ba42052f0e677401a1501262a7e4de179530ffac38d1"
     },
     {
       "path": "project.godot",
@@ -24,7 +24,7 @@
     },
     {
       "path": "scenes/main.tscn",
-      "sha256": "689df8fa90296492076ef26e2e534ae7326664a55723a10a1f3d7a44e37fe6b2"
+      "sha256": "ca3c9be2a9c94188a8618b918e6826eb9b7dd4b42321e9702b86a681ad9cb5a1"
     },
     {
       "path": "scenes/player.tscn",
@@ -32,23 +32,23 @@
     },
     {
       "path": "scenes/inventory_ui.tscn",
-      "sha256": "dede1dc0958a1a9743b255841a88b21f8f5c0005465cf46890ec045b80a7ac80"
+      "sha256": "ad6883305020a181aa86f0e28e1be96f08589c5c7c9d3fb1ba55c20424365634"
     },
     {
       "path": "scenes/hotbar_ui.tscn",
-      "sha256": "d5542825cffad4fa1a7b6883c8051d28062942798ad14922e12d10f138966d87"
+      "sha256": "075b44d665e3e1c2528be43f68b382d2e8038abdbb01ad914489e75981b2699b"
     },
     {
       "path": "scripts/main.gd",
-      "sha256": "6887995eb78180677b6afd8b8d754fcbc1a2f977eee643b6d02ee8db2362b458"
+      "sha256": "6e00f7be200907dd6a84b2b77b4261b49a0776fb08630802a153c28b00982bc8"
     },
     {
       "path": "scripts/player.gd",
-      "sha256": "62db1dcd0cd6ff4425e7157ed9ca5618af777ee6de37bcd42bd38e1c5b8b085b"
+      "sha256": "d83454b5c839a71926b9a2de57f14606298a4221e08f1021ec9669bbead4153c"
     },
     {
       "path": "scripts/resource_node.gd",
-      "sha256": "a1911dda3aaa3637d5cf62ac162d5ea8f917bde543e98ec2f50f07194b487fac"
+      "sha256": "5af6e530364bb6a4c75461e866f884a4710361023b1c9d2d31b800d668cdbb8e"
     },
     {
       "path": "scripts/world.gd",
@@ -60,7 +60,7 @@
     },
     {
       "path": "scripts/hotbar_ui.gd",
-      "sha256": "b0f5763fc275084e2f36fe282fcb97fcdb094fc468325f5ba44f5b9e6b19c029"
+      "sha256": "9733ed300a3b7fd43f804b2583628a9fd084ad574d0ee44f4229528ec7ece4a8"
     },
     {
       "path": "update_config.json",
