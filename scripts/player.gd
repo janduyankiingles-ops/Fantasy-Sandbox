@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 const CampfireScene = preload("res://scenes/campfire.tscn")
 
-@onready var visual: AnimatedSprite2D = $Visual as AnimatedSprite2D
+@onready var visual: Sprite2D = $Visual as Sprite2D
 
 signal inventory_changed
 signal health_changed
