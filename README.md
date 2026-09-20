@@ -1,59 +1,65 @@
-# Fantasy Sandbox — V0.0.8
+# Fantasy Sandbox — V0.0.9
 
-## Sistema desta versão: combate básico
+## Sistema desta versão: primeiro inimigo — Lobo
 
-O ataque com **Espaço** agora causa dano real em alvos próximos.
+O mundo agora possui lobos vivos e hostis.
 
-### Regras do ataque
+### Comportamento
 
-- O ataque é corpo a corpo.
-- O alvo precisa estar dentro do alcance.
-- O alvo precisa estar à frente do personagem, considerando a última direção em que ele se moveu.
-- Apenas o alvo válido mais próximo recebe o golpe.
+- Existem 3 lobos espalhados pelo mapa.
+- Quando estão tranquilos, vagam pela região onde nasceram.
+- Detectam o jogador a aproximadamente 300 unidades.
+- Ao detectar, perseguem o jogador.
+- Se o jogador fugir para longe, desistem da perseguição.
+- Quando alcançam o jogador, mordem.
+- Cada mordida causa 8 de dano.
+- O ataque do lobo possui intervalo de aproximadamente 1,1 segundo.
 
-### Dano por item
+### Vida do lobo
 
-- Mãos vazias: 1.
-- Machado Improvisado: 2.
-- Picareta Improvisada: 2.
-- Faca Improvisada: 3.
-- Machado: 4.
-- Picareta: 4.
-- Espada: 7.
+- Vida máxima: 24 HP.
+- A barra de vida aparece acima do lobo.
+- O lobo pisca quando recebe dano.
+- Todos os ataques implementados anteriormente podem causar dano nele.
+- Espada continua causando 7 de dano e é a melhor arma atual.
 
-A Espada é atualmente a melhor arma de combate.
+### Morte
 
-## Vida do jogador
+Quando a vida chega a zero:
 
-O jogador agora possui:
+- o lobo morre;
+- deixa de perseguir e atacar;
+- deixa de bloquear fisicamente o jogador;
+- o corpo permanece no chão.
+
+O cadáver permanecer no chão é intencional: a próxima etapa utilizará esse corpo para carne e pele.
+
+### Direção visual
+
+O desenho do lobo gira conforme a direção em que ele se move, inclusive durante perseguição.
+
+## Morte do jogador
+
+O jogador agora pode morrer.
 
 - Vida máxima: 100.
-- Vida atual exibida no HUD.
+- Ao chegar a 0 HP, fica morto por aproximadamente 2 segundos.
+- Depois reaparece no ponto inicial com a vida cheia.
+- O inventário e as ferramentas não são apagados no respawn nesta fase do protótipo.
 
-Nesta versão ainda não existe inimigo causando dano ao jogador. Essa base será utilizada pelos lobos.
+## Sistemas preservados
 
-## Boneco de treino
+- coleta primitiva;
+- ferramentas improvisadas;
+- crafting em duas etapas;
+- Machado/Picareta;
+- Espada;
+- inventário dinâmico;
+- hotbar;
+- combate direcional.
 
-Foi colocado um boneco de treino próximo ao ponto inicial.
+## Próxima etapa do loop
 
-- Vida: 20.
-- Possui barra de vida.
-- Pisca ao receber dano.
-- Ao chegar a 0 HP, fica destruído.
-- Reaparece automaticamente após aproximadamente 1,5 segundo.
+Depois de validar o Lobo, a próxima versão adicionará a recompensa da caça:
 
-O boneco existe apenas para validar alcance, direção e dano antes da implementação dos lobos.
-
-## Sistemas anteriores preservados
-
-- Coleta de Graveto, Pedra Pequena e Cipó.
-- Ferramentas improvisadas.
-- Bloqueio de árvores/rochas sem ferramenta.
-- Crafting em duas etapas.
-- Inventário dinâmico.
-- Hotbar com 6 ferramentas.
-- Machado/Picareta melhorando coleta.
-
-## Próximo passo do loop
-
-Após validar o combate básico, a próxima versão adicionará o primeiro inimigo real: **Lobo**, com movimentação, perseguição, ataque e morte.
+**XP + cadáver aproveitável + Carne Crua + retirada de Pele com a Faca Improvisada.**
