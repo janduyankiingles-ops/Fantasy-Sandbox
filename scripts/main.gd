@@ -6,10 +6,18 @@ extends Node2D
 @onready var inventory_label: Label = $HUD/Panel/Margin/VBox/InventoryLabel
 @onready var interaction_panel: PanelContainer = $HUD/InteractionPanel
 @onready var interaction_label: Label = $HUD/InteractionPanel/Margin/InteractionLabel
+@onready var inventory_ui: Control = $HUD/InventoryUI as Control
 
 func _ready() -> void:
 	player.connect("inventory_changed", Callable(self, "_update_inventory"))
 	_update_inventory()
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventKey:
+		var key_event: InputEventKey = event as InputEventKey
+		if key_event.pressed and not key_event.echo and key_event.keycode == KEY_I:
+			inventory_ui.call("toggle_inventory")
+			get_viewport().set_input_as_handled()
 
 func _process(_delta: float) -> void:
 	position_label.text = "Posição: %d, %d" % [
@@ -34,3 +42,7 @@ func _process(_delta: float) -> void:
 
 func _update_inventory() -> void:
 	inventory_label.text = str(player.call("get_inventory_text"))
+
+	var wood_amount: int = int(player.call("get_inventory_amount", "wood"))
+	var stone_amount: int = int(player.call("get_inventory_amount", "stone"))
+	inventory_ui.call("refresh_inventory", wood_amount, stone_amount)
