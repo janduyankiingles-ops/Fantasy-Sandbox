@@ -120,7 +120,6 @@ func _clean_and_align_frame(source_frame: Image) -> Image:
 	var clean_frame: Image = source_frame.duplicate()
 
 	var min_x: int = CELL_SIZE
-	var min_y: int = CELL_SIZE
 	var max_x: int = -1
 	var max_y: int = -1
 
@@ -133,7 +132,6 @@ func _clean_and_align_frame(source_frame: Image) -> Image:
 				continue
 
 			min_x = mini(min_x, x)
-			min_y = mini(min_y, y)
 			max_x = maxi(max_x, x)
 			max_y = maxi(max_y, y)
 
@@ -248,14 +246,17 @@ func _apply_texture(frame_texture: Texture2D) -> void:
 
 func _get_frames(animation_name: String) -> Array[Texture2D]:
 	var value: Variant = frames_by_animation.get(animation_name, null)
-	if value is Array:
-		var frames: Array[Texture2D] = []
-		for item: Variant in value:
-			if item is Texture2D:
-				frames.append(item)
-		return frames
+	if value is not Array:
+		return []
 
-	return []
+	var source_frames: Array = value
+	var frames: Array[Texture2D] = []
+
+	for item: Variant in source_frames:
+		if item is Texture2D:
+			frames.append(item as Texture2D)
+
+	return frames
 
 func _get_tool_kind(gathering: bool) -> String:
 	if selected_item_key == "sword":
