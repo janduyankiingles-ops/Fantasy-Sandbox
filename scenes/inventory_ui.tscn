@@ -196,3 +196,47 @@ layout_mode = 2
 text = ""
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="Slot13" type="PanelContainer" parent="InventoryPanel/Margin/VBox/Grid"]
+visible = false
+custom_minimum_size = Vector2(130, 88)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="InventoryPanel/Margin/VBox/Grid/Slot13"]
+layout_mode = 2
+text = ""
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Slot14" type="PanelContainer" parent="InventoryPanel/Margin/VBox/Grid"]
+visible = false
+custom_minimum_size = Vector2(130, 88)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="InventoryPanel/Margin/VBox/Grid/Slot14"]
+layout_mode = 2
+text = ""
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Slot15" type="PanelContainer" parent="InventoryPanel/Margin/VBox/Grid"]
+visible = false
+custom_minimum_size = Vector2(130, 88)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="InventoryPanel/Margin/VBox/Grid/Slot15"]
+layout_mode = 2
+text = ""
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Slot16" type="PanelContainer" parent="InventoryPanel/Margin/VBox/Grid"]
+visible = false
+custom_minimum_size = Vector2(130, 88)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="InventoryPanel/Margin/VBox/Grid/Slot16"]
+layout_mode = 2
+text = ""
+horizontal_alignment = 1
+vertical_alignment = 1
