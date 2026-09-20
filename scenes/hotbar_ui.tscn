@@ -19,9 +19,9 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -238.0
-offset_top = -116.0
-offset_right = 238.0
+offset_left = -310.0
+offset_top = -118.0
+offset_right = 310.0
 offset_bottom = -16.0
 grow_horizontal = 2
 grow_vertical = 0
@@ -41,67 +41,27 @@ theme_override_constants/separation = 6
 alignment = 1
 
 [node name="Slot1" type="PanelContainer" parent="HotbarBox/VBox/Slots"]
-custom_minimum_size = Vector2(70, 70)
+custom_minimum_size = Vector2(92, 72)
 layout_mode = 2
 
-[node name="Margin" type="MarginContainer" parent="HotbarBox/VBox/Slots/Slot1"]
+[node name="Label" type="Label" parent="HotbarBox/VBox/Slots/Slot1"]
 layout_mode = 2
-theme_override_constants/margin_left = 6
-theme_override_constants/margin_top = 4
-theme_override_constants/margin_right = 6
-theme_override_constants/margin_bottom = 4
-
-[node name="VBox" type="VBoxContainer" parent="HotbarBox/VBox/Slots/Slot1/Margin"]
-layout_mode = 2
-alignment = 1
-
-[node name="Number" type="Label" parent="HotbarBox/VBox/Slots/Slot1/Margin/VBox"]
-layout_mode = 2
-text = "1"
+text = "1\nVazio"
 horizontal_alignment = 1
-
-[node name="Item" type="Label" parent="HotbarBox/VBox/Slots/Slot1/Margin/VBox"]
-layout_mode = 2
-text = "Madeira"
-horizontal_alignment = 1
-
-[node name="Count" type="Label" parent="HotbarBox/VBox/Slots/Slot1/Margin/VBox"]
-layout_mode = 2
-text = "x0"
-horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Slot2" type="PanelContainer" parent="HotbarBox/VBox/Slots"]
-custom_minimum_size = Vector2(70, 70)
+custom_minimum_size = Vector2(92, 72)
 layout_mode = 2
 
-[node name="Margin" type="MarginContainer" parent="HotbarBox/VBox/Slots/Slot2"]
+[node name="Label" type="Label" parent="HotbarBox/VBox/Slots/Slot2"]
 layout_mode = 2
-theme_override_constants/margin_left = 6
-theme_override_constants/margin_top = 4
-theme_override_constants/margin_right = 6
-theme_override_constants/margin_bottom = 4
-
-[node name="VBox" type="VBoxContainer" parent="HotbarBox/VBox/Slots/Slot2/Margin"]
-layout_mode = 2
-alignment = 1
-
-[node name="Number" type="Label" parent="HotbarBox/VBox/Slots/Slot2/Margin/VBox"]
-layout_mode = 2
-text = "2"
+text = "2\nVazio"
 horizontal_alignment = 1
-
-[node name="Item" type="Label" parent="HotbarBox/VBox/Slots/Slot2/Margin/VBox"]
-layout_mode = 2
-text = "Pedra"
-horizontal_alignment = 1
-
-[node name="Count" type="Label" parent="HotbarBox/VBox/Slots/Slot2/Margin/VBox"]
-layout_mode = 2
-text = "x0"
-horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Slot3" type="PanelContainer" parent="HotbarBox/VBox/Slots"]
-custom_minimum_size = Vector2(70, 70)
+custom_minimum_size = Vector2(92, 72)
 layout_mode = 2
 
 [node name="Label" type="Label" parent="HotbarBox/VBox/Slots/Slot3"]
@@ -111,7 +71,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Slot4" type="PanelContainer" parent="HotbarBox/VBox/Slots"]
-custom_minimum_size = Vector2(70, 70)
+custom_minimum_size = Vector2(92, 72)
 layout_mode = 2
 
 [node name="Label" type="Label" parent="HotbarBox/VBox/Slots/Slot4"]
@@ -121,7 +81,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Slot5" type="PanelContainer" parent="HotbarBox/VBox/Slots"]
-custom_minimum_size = Vector2(70, 70)
+custom_minimum_size = Vector2(92, 72)
 layout_mode = 2
 
 [node name="Label" type="Label" parent="HotbarBox/VBox/Slots/Slot5"]
@@ -131,7 +91,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Slot6" type="PanelContainer" parent="HotbarBox/VBox/Slots"]
-custom_minimum_size = Vector2(70, 70)
+custom_minimum_size = Vector2(92, 72)
 layout_mode = 2
 
 [node name="Label" type="Label" parent="HotbarBox/VBox/Slots/Slot6"]
