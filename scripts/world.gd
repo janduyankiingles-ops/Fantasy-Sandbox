@@ -13,11 +13,15 @@ var resource_positions: Array[Dictionary] = [
 	{"type": "tree", "pos": Vector2(-430, -210)},
 	{"type": "tree", "pos": Vector2(90, -390)},
 	{"type": "tree", "pos": Vector2(540, 330)},
+	{"type": "tree", "pos": Vector2(760, 180)},
+	{"type": "tree", "pos": Vector2(-760, -120)},
 	{"type": "rock", "pos": Vector2(160, 260)},
 	{"type": "rock", "pos": Vector2(-170, -260)},
 	{"type": "rock", "pos": Vector2(470, -300)},
 	{"type": "rock", "pos": Vector2(-520, 90)},
 	{"type": "rock", "pos": Vector2(-360, 390)},
+	{"type": "rock", "pos": Vector2(690, -470)},
+	{"type": "rock", "pos": Vector2(-720, 500)},
 
 	# Kit inicial espalhado no chão
 	{"type": "stick", "pos": Vector2(75, 45)},
@@ -43,7 +47,11 @@ var resource_positions: Array[Dictionary] = [
 	{"type": "vine", "pos": Vector2(145, 165)},
 	{"type": "vine", "pos": Vector2(-215, -35)},
 	{"type": "vine", "pos": Vector2(245, -85)},
-	{"type": "vine", "pos": Vector2(-80, 230)}
+	{"type": "vine", "pos": Vector2(-80, 230)},
+	{"type": "vine", "pos": Vector2(330, 260)},
+	{"type": "vine", "pos": Vector2(-340, 250)},
+	{"type": "vine", "pos": Vector2(360, -250)},
+	{"type": "vine", "pos": Vector2(-350, -300)}
 ]
 
 func _ready() -> void:
