@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3]
+[gd_scene load_steps=9 format=3]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_main"]
 [ext_resource type="Script" path="res://scripts/world.gd" id="2_world"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" path="res://scenes/hotbar_ui.tscn" id="5_hotbar"]
 [ext_resource type="PackedScene" path="res://scenes/crafting_ui.tscn" id="6_crafting"]
 [ext_resource type="PackedScene" path="res://scenes/wolf.tscn" id="7_wolf"]
+[ext_resource type="Script" path="res://scripts/building_system.gd" id="8_building"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_main")
@@ -29,13 +30,16 @@ z_index = 4
 position = Vector2(520, -560)
 z_index = 4
 
+[node name="BuildingSystem" type="Node2D" parent="."]
+script = ExtResource("8_building")
+
 [node name="HUD" type="CanvasLayer" parent="."]
 
 [node name="Panel" type="PanelContainer" parent="HUD"]
 offset_left = 18.0
 offset_top = 18.0
 offset_right = 430.0
-offset_bottom = 330.0
+offset_bottom = 365.0
 
 [node name="Margin" type="MarginContainer" parent="HUD/Panel"]
 theme_override_constants/margin_left = 14
@@ -48,7 +52,7 @@ theme_override_constants/separation = 5
 
 [node name="Title" type="Label" parent="HUD/Panel/Margin/VBox"]
 theme_override_font_sizes/font_size = 20
-text = "FANTASY SANDBOX — V0.0.13"
+text = "FANTASY SANDBOX — V0.0.14"
 
 [node name="PositionLabel" type="Label" parent="HUD/Panel/Margin/VBox"]
 text = "Posição: 0, 0"
@@ -68,6 +72,10 @@ text = "Fome: 100/100"
 theme_override_font_sizes/font_size = 17
 text = "Armadura: nenhuma"
 
+[node name="BuildingLabel" type="Label" parent="HUD/Panel/Margin/VBox"]
+theme_override_font_sizes/font_size = 16
+text = "Construção: desligada [B]"
+
 [node name="ProgressionLabel" type="Label" parent="HUD/Panel/Margin/VBox"]
 theme_override_font_sizes/font_size = 17
 text = "Nível: 1 | XP: 0/100"
@@ -77,7 +85,7 @@ theme_override_font_sizes/font_size = 17
 text = "Gravetos: 0 | Pedrinhas: 0 | Cipó: 0\nMadeira: 0 | Pedra: 0"
 
 [node name="Controls" type="Label" parent="HUD/Panel/Margin/VBox"]
-text = "WASD/Setas: mover   Shift: correr\nE: interagir/cozinhar   Espaço: atacar   F: comer\nG: colocar fogueira   H: equipar armadura\nI: inventário   C: crafting   1-6: ferramentas"
+text = "WASD/Setas: mover   Shift: correr\nE: interagir   Espaço: atacar   F: comer   G: fogueira   H: armadura\nB: construir   Q: trocar peça   R: girar   Enter: colocar\nI: inventário   C: crafting   1-6: ferramentas"
 
 [node name="InteractionPanel" type="PanelContainer" parent="HUD"]
 visible = false
