@@ -62,7 +62,7 @@ horizontal_alignment = 1
 [node name="Resources" type="Label" parent="CraftingPanel/Margin/VBox"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 17
-text = "Chão: Graveto 0 | Pedra Pequena 0 | Cipó 0\nGrandes: Madeira 0 | Pedra 0"
+text = "Chão: Graveto 0 | Pedra Pequena 0 | Cipó 0\nGrandes: Madeira 0 | Pedra 0 | Pele 0"
 horizontal_alignment = 1
 
 [node name="Recipes" type="VBoxContainer" parent="CraftingPanel/Margin/VBox"]
@@ -118,6 +118,16 @@ text = "SOBREVIVÊNCIA"
 layout_mode = 2
 custom_minimum_size = Vector2(0, 44)
 text = "Fogueira — 3 Madeira + 3 Pedra"
+
+[node name="ArmorTitle" type="Label" parent="CraftingPanel/Margin/VBox/Recipes"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "ARMADURA"
+
+[node name="WolfArmorButton" type="Button" parent="CraftingPanel/Margin/VBox/Recipes"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 44)
+text = "Armadura de Pele — 3 Peles de Lobo + 2 Cipós"
 
 [node name="Status" type="Label" parent="CraftingPanel/Margin/VBox"]
 layout_mode = 2
