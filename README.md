@@ -1,92 +1,129 @@
-# Fantasy Sandbox — V0.0.20
+# Fantasy Sandbox — V0.0.21
 
-## Personagem Modular V2 — quatro direções
+## Personagem modular agora é o personagem oficial
 
-O protótipo modular foi aprovado como abordagem e agora recebeu a segunda etapa visual.
+A V0.0.21 substitui o personagem antigo baseado em spritesheet pelo novo rig modular dentro do gameplay principal.
 
-O personagem oficial do gameplay ainda não foi substituído. O teste continua acessível pela tecla **P**.
+Não é mais necessário pressionar **P**. O personagem que aparece normalmente no mundo já usa o sistema modular.
 
-## Correção das pernas
+## O que foi preservado
 
-As pernas foram redesenhadas para ficarem claramente visíveis abaixo da túnica.
+Toda a lógica do jogo continua em `player.gd`:
 
-Agora possuem:
+- movimento;
+- corrida;
+- combate;
+- coleta;
+- crafting;
+- fome;
+- vida;
+- XP;
+- armadura;
+- fogueira;
+- construção;
+- interação com recursos e lobos.
 
-- calça mais longa;
-- contorno próprio;
-- iluminação diferente entre as duas pernas;
-- botas maiores e separadas visualmente da calça;
-- sola aparente;
-- movimento alternado durante a caminhada.
+A alteração foi concentrada na camada visual.
 
-A profundidade também muda conforme a orientação.
+## Novo rig oficial
+
+O nó `Visual` do jogador agora é um `Node2D` composto por:
+
+- sombra;
+- perna esquerda;
+- perna direita;
+- tronco;
+- braço esquerdo;
+- braço direito;
+- cabeça;
+- duas partes do cachecol;
+- ferramenta.
+
+Cada parte é desenhada diretamente pelo Godot e permanece consistente entre os estados.
+
+Não existe spritesheet no personagem oficial desta versão.
+
+## Estados visuais
+
+O rig entende os mesmos estados que o gameplay já utilizava:
+
+### Idle
+
+- respiração discreta;
+- direção preservada após parar.
+
+### Walk
+
+- pernas alternadas;
+- braços em contramovimento;
+- bob discreto do corpo e cabeça;
+- cachecol acompanha o passo;
+- quatro direções.
+
+### Attack
+
+Ao pressionar **Espaço**, o gameplay continua aplicando dano normalmente e o rig executa uma sequência modular curta de preparação, golpe e recuperação.
+
+A ferramenta visual depende do item selecionado:
+
+- espada;
+- machado;
+- picareta;
+- faca;
+- sem ferramenta quando o personagem está desarmado.
+
+### Gather
+
+Quando uma coleta é realizada com sucesso usando **E**, o rig executa a animação modular de coleta no mesmo intervalo usado pelo gameplay.
+
+Machado, picareta ou faca são mostrados conforme o item selecionado.
 
 ## Quatro direções
 
-O rig modular agora possui aparência própria para:
+O visual continua distinguindo:
 
-- baixo / frente;
-- cima / costas;
-- esquerda / perfil;
-- direita / perfil.
+- baixo;
+- cima;
+- esquerda;
+- direita.
 
-Não são sprites completos diferentes. As mesmas partes continuam sendo usadas, mas cada parte sabe como deve ser desenhada para a orientação atual.
+Frente mostra o rosto, costas usa cabelo e roupa traseiros e as vistas laterais usam perfil.
 
-### Frente
+## Escala e colisão
 
-Mostra rosto, olhos, nariz, boca, fivela e frente da roupa.
+O protótipo usava escala 3x, mas para integração no mapa o rig oficial usa **2x**.
 
-### Costas
+Os pés foram alinhados com a base da colisão original do personagem, evitando que o desenho pareça flutuar ou fique muito abaixo do ponto real do jogador.
 
-O rosto desaparece, o cabelo cobre a parte posterior da cabeça e a roupa recebe detalhes de costas.
+A colisão e as velocidades não foram alteradas.
 
-### Esquerda e direita
+## Sombra e armadura
 
-A cabeça ganha perfil com nariz e um olho visível. Tronco, braços, pernas e cachecol também mudam de disposição.
+A sombra antiga desenhada por `player.gd` foi removida porque o rig modular já possui sombra própria.
 
-## Caminhada direcional
+O indicador da armadura de pele permanece separado e continua aparecendo quando a armadura está equipada.
 
-As quatro direções possuem caminhada modular.
+## Arquivos do sistema oficial
 
-- pernas alternam;
-- braços fazem contramovimento;
-- tronco e cabeça fazem bob de 1 pixel;
-- cachecol reage ao passo;
-- nas laterais braços e pernas também avançam/recuam horizontalmente;
-- a ordem de desenho muda para indicar qual braço/perna está mais próximo da câmera.
+- `scripts/player_modular_part.gd`
+- `scripts/player_modular_visual.gd`
+- `scenes/player.tscn`
+- `scripts/player.gd`
 
-Em diagonais, o personagem preserva uma direção coerente para evitar alternância visual rápida.
+Os arquivos antigos de sprite foram mantidos por enquanto apenas como segurança para rollback. Eles não são usados pelo personagem oficial da V0.0.21.
 
-## Indicador de teste
+## Teste desta versão
 
-A cena do protótipo mostra agora:
+Teste no jogo normal, sem abrir nenhuma cena especial:
 
-`Direção visual: BAIXO / CIMA / ESQUERDA / DIREITA`
+1. caminhe em todas as quatro direções;
+2. pare e confirme que a direção é preservada;
+3. corra com Shift;
+4. pressione Espaço com e sem uma ferramenta selecionada;
+5. corte árvores com machado;
+6. minere rochas com picareta;
+7. use a faca onde aplicável;
+8. lute contra um lobo;
+9. confirme que colisão, coleta e combate continuam funcionando.
 
-Isso permite conferir se o rig está selecionando a vista correta.
-
-## Como testar
-
-1. Abra o jogo normalmente.
-2. Pressione **P**.
-3. Use **S** para olhar/caminhar para baixo.
-4. Use **W** para olhar/caminhar para cima.
-5. Use **A** para esquerda.
-6. Use **D** para direita.
-7. Solte a tecla e confirme que o personagem permanece olhando naquela direção.
-8. Pressione **ESC** para voltar ao jogo.
-
-## Escopo atual
-
-O protótipo possui:
-
-- idle em quatro direções;
-- caminhada em quatro direções;
-- pernas visíveis;
-- animação modular sem spritesheet.
-
-Ataque, coleta e equipamentos serão adicionados ao rig somente depois desta validação.
-
-## Gameplay
-
-Nenhuma regra do gameplay principal foi alterada.
+Esta versão é a primeira integração do sistema modular no gameplay principal.
