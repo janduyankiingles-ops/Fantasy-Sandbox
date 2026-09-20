@@ -19,8 +19,14 @@ var nearby_resource: Node2D = null
 var selected_hotbar_slot: int = 0
 
 var inventory: Dictionary = {
+	"stick": 0,
+	"small_stone": 0,
+	"vine": 0,
 	"wood": 0,
 	"stone": 0,
+	"improvised_axe": 0,
+	"improvised_pickaxe": 0,
+	"improvised_knife": 0,
 	"axe": 0,
 	"pickaxe": 0,
 	"sword": 0
@@ -95,7 +101,7 @@ func _try_harvest() -> void:
 	if not nearby_resource.has_method("harvest"):
 		return
 
-	var selected_tool: String = get_selected_tool()
+	var selected_tool: String = get_selected_item_key()
 	var result: Dictionary = nearby_resource.call("harvest", selected_tool)
 	var amount: int = int(result.get("amount", 0))
 
@@ -103,33 +109,64 @@ func _try_harvest() -> void:
 		return
 
 	var resource_type: String = str(result.get("type", ""))
-	if resource_type == "tree":
-		inventory["wood"] = int(inventory.get("wood", 0)) + amount
-	elif resource_type == "rock":
-		inventory["stone"] = int(inventory.get("stone", 0)) + amount
-	else:
+	var inventory_key: String = _resource_type_to_inventory_key(resource_type)
+	if inventory_key.is_empty():
 		return
 
+	inventory[inventory_key] = int(inventory.get(inventory_key, 0)) + amount
 	interact_cooldown_left = interaction_cooldown
 	inventory_changed.emit()
+
+func _resource_type_to_inventory_key(resource_type: String) -> String:
+	match resource_type:
+		"stick":
+			return "stick"
+		"small_stone":
+			return "small_stone"
+		"vine":
+			return "vine"
+		"tree":
+			return "wood"
+		"rock":
+			return "stone"
+		_:
+			return ""
 
 func set_selected_hotbar_slot(slot_index: int) -> void:
 	selected_hotbar_slot = clampi(slot_index, 0, 5)
 
-func get_selected_tool() -> String:
-	if selected_hotbar_slot == 2 and int(inventory.get("axe", 0)) > 0:
-		return "axe"
-	if selected_hotbar_slot == 3 and int(inventory.get("pickaxe", 0)) > 0:
-		return "pickaxe"
-	return ""
+func get_selected_item_key() -> String:
+	var key: String = ""
+
+	match selected_hotbar_slot:
+		0:
+			key = "improvised_axe"
+		1:
+			key = "improvised_pickaxe"
+		2:
+			key = "improvised_knife"
+		3:
+			key = "axe"
+		4:
+			key = "pickaxe"
+		5:
+			key = "sword"
+
+	if int(inventory.get(key, 0)) <= 0:
+		return ""
+
+	return key
 
 func get_interaction_prompt() -> String:
 	if nearby_resource != null and is_instance_valid(nearby_resource) and nearby_resource.has_method("get_interaction_text"):
-		return str(nearby_resource.call("get_interaction_text", get_selected_tool()))
+		return str(nearby_resource.call("get_interaction_text", get_selected_item_key()))
 	return ""
 
 func get_inventory_text() -> String:
-	return "Madeira: %d    Pedra: %d" % [
+	return "Gravetos: %d | Pedrinhas: %d | Cipó: %d\nMadeira: %d | Pedra: %d" % [
+		int(inventory.get("stick", 0)),
+		int(inventory.get("small_stone", 0)),
+		int(inventory.get("vine", 0)),
 		int(inventory.get("wood", 0)),
 		int(inventory.get("stone", 0))
 	]
@@ -137,37 +174,47 @@ func get_inventory_text() -> String:
 func get_inventory_amount(item_key: String) -> int:
 	return int(inventory.get(item_key, 0))
 
-func craft_item(item_key: String) -> bool:
-	var wood_cost: int = 0
-	var stone_cost: int = 0
+func get_inventory_snapshot() -> Dictionary:
+	return inventory.duplicate()
 
-	match item_key:
-		"axe":
-			wood_cost = 3
-			stone_cost = 2
-		"pickaxe":
-			wood_cost = 2
-			stone_cost = 3
-		"sword":
-			wood_cost = 2
-			stone_cost = 4
-		_:
-			return false
+func craft_item(item_key: String) -> bool:
+	var costs: Dictionary = _get_recipe_costs(item_key)
+	if costs.is_empty():
+		return false
 
 	if int(inventory.get(item_key, 0)) > 0:
 		return false
 
-	var current_wood: int = int(inventory.get("wood", 0))
-	var current_stone: int = int(inventory.get("stone", 0))
+	for resource_key in costs.keys():
+		var needed: int = int(costs[resource_key])
+		var available: int = int(inventory.get(resource_key, 0))
+		if available < needed:
+			return false
 
-	if current_wood < wood_cost or current_stone < stone_cost:
-		return false
+	for resource_key in costs.keys():
+		var needed: int = int(costs[resource_key])
+		inventory[resource_key] = int(inventory.get(resource_key, 0)) - needed
 
-	inventory["wood"] = current_wood - wood_cost
-	inventory["stone"] = current_stone - stone_cost
 	inventory[item_key] = 1
 	inventory_changed.emit()
 	return true
+
+func _get_recipe_costs(item_key: String) -> Dictionary:
+	match item_key:
+		"improvised_axe":
+			return {"stick": 2, "small_stone": 1, "vine": 1}
+		"improvised_pickaxe":
+			return {"stick": 2, "small_stone": 2, "vine": 1}
+		"improvised_knife":
+			return {"stick": 1, "small_stone": 1, "vine": 1}
+		"axe":
+			return {"wood": 3, "stone": 2}
+		"pickaxe":
+			return {"wood": 2, "stone": 3}
+		"sword":
+			return {"wood": 2, "stone": 4}
+		_:
+			return {}
 
 func _draw() -> void:
 	draw_circle(Vector2(0, 13), 14.0, Color(0.05, 0.05, 0.06, 0.35))
