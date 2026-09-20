@@ -1,4 +1,4 @@
-extends AnimatedSprite2D
+extends Sprite2D
 
 const IDLE_SHEET: Texture2D = preload("res://assets/player/idle.png")
 const WALK_SHEET: Texture2D = preload("res://assets/player/walk.png")
@@ -14,7 +14,10 @@ const GATHER_UP: Texture2D = preload("res://assets/player/gather_up.png")
 const GATHER_RIGHT: Texture2D = preload("res://assets/player/gather_right.png")
 
 const CELL_SIZE: int = 64
+const ALPHA_CUTOFF: float = 0.15
+const BASE_POSITION: Vector2 = Vector2(0, -17)
 
+var animation_frames: Dictionary = {}
 var current_state: String = "idle"
 var current_direction: String = "down"
 var current_animation_name: String = ""
@@ -24,139 +27,165 @@ var animation_frame_index: int = 0
 func _ready() -> void:
 	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	centered = true
-	position = Vector2(0, -17)
+	position = BASE_POSITION
 	scale = Vector2(1.25, 1.25)
 	z_index = 1
 
-	_build_sprite_frames()
+	_build_individual_frames()
 	_switch_animation("idle", "down")
 
 func _process(delta: float) -> void:
 	_advance_animation(delta)
 
-func _build_sprite_frames() -> void:
-	var frames: SpriteFrames = SpriteFrames.new()
+func _build_individual_frames() -> void:
+	animation_frames.clear()
 
-	if frames.has_animation("default"):
-		frames.remove_animation("default")
+	var idle_image: Image = _get_source_image(IDLE_SHEET)
+	var walk_image: Image = _get_source_image(WALK_SHEET)
 
-	# Ordem das linhas nas folhas Idle/Walk:
-	# 0 = frente, 1 = esquerda, 2 = costas, 3 = direita.
-	_add_direction_animations(frames, "down", 0, ATTACK_DOWN, GATHER_DOWN)
-	_add_direction_animations(frames, "left", 1, ATTACK_LEFT, GATHER_LEFT)
-	_add_direction_animations(frames, "up", 2, ATTACK_UP, GATHER_UP)
-	_add_direction_animations(frames, "right", 3, ATTACK_RIGHT, GATHER_RIGHT)
+	_add_sheet_frames("idle_down", idle_image, 0, 4)
+	_add_sheet_frames("idle_left", idle_image, 1, 4)
+	_add_sheet_frames("idle_up", idle_image, 2, 4)
+	_add_sheet_frames("idle_right", idle_image, 3, 4)
 
-	sprite_frames = frames
+	_add_sheet_frames("walk_down", walk_image, 0, 6)
+	_add_sheet_frames("walk_left", walk_image, 1, 6)
+	_add_sheet_frames("walk_up", walk_image, 2, 6)
+	_add_sheet_frames("walk_right", walk_image, 3, 6)
 
-func _add_direction_animations(
-	frames: SpriteFrames,
-	direction_name: String,
-	row: int,
-	attack_sheet: Texture2D,
-	gather_sheet: Texture2D
-) -> void:
-	_add_sheet_animation(
-		frames,
-		"idle_" + direction_name,
-		IDLE_SHEET,
-		row,
-		4,
-		4.0,
-		true
-	)
-	_add_sheet_animation(
-		frames,
-		"walk_" + direction_name,
-		WALK_SHEET,
-		row,
-		6,
-		10.0,
-		true
-	)
-	_add_row_animation(
-		frames,
-		"attack_" + direction_name,
-		attack_sheet,
-		6,
-		26.0,
-		false
-	)
-	_add_row_animation(
-		frames,
-		"gather_" + direction_name,
-		gather_sheet,
-		5,
-		15.0,
-		false
-	)
+	_add_single_row_frames("attack_down", ATTACK_DOWN, 6)
+	_add_single_row_frames("attack_left", ATTACK_LEFT, 6)
+	_add_single_row_frames("attack_up", ATTACK_UP, 6)
+	_add_single_row_frames("attack_right", ATTACK_RIGHT, 6)
 
-func _add_sheet_animation(
-	frames: SpriteFrames,
+	_add_single_row_frames("gather_down", GATHER_DOWN, 5)
+	_add_single_row_frames("gather_left", GATHER_LEFT, 5)
+	_add_single_row_frames("gather_up", GATHER_UP, 5)
+	_add_single_row_frames("gather_right", GATHER_RIGHT, 5)
+
+func _get_source_image(source_texture: Texture2D) -> Image:
+	var source_image: Image = source_texture.get_image()
+	if source_image.get_format() != Image.FORMAT_RGBA8:
+		source_image.convert(Image.FORMAT_RGBA8)
+	return source_image
+
+func _add_sheet_frames(
 	animation_name: String,
-	sheet: Texture2D,
+	source_image: Image,
 	row: int,
-	frame_count: int,
-	fps: float,
-	loop_animation: bool
+	frame_count: int
 ) -> void:
-	frames.add_animation(animation_name)
-	frames.set_animation_speed(animation_name, fps)
-	frames.set_animation_loop(animation_name, loop_animation)
+	var frames: Array = []
 
-	for index in range(frame_count):
-		var frame_texture: AtlasTexture = _make_frame_texture(
-			sheet,
-			Rect2(
-				float(index * CELL_SIZE),
-				float(row * CELL_SIZE),
-				float(CELL_SIZE),
-				float(CELL_SIZE)
-			)
+	for column in range(frame_count):
+		var source_rect: Rect2i = Rect2i(
+			column * CELL_SIZE,
+			row * CELL_SIZE,
+			CELL_SIZE,
+			CELL_SIZE
 		)
-		frames.add_frame(animation_name, frame_texture)
+		frames.append(_make_individual_frame(source_image, source_rect))
 
-func _add_row_animation(
-	frames: SpriteFrames,
+	animation_frames[animation_name] = frames
+
+func _add_single_row_frames(
 	animation_name: String,
-	sheet: Texture2D,
-	frame_count: int,
-	fps: float,
-	loop_animation: bool
+	source_texture: Texture2D,
+	frame_count: int
 ) -> void:
-	frames.add_animation(animation_name)
-	frames.set_animation_speed(animation_name, fps)
-	frames.set_animation_loop(animation_name, loop_animation)
+	var source_image: Image = _get_source_image(source_texture)
+	_add_sheet_frames(animation_name, source_image, 0, frame_count)
 
-	for index in range(frame_count):
-		var frame_texture: AtlasTexture = _make_frame_texture(
-			sheet,
-			Rect2(
-				float(index * CELL_SIZE),
-				0.0,
-				float(CELL_SIZE),
-				float(CELL_SIZE)
-			)
+func _make_individual_frame(source_image: Image, source_rect: Rect2i) -> Texture2D:
+	var source_frame: Image = source_image.get_region(source_rect)
+
+	if source_frame.get_format() != Image.FORMAT_RGBA8:
+		source_frame.convert(Image.FORMAT_RGBA8)
+
+	var min_x: int = CELL_SIZE
+	var min_y: int = CELL_SIZE
+	var max_x: int = -1
+	var max_y: int = -1
+
+	# O PNG original possui pixels de fundo com alpha muito baixo.
+	# Eles são removidos completamente antes da criação do frame.
+	for y in range(CELL_SIZE):
+		for x in range(CELL_SIZE):
+			var pixel: Color = source_frame.get_pixel(x, y)
+
+			if pixel.a < ALPHA_CUTOFF:
+				source_frame.set_pixel(x, y, Color(0.0, 0.0, 0.0, 0.0))
+				continue
+
+			min_x = mini(min_x, x)
+			min_y = mini(min_y, y)
+			max_x = maxi(max_x, x)
+			max_y = maxi(max_y, y)
+
+	if max_x < 0 or max_y < 0:
+		var empty_image: Image = Image.create(
+			CELL_SIZE,
+			CELL_SIZE,
+			false,
+			Image.FORMAT_RGBA8
 		)
-		frames.add_frame(animation_name, frame_texture)
+		empty_image.fill(Color(0.0, 0.0, 0.0, 0.0))
+		return ImageTexture.create_from_image(empty_image)
 
-func _make_frame_texture(sheet: Texture2D, frame_region: Rect2) -> AtlasTexture:
-	var frame_texture: AtlasTexture = AtlasTexture.new()
-	frame_texture.atlas = sheet
-	frame_texture.region = frame_region
+	# Usa a região inferior do personagem como âncora.
+	# Assim cachecol, braços e arma não deslocam o corpo entre frames.
+	var foot_band_start: int = maxi(min_y, max_y - 11)
+	var foot_min_x: int = CELL_SIZE
+	var foot_max_x: int = -1
 
-	# Impede que pixels do quadro vizinho apareçam nas bordas quando
-	# o atlas é escalado.
-	frame_texture.filter_clip = true
+	for y in range(foot_band_start, max_y + 1):
+		for x in range(CELL_SIZE):
+			var pixel: Color = source_frame.get_pixel(x, y)
+			if pixel.a >= ALPHA_CUTOFF:
+				foot_min_x = mini(foot_min_x, x)
+				foot_max_x = maxi(foot_max_x, x)
 
-	return frame_texture
+	var anchor_x: float = (float(min_x) + float(max_x)) * 0.5
+	if foot_max_x >= 0:
+		anchor_x = (float(foot_min_x) + float(foot_max_x)) * 0.5
+
+	var offset_x: int = roundi(31.5 - anchor_x)
+	var offset_y: int = 62 - max_y
+
+	var aligned_image: Image = Image.create(
+		CELL_SIZE,
+		CELL_SIZE,
+		false,
+		Image.FORMAT_RGBA8
+	)
+	aligned_image.fill(Color(0.0, 0.0, 0.0, 0.0))
+
+	# Copia pixel por pixel para que cada quadro seja realmente independente.
+	# Não há AtlasTexture nem risco de vazar para a célula vizinha.
+	for y in range(CELL_SIZE):
+		for x in range(CELL_SIZE):
+			var pixel: Color = source_frame.get_pixel(x, y)
+			if pixel.a < ALPHA_CUTOFF:
+				continue
+
+			var target_x: int = x + offset_x
+			var target_y: int = y + offset_y
+
+			if target_x < 0 or target_x >= CELL_SIZE:
+				continue
+			if target_y < 0 or target_y >= CELL_SIZE:
+				continue
+
+			aligned_image.set_pixel(target_x, target_y, pixel)
+
+	return ImageTexture.create_from_image(aligned_image)
 
 func set_visual_state(state_name: String, facing_direction: Vector2) -> void:
 	var direction_name: String = _get_direction_name(facing_direction)
 	var final_state: String = state_name
 	var desired_animation: String = final_state + "_" + direction_name
 
-	if not sprite_frames.has_animation(desired_animation):
+	if not animation_frames.has(desired_animation):
 		final_state = "idle"
 		desired_animation = "idle_" + direction_name
 
@@ -168,7 +197,7 @@ func set_visual_state(state_name: String, facing_direction: Vector2) -> void:
 func _switch_animation(state_name: String, direction_name: String) -> void:
 	var desired_animation: String = state_name + "_" + direction_name
 
-	if not sprite_frames.has_animation(desired_animation):
+	if not animation_frames.has(desired_animation):
 		state_name = "idle"
 		desired_animation = "idle_" + direction_name
 
@@ -177,42 +206,83 @@ func _switch_animation(state_name: String, direction_name: String) -> void:
 	current_animation_name = desired_animation
 	animation_clock = 0.0
 	animation_frame_index = 0
+	position = BASE_POSITION
 
-	# A animação é avançada manualmente em _process().
-	# Assim não dependemos do estado interno de play/pause do AnimatedSprite2D.
-	stop()
-	animation = current_animation_name
-	frame = 0
+	_apply_current_frame()
 
 func _advance_animation(delta: float) -> void:
-	if current_animation_name.is_empty():
-		return
-	if sprite_frames == null:
-		return
-	if not sprite_frames.has_animation(current_animation_name):
+	var frames_value: Variant = animation_frames.get(current_animation_name, null)
+	if frames_value is not Array:
 		return
 
-	var frame_count: int = sprite_frames.get_frame_count(current_animation_name)
+	var frames: Array = frames_value
+	var frame_count: int = frames.size()
+
 	if frame_count <= 1:
-		frame = 0
+		animation_frame_index = 0
+		_apply_current_frame()
 		return
 
-	var fps: float = sprite_frames.get_animation_speed(current_animation_name)
+	var fps: float = _get_animation_fps(current_state)
 	if fps <= 0.0:
 		return
 
 	var frame_duration: float = 1.0 / fps
 	animation_clock += delta
 
+	var changed_frame: bool = false
+
 	while animation_clock >= frame_duration:
 		animation_clock -= frame_duration
 
-		if sprite_frames.get_animation_loop(current_animation_name):
+		if _is_looping_state(current_state):
 			animation_frame_index = (animation_frame_index + 1) % frame_count
 		else:
 			animation_frame_index = mini(animation_frame_index + 1, frame_count - 1)
 
-		frame = animation_frame_index
+		changed_frame = true
+
+	if changed_frame:
+		_apply_current_frame()
+
+func _apply_current_frame() -> void:
+	var frames_value: Variant = animation_frames.get(current_animation_name, null)
+	if frames_value is not Array:
+		return
+
+	var frames: Array = frames_value
+	if frames.is_empty():
+		return
+
+	animation_frame_index = clampi(animation_frame_index, 0, frames.size() - 1)
+
+	var texture_value: Variant = frames[animation_frame_index]
+	if texture_value is Texture2D:
+		texture = texture_value
+
+	# Um bob de 1 pixel reforça visualmente o passo sem deformar a arte.
+	if current_state == "walk":
+		var walk_bob: Array[int] = [0, 1, 0, -1, 0, 1]
+		var bob_index: int = animation_frame_index % walk_bob.size()
+		position = BASE_POSITION + Vector2(0.0, float(walk_bob[bob_index]))
+	else:
+		position = BASE_POSITION
+
+func _get_animation_fps(state_name: String) -> float:
+	match state_name:
+		"idle":
+			return 4.0
+		"walk":
+			return 10.0
+		"attack":
+			return 26.0
+		"gather":
+			return 15.0
+		_:
+			return 1.0
+
+func _is_looping_state(state_name: String) -> bool:
+	return state_name == "idle" or state_name == "walk"
 
 func _get_direction_name(direction: Vector2) -> String:
 	if direction == Vector2.ZERO:
@@ -227,8 +297,6 @@ func _get_direction_name(direction: Vector2) -> String:
 	if abs_y > abs_x + 0.05:
 		return "down" if direction.y > 0.0 else "up"
 
-	# Em diagonais perfeitas, mantém a direção visual anterior enquanto
-	# ela ainda fizer parte do movimento.
 	if current_direction == "left" and direction.x < 0.0:
 		return "left"
 	if current_direction == "right" and direction.x > 0.0:
