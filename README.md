@@ -1,31 +1,24 @@
-# Fantasy Sandbox — V0.0.4
+# Fantasy Sandbox — V0.0.5
 
 Protótipo de RPG sandbox de fantasia em Godot 4.7.x.
 
-## Sistema desta versão: hotbar básica
+## Sistema desta versão: ferramentas básicas
 
-- Barra inferior com 6 slots.
-- Teclas **1 a 6** selecionam os slots.
-- Slot 1: Madeira.
-- Slot 2: Pedra.
-- Slots 3 a 6: vazios.
-- A seleção atual recebe destaque visual.
-- As quantidades de Madeira e Pedra ficam sincronizadas com o inventário.
+- O jogador começa com **1 Machado** e **1 Picareta**.
+- Hotbar: **3 = Machado** e **4 = Picareta**.
+- Machado causa eficiência 2x em árvores.
+- Picareta causa eficiência 2x em pedras.
+- Mão vazia ou ferramenta errada continua coletando, porém mais devagar.
+- O rendimento total do recurso é preservado; a ferramenta correta reduz a quantidade de golpes necessários.
+- Machado e Picareta aparecem também no inventário visual.
 
-## Importante
+## Ainda não incluído
 
-A V0.0.4 adiciona somente seleção e visualização da hotbar. Selecionar Madeira ou Pedra ainda não usa, coloca, equipa ou consome o item.
-
-## Sistemas já estáveis
-
-- Movimento em 8 direções.
-- Corrida.
-- Câmera.
-- Colisões.
-- Árvores e pedras.
-- Coleta com **E**.
-- Inventário visual com **I**.
-- Atualizador incremental V1.1.
+- Crafting.
+- Durabilidade.
+- Ferramentas melhores.
+- Equipamentos.
+- Animação própria de machado/picareta.
 
 ## Controles
 
@@ -33,5 +26,9 @@ A V0.0.4 adiciona somente seleção e visualização da hotbar. Selecionar Madei
 - Shift: correr.
 - E: coletar/interagir.
 - Espaço: ataque provisório.
-- I: abrir/fechar inventário.
-- 1 a 6: selecionar slot da hotbar.
+- I: inventário.
+- 1: Madeira.
+- 2: Pedra.
+- 3: Machado.
+- 4: Picareta.
+- 5 e 6: slots vazios.
