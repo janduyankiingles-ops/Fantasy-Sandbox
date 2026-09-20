@@ -37,6 +37,8 @@ func _configure_for_type() -> void:
 			final_bonus = 0
 
 func _create_collision() -> void:
+	if _is_ground_pickup():
+		return
 	if get_node_or_null("CollisionShape2D") != null:
 		return
 
