@@ -103,7 +103,11 @@ try {
     Write-Step "Consultando atualizacoes..."
 
     $headers = @{"Cache-Control"="no-cache"; "Pragma"="no-cache"; "User-Agent"="FantasySandboxUpdater/1.0"}
-    $manifestText = (Invoke-WebRequest -Uri ([string]$config.manifest_url) -UseBasicParsing -Headers $headers).Content
+    $manifestUrl = [string]$config.manifest_url
+    $separator = if ($manifestUrl.Contains("?")) { "&" } else { "?" }
+    $cacheBust = [DateTimeOffset]::UtcNow.ToUnixTimeMilliseconds()
+    $manifestRequestUrl = "$manifestUrl$separator" + "cb=$cacheBust"
+    $manifestText = (Invoke-WebRequest -Uri $manifestRequestUrl -UseBasicParsing -Headers $headers).Content
     $manifest = $manifestText | ConvertFrom-Json
 
     if ($null -eq $manifest -or [int]$manifest.schema -ne 1) {
