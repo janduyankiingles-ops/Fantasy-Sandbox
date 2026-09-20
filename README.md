@@ -1,133 +1,98 @@
-# Fantasy Sandbox — V0.0.15
+# Fantasy Sandbox — V0.0.16
 
-## Revisão e balanceamento do primeiro loop
+## Nova identidade visual: personagem principal em pixel art
 
-A V0.0.15 não adiciona um sistema grande novo. Ela revisa o primeiro ciclo completo do jogo depois da implementação de coleta, crafting, combate, caça, fome, cozinha, armadura e construção.
+A primeira etapa da renovação gráfica foi aplicada ao personagem principal.
 
-## Fome
+O antigo personagem desenhado diretamente por código foi substituído por um sprite em pixel art seguindo a estética definida para Fantasy Sandbox: fantasia sombria, rusticidade, cores terrosas e silhueta expressiva.
 
-O ritmo anterior era rápido demais para jogar o loop completo.
+## Atlas
 
-Antes:
+O personagem utiliza um atlas otimizado e com transparência:
 
-- 100 de Fome duravam aproximadamente 100 segundos.
+- `assets/player/player_atlas.png`
 
-Agora:
+O atlas foi preparado especificamente para o jogo e usa células regulares de **72 x 81 px**.
 
-- a perda é de **0,20 por segundo**;
-- 100 de Fome duram aproximadamente **8 minutos e 20 segundos** até chegar a zero.
+A filtragem da textura é **Nearest**, preservando o aspecto pixel art sem borramento.
 
-Continuam iguais:
+## Direções
 
-- Carne Crua: +20 de Fome e -5 de Vida;
-- Carne Assada: +45 de Fome e sem dano;
-- Fome em zero: 5 de dano a cada aproximadamente 2 segundos.
+O personagem possui arte própria para:
 
-## XP
+- frente;
+- direita;
+- costas;
+- esquerda.
 
-Cada Lobo agora concede **35 XP**.
+Ao mover-se na diagonal, a direção visual dominante é escolhida automaticamente.
 
-Com os três lobos iniciais:
+## Animações
 
-- Lobo 1: 35 XP;
-- Lobo 2: 70 XP acumulados;
-- Lobo 3: 105 XP acumulados.
+Cada direção possui quatro estados.
 
-Assim, completar a caça dos três lobos permite chegar ao **Nível 2** e ainda ficar com 5 XP no novo nível.
+### Idle
 
-Isso torna possível testar a progressão dentro do primeiro mapa.
+- 3 frames;
+- animação lenta;
+- reproduz continuamente enquanto o jogador está parado.
 
-## Recursos do mundo
+### Walk
 
-Foi criada uma margem maior para o jogador não ficar apertado depois de fabricar ferramentas, fogueira e começar a construir.
+- 4 frames;
+- reproduz enquanto o jogador se movimenta;
+- funciona tanto andando quanto correndo.
 
-O mapa agora possui:
+### Attack
 
-- **8 árvores**;
-- **7 rochas grandes**;
-- **10 cipós**;
-- os mesmos 8 gravetos iniciais;
-- as mesmas 8 pedras pequenas iniciais.
+- 4 frames;
+- reproduz ao pressionar **Espaço**;
+- sincronizada com o ataque corpo a corpo atual.
 
-As novas árvores, rochas e cipós ficam um pouco mais afastados do ponto inicial para incentivar exploração curta.
+A animação-base de ataque mostra uma espada. Nesta etapa ela é utilizada para qualquer ataque, independentemente da ferramenta selecionada. Animações específicas para Machado, Picareta e Faca podem ser adicionadas em uma etapa gráfica posterior.
 
-## Construção
+### Gather
 
-O sistema de construção agora explica melhor por que o preview está vermelho.
+- 4 frames;
+- reproduz quando uma coleta com **E** é concluída com sucesso;
+- cobre recursos do chão, corte de árvores, mineração e aproveitamento de cadáveres.
 
-O HUD pode mostrar:
+## Gameplay preservado
 
-- **SEM RECURSOS**;
-- **ESPAÇO OCUPADO**;
-- **MUITO PERTO**;
-- ou **VÁLIDO**.
+A atualização é principalmente visual.
 
-Os custos permanecem:
+Continuam funcionando normalmente:
 
-- Chão de Madeira: 1 Madeira;
-- Parede: 2 Madeira + 1 Pedra;
-- Porta: 2 Madeira + 1 Pedra.
+- movimentação;
+- corrida;
+- combate;
+- coleta;
+- crafting;
+- lobos;
+- XP;
+- fome;
+- fogueira;
+- armadura;
+- construção.
 
-## Fogueira
+A colisão do jogador continua independente do tamanho visual do sprite.
 
-A fogueira agora respeita os obstáculos do mundo.
+## Armadura
 
-Ela não pode mais ser colocada:
+O efeito mecânico da Armadura de Pele continua funcionando normalmente.
 
-- em cima de árvore;
-- em cima de rocha;
-- em cima de lobo/cadáver;
-- em cima de outra fogueira;
-- em cima de peça construída.
+Enquanto a arte específica da armadura não for criada, o jogador equipado recebe um pequeno indicador visual marrom sob os pés e o HUD continua mostrando o estado da armadura.
 
-Se a posição estiver bloqueada, o kit não é consumido.
+## Próximos passos gráficos
 
-## HUD
+Depois de validar o personagem dentro do jogo, podemos aplicar a mesma direção artística aos demais elementos:
 
-Os indicadores de depuração:
+1. árvores, pedras, gravetos, cipós e recursos;
+2. lobo e suas animações;
+3. chão e vegetação do mundo;
+4. fogueira;
+5. construções;
+6. HUD e menus;
+7. efeitos de luz, partículas e atmosfera.
 
-- Posição;
-- Estado.
-
-foram ocultados do HUD principal.
-
-O jogador continua vendo apenas informações úteis para o gameplay:
-
-- Vida;
-- Fome;
-- Armadura;
-- Construção;
-- Nível/XP;
-- recursos;
-- controles.
-
-## Estado do primeiro loop
-
-O primeiro loop jogável está funcional:
-
-Coletar recursos primitivos
-→ fabricar ferramentas improvisadas
-→ obter Madeira/Pedra
-→ fabricar ferramentas e Espada
-→ caçar Lobos
-→ ganhar XP
-→ obter Carne e Pele
-→ controlar Fome
-→ fabricar Fogueira
-→ cozinhar Carne
-→ fabricar Armadura
-→ construir uma base.
-
-## Próxima fase
-
-Com a V0.0.15 validada, o próximo desenvolvimento já pode aprofundar o jogo.
-
-Prioridades recomendadas para a segunda camada:
-
-- sistema de salvar/carregar;
-- respawn de recursos;
-- respawn/ecologia de animais;
-- baús e armazenamento;
-- porta que abre e fecha;
-- equipamentos melhores;
-- expansão do mundo e biomas.
+A ideia é trocar os gráficos gradualmente sem alterar os sistemas que já estão funcionando.
