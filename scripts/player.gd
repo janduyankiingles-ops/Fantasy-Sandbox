@@ -586,15 +586,13 @@ func _get_recipe_costs(item_key: String) -> Dictionary:
 			return {}
 
 func _draw() -> void:
-	draw_circle(Vector2(0, 17), 13.0, Color(0.03, 0.03, 0.03, 0.32))
-
 	if armor_equipped and int(inventory.get("wolf_armor", 0)) > 0:
 		draw_arc(
-			Vector2(0, 17),
-			15.0,
+			Vector2(0, 8),
+			19.0,
 			0.0,
 			TAU,
-			24,
+			32,
 			Color("9b7655"),
 			2.0
 		)
