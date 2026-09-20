@@ -1,70 +1,70 @@
-# Fantasy Sandbox — V0.0.16
+# Fantasy Sandbox — V0.0.17
 
-## Nova identidade visual: personagem principal em pixel art
+## Personagem principal — spritesheet limpa
 
-A primeira etapa da renovação gráfica foi aplicada ao personagem principal.
+A arte do personagem foi refeita para eliminar os problemas de recorte vistos na V0.0.16.x.
 
-O antigo personagem desenhado diretamente por código foi substituído por um sprite em pixel art seguindo a estética definida para Fantasy Sandbox: fantasia sombria, rusticidade, cores terrosas e silhueta expressiva.
+A versão anterior utilizava um único atlas que acabava capturando partes de frames vizinhos. A V0.0.17 passa a usar quatro folhas independentes, todas preparadas em uma grade real de **44 x 44 px por frame**.
 
-## Atlas
+## Arquivos
 
-O personagem utiliza um atlas otimizado e com transparência:
+- `assets/player/idle.png`
+- `assets/player/walk.png`
+- `assets/player/attack.png`
+- `assets/player/gather.png`
 
-- `assets/player/player_atlas.png`
+O antigo `assets/player/player_atlas.png` foi removido.
 
-O atlas foi preparado especificamente para o jogo e usa células regulares de **72 x 81 px**.
-
-A filtragem da textura é **Nearest**, preservando o aspecto pixel art sem borramento.
+Todos os PNGs foram conferidos depois do upload no GitHub e tiveram a assinatura PNG e SHA-256 verificados sobre os bytes remotos.
 
 ## Direções
 
-O personagem possui arte própria para:
+Cada folha possui quatro linhas:
 
-- frente;
-- direita;
-- costas;
-- esquerda.
+1. frente;
+2. esquerda;
+3. costas;
+4. direita.
 
-Ao mover-se na diagonal, a direção visual dominante é escolhida automaticamente.
+O código agora respeita exatamente essa ordem.
 
 ## Animações
 
-Cada direção possui quatro estados.
-
 ### Idle
-
-- 3 frames;
-- animação lenta;
-- reproduz continuamente enquanto o jogador está parado.
+- 4 frames por direção;
+- 4 FPS;
+- loop contínuo.
 
 ### Walk
-
-- 4 frames;
-- reproduz enquanto o jogador se movimenta;
-- funciona tanto andando quanto correndo.
+- 6 frames por direção;
+- 10 FPS;
+- usado andando ou correndo.
 
 ### Attack
-
-- 4 frames;
-- reproduz ao pressionar **Espaço**;
-- sincronizada com o ataque corpo a corpo atual.
-
-A animação-base de ataque mostra uma espada. Nesta etapa ela é utilizada para qualquer ataque, independentemente da ferramenta selecionada. Animações específicas para Machado, Picareta e Faca podem ser adicionadas em uma etapa gráfica posterior.
+- 6 frames por direção;
+- 26 FPS;
+- sem loop;
+- sincronizado com o tempo atual do ataque.
 
 ### Gather
+- 5 frames por direção;
+- 15 FPS;
+- sem loop;
+- usado em coleta, corte, mineração e aproveitamento de cadáveres.
 
-- 4 frames;
-- reproduz quando uma coleta com **E** é concluída com sucesso;
-- cobre recursos do chão, corte de árvores, mineração e aproveitamento de cadáveres.
+## Renderização
+
+- textura com filtro **Nearest**;
+- células perfeitamente separadas;
+- escala visual de **1,75x**;
+- pivô consistente entre estados;
+- colisão do jogador continua independente do sprite.
 
 ## Gameplay preservado
 
-A atualização é principalmente visual.
+Nenhuma regra de gameplay foi alterada nesta versão. Continuam funcionando:
 
-Continuam funcionando normalmente:
-
-- movimentação;
-- corrida;
+- movimentação e corrida;
 - combate;
 - coleta;
 - crafting;
@@ -75,42 +75,6 @@ Continuam funcionando normalmente:
 - armadura;
 - construção.
 
-A colisão do jogador continua independente do tamanho visual do sprite.
+## Próximo passo gráfico
 
-## Armadura
-
-O efeito mecânico da Armadura de Pele continua funcionando normalmente.
-
-Enquanto a arte específica da armadura não for criada, o jogador equipado recebe um pequeno indicador visual marrom sob os pés e o HUD continua mostrando o estado da armadura.
-
-## Próximos passos gráficos
-
-Depois de validar o personagem dentro do jogo, podemos aplicar a mesma direção artística aos demais elementos:
-
-1. árvores, pedras, gravetos, cipós e recursos;
-2. lobo e suas animações;
-3. chão e vegetação do mundo;
-4. fogueira;
-5. construções;
-6. HUD e menus;
-7. efeitos de luz, partículas e atmosfera.
-
-A ideia é trocar os gráficos gradualmente sem alterar os sistemas que já estão funcionando.
-
-
-## Hotfix V0.0.16.2
-
-O atlas do personagem foi reexportado como PNG compacto e validado antes da publicação.
-
-A versão anterior podia ser baixada com integridade de hash, mas o arquivo binário remoto estava truncado e o Godot o rejeitava como `ERR_FILE_CORRUPT`.
-
-Correções:
-
-- atlas reduzido para **480 x 144 px**;
-- cada frame agora usa **32 x 36 px**;
-- escala visual no Godot: **2,25x**;
-- filtragem continua em **Nearest**;
-- PNG remoto validado com assinatura correta;
-- SHA-256 verificado sobre os bytes reais publicados.
-
-Nenhuma regra de gameplay foi alterada.
+Depois de validar o personagem no jogo, a próxima etapa gráfica será padronizar o ambiente na mesma estética: árvores, rochas, gravetos, pedras pequenas, cipós e terreno.
