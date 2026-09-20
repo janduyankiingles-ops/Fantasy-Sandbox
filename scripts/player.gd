@@ -79,7 +79,7 @@ func _physics_process(delta: float) -> void:
 		if respawn_time_left <= 0.0:
 			_respawn()
 
-		_update_visual_state()
+		_update_visual_state(Vector2.ZERO)
 		move_and_slide()
 		queue_redraw()
 		return
@@ -137,11 +137,11 @@ func _physics_process(delta: float) -> void:
 		_try_eat_food()
 	eat_food_was_down = eat_food_down
 
-	_update_visual_state()
+	_update_visual_state(input_vector)
 	move_and_slide()
 	queue_redraw()
 
-func _update_visual_state() -> void:
+func _update_visual_state(move_input: Vector2) -> void:
 	if visual == null:
 		return
 
@@ -151,7 +151,7 @@ func _update_visual_state() -> void:
 		state_name = "attack"
 	elif is_gathering:
 		state_name = "gather"
-	elif velocity.length() > 1.0:
+	elif move_input.length_squared() > 0.0:
 		state_name = "walk"
 
 	visual.call("set_visual_state", state_name, facing)
