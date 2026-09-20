@@ -2,9 +2,9 @@
   "schema": 2,
   "app": "Fantasy Sandbox",
   "channel": "stable",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "minimum_updater": "1.1.0",
-  "source_commit": "cbcc059214d2db37813c2e4b6aff0271b5520b40",
+  "source_commit": "c9aff570adefc810e020d0cf161beabe5679cbe6",
   "files": [
     {
       "path": ".gitignore",
@@ -16,7 +16,7 @@
     },
     {
       "path": "README.md",
-      "sha256": "3a3e05c7119105acf663dd64bbf0256917025b1edd27170a61339fc68070ae8d"
+      "sha256": "468adff85e056ca6e232493ce62fd6eb18edbd3ac8ab26c428ff518b5851f33f"
     },
     {
       "path": "project.godot",
@@ -24,7 +24,7 @@
     },
     {
       "path": "scenes/main.tscn",
-      "sha256": "abcf2744489e19d87b2339bba88670ff2d657b579fd0f372335938d814eb9b20"
+      "sha256": "b81b512df2a35435b059d49826400d6ee25528efdb56adb347ee5c7da690e538"
     },
     {
       "path": "scenes/player.tscn",
@@ -32,43 +32,43 @@
     },
     {
       "path": "scenes/inventory_ui.tscn",
-      "sha256": "2734e961a2a71e380b68f8cbb0d7196678a8aa31805affd8b7d2754f6e9a35ab"
+      "sha256": "ff1a43007575225aa6653e84581efd5a994b68baef5f85ad29cd5c5e55631fb3"
     },
     {
       "path": "scenes/hotbar_ui.tscn",
-      "sha256": "2f4c3b49114ab4329e4e5f41e0c1ca702a1a06cc0a4786bdd5a552c3e1ad4272"
+      "sha256": "483a7261085625bb64a5fbebb9f1765aa9bb33023e1f9a007c6ae20b5d2d2606"
     },
     {
       "path": "scenes/crafting_ui.tscn",
-      "sha256": "d880a199f157ebb3ccfdf768c470b1a8a7625f97697b913ec7c6622e7a768f7e"
+      "sha256": "44980f7a3ea854f483012e26af620df592af5bfa1f829fea6f39b7d079e6340c"
     },
     {
       "path": "scripts/main.gd",
-      "sha256": "1af54d4925b0b2d488703f76a90c562182d0d47b7cac7294e8bc768743701356"
+      "sha256": "7841faa74a40535859068c263d80a565e131e94dbcfc7d29c31c5eb238b0c431"
     },
     {
       "path": "scripts/player.gd",
-      "sha256": "0c35cd8974737f2e18405acd74f97889d21a5943b4b4eb4f805d72429b882b45"
+      "sha256": "54f15adf49d7571465a7ac12edbf99f7e4b5e82ab07971855681ff4158f6aa35"
     },
     {
       "path": "scripts/resource_node.gd",
-      "sha256": "5af6e530364bb6a4c75461e866f884a4710361023b1c9d2d31b800d668cdbb8e"
+      "sha256": "a23762ee07a01747df1927779e7f09b6fe00e71c57c2c873078f71ff0047ff94"
     },
     {
       "path": "scripts/world.gd",
-      "sha256": "f77794092afc760c36b0e815a6efe6c8e444f5303edbfa9ca28e00818fe56628"
+      "sha256": "f2bf8f56876392f632ab2ad4bc6a142f5fe11a9d6cb10787bde8b5365fe5ea58"
     },
     {
       "path": "scripts/inventory_ui.gd",
-      "sha256": "4942f207ceae14b892e81750aeea21c9827148cbdbe6428257374805cb6535b5"
+      "sha256": "70a4bf1ee2ac9683ab3044dfb984976ee1882d1327b282ed8e14ac72da5044b0"
     },
     {
       "path": "scripts/hotbar_ui.gd",
-      "sha256": "9f02f40cfde32d5a8a0c888d783bf671e6b7fa47b576ec32c45733a358f619ab"
+      "sha256": "c25e4125362b7dd40d4aca28916ed6f2f25ef40f9c7cadf12484219bd6e96b6c"
     },
     {
       "path": "scripts/crafting_ui.gd",
-      "sha256": "793cd40ba63cc2735d3e2e2155bbbf1e62a40b8062a0d68f5eb8ef600a7eb238"
+      "sha256": "ebba09a38217e6fa59941264c11d7936b830d291fb8902c0661e240c7af9339c"
     },
     {
       "path": "update_config.json",
