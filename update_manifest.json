@@ -2,9 +2,9 @@
   "schema": 2,
   "app": "Fantasy Sandbox",
   "channel": "stable",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "minimum_updater": "1.1.0",
-  "source_commit": "f2c1502d6ef981f63b50fcefdda7f1fc19d89291",
+  "source_commit": "14a2e4a76396d0b12c8cf589d4a503e2c52b1781",
   "files": [
     {
       "path": ".gitignore",
@@ -16,7 +16,7 @@
     },
     {
       "path": "README.md",
-      "sha256": "3b16e8d6df9e9d6308fbd46d1f397193426c4befb96c889f82ebcfa9ed20c302"
+      "sha256": "6d107773a15209ab6c3f3b42d662f3207659c212a5a9197375546d4e8fd90faa"
     },
     {
       "path": "project.godot",
@@ -24,7 +24,7 @@
     },
     {
       "path": "scenes/main.tscn",
-      "sha256": "b14be799db7fd650e8f2fe638cbc07615281e35092ecc61db3b5f34902380d95"
+      "sha256": "2d8a7962db9048318814e20fa5067d44c0e8e28cfe824c32d662f39840a735ca"
     },
     {
       "path": "scenes/player.tscn",
@@ -48,15 +48,15 @@
     },
     {
       "path": "scripts/main.gd",
-      "sha256": "f36e029b0fef5d4f30a1f08daee93a293fe4d60b6b985cb15abc5b0bd78bd2c7"
+      "sha256": "2b21ae283c04eb17025b74113235da8274ce0b562cee2cbb2774db3dded6d111"
     },
     {
       "path": "scripts/player.gd",
-      "sha256": "c166f658636a8ff176443e9bedbc80bf8c804ffc25c3c16cf8186026fa982065"
+      "sha256": "09ab1b24d1357b77fcaae572597e7e462730f9ddf7440644174d97f18cdc96b7"
     },
     {
       "path": "scripts/resource_node.gd",
-      "sha256": "a23762ee07a01747df1927779e7f09b6fe00e71c57c2c873078f71ff0047ff94"
+      "sha256": "b39ea34776b1676ae67e1912a153e7624bbe0143a24293fb57ce5a18c11b9cb1"
     },
     {
       "path": "scripts/world.gd",
@@ -96,7 +96,7 @@
     },
     {
       "path": "scripts/wolf.gd",
-      "sha256": "0394be3bbe3aa92af1d6906f0c5f0e96da32e8ab9b557cbf799317f3178aa0d6"
+      "sha256": "791f81172a14a682a60515ca2cfcfdba924ea9d1d7951331ee411766d78ac8e2"
     },
     {
       "path": "scenes/campfire.tscn",
@@ -104,7 +104,27 @@
     },
     {
       "path": "scripts/campfire.gd",
-      "sha256": "51fa0af151f8f24bccd73155ca950b76a4bcfe0d3e6f7c5c17992a8d8aef3bdf"
+      "sha256": "f9f59f30755042bed58618af8cca2448e1c28ba4418da174cb61b5e9e488653a"
+    },
+    {
+      "path": "scenes/build_piece.tscn",
+      "sha256": "4543be5865b1a017afe2c699db5540c3443b0a158f9551976ce6f4485c0ea9f3"
+    },
+    {
+      "path": "scenes/build_preview.tscn",
+      "sha256": "171fcc5d3eb38ee9a086a72745c18dc8e6bc64eb564800b293f8c574a8d1c866"
+    },
+    {
+      "path": "scripts/build_piece.gd",
+      "sha256": "711a3d241bcb2dc7bf7edb12f446fcab93e3264dfe4043e9b271fe23afc6161e"
+    },
+    {
+      "path": "scripts/build_preview.gd",
+      "sha256": "45f6b0128b97d127c56a0327b854713fe6f35c42d4963bc0aeb18fbba29ac75c"
+    },
+    {
+      "path": "scripts/building_system.gd",
+      "sha256": "db09977a9b8db312c5a1b8d1a64e8d52f5c7945d60e184e7a2a185d54e79e94f"
     }
   ],
   "delete": []
