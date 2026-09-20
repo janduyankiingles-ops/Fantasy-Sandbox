@@ -27,6 +27,11 @@ func _unhandled_input(event: InputEvent) -> void:
 		if not key_event.pressed or key_event.echo:
 			return
 
+		if key_event.keycode == KEY_F8:
+			get_tree().change_scene_to_file("res://scenes/player_v2_demo.tscn")
+			get_viewport().set_input_as_handled()
+			return
+
 		if key_event.keycode == KEY_I:
 			crafting_ui.call("close_crafting")
 			if bool(building_system.call("is_build_mode")):
