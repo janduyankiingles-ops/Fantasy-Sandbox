@@ -2,9 +2,9 @@
   "schema": 2,
   "app": "Fantasy Sandbox",
   "channel": "stable",
-  "version": "0.0.16.1",
+  "version": "0.0.16.2",
   "minimum_updater": "1.1.0",
-  "source_commit": "57ac4fed3440a9a552e0de01068297f669344cab",
+  "source_commit": "7032a031cf73025c3f8164ee1b9155da51121704",
   "files": [
     {
       "path": ".gitignore",
@@ -16,7 +16,7 @@
     },
     {
       "path": "README.md",
-      "sha256": "01e6b328b13fa80bb00aca091abd9200045b5061cafef3de284c65045f777547"
+      "sha256": "f01fb29c29f524e8a274efe16a0e7f77a842f7c0d96714a9dcc39b5a8dc85228"
     },
     {
       "path": "project.godot",
@@ -24,7 +24,7 @@
     },
     {
       "path": "scenes/main.tscn",
-      "sha256": "d65b93b280c3da814dc5f1dcdb5989387e1b48cff368cf656283d0e46f15ad48"
+      "sha256": "3e66f2e57cfa2655b3df1288d390cb54396c7975642df28cecfdb4c29b6a4390"
     },
     {
       "path": "scenes/player.tscn",
@@ -128,11 +128,11 @@
     },
     {
       "path": "scripts/player_visual.gd",
-      "sha256": "1f185e20449b6600b8cc3e0f6b3db9a988eaa3dfba674c4cea8356e56515ea89"
+      "sha256": "e89a726deaad2919180847151e64430e7e20d42bbdc58cc70a87d89a31405515"
     },
     {
       "path": "assets/player/player_atlas.png",
-      "sha256": "0e0066265321de3103d4552a38072b686bdd01d6adea781dc46460ec6fd921f7"
+      "sha256": "b5df505fbba15a6d17f95b473359975bdcf80c41778a1a6cf6fea9e36d552604"
     }
   ],
   "delete": []
