@@ -37,6 +37,8 @@ var xp_to_next_level: int = 100
 var current_hunger: float = 100.0
 var starvation_tick_left: float = 2.0
 var eat_food_was_down: bool = false
+var armor_equipped: bool = false
+var armor_damage_reduction: float = 0.25
 
 var inventory: Dictionary = {
 	"stick": 0,
@@ -53,7 +55,8 @@ var inventory: Dictionary = {
 	"raw_meat": 0,
 	"cooked_meat": 0,
 	"wolf_hide": 0,
-	"campfire_kit": 0
+	"campfire_kit": 0,
+	"wolf_armor": 0
 }
 
 func _ready() -> void:
@@ -134,7 +137,7 @@ func _update_hunger(delta: float) -> void:
 	starvation_tick_left = maxf(0.0, starvation_tick_left - delta)
 	if starvation_tick_left <= 0.0:
 		starvation_tick_left = starvation_interval
-		take_damage(starvation_damage)
+		_take_direct_damage(starvation_damage)
 
 func _try_eat_food() -> void:
 	if dead:
@@ -158,7 +161,7 @@ func _try_eat_food() -> void:
 	inventory_changed.emit()
 
 	# Carne crua é uma opção de emergência: alimenta, mas faz mal.
-	take_damage(5)
+	_take_direct_damage(5)
 
 func get_hunger_text() -> String:
 	if current_hunger <= 0.0:
@@ -228,6 +231,19 @@ func _get_attack_damage() -> int:
 			return 1
 
 func take_damage(amount: int) -> void:
+	if amount <= 0:
+		return
+
+	var final_damage: int = amount
+	if armor_equipped and int(inventory.get("wolf_armor", 0)) > 0:
+		final_damage = maxi(1, roundi(float(amount) * (1.0 - armor_damage_reduction)))
+
+	_apply_damage(final_damage)
+
+func _take_direct_damage(amount: int) -> void:
+	_apply_damage(amount)
+
+func _apply_damage(amount: int) -> void:
 	if amount <= 0 or current_health <= 0 or dead:
 		return
 
@@ -266,6 +282,27 @@ func get_current_health() -> int:
 
 func get_max_health() -> int:
 	return max_health
+
+func toggle_armor() -> bool:
+	if int(inventory.get("wolf_armor", 0)) <= 0:
+		armor_equipped = false
+		return false
+
+	armor_equipped = not armor_equipped
+	queue_redraw()
+	return armor_equipped
+
+func get_armor_text() -> String:
+	if int(inventory.get("wolf_armor", 0)) <= 0:
+		return "Armadura: nenhuma"
+
+	if armor_equipped:
+		return "Armadura: Pele de Lobo — EQUIPADA (-25% dano)"
+
+	return "Armadura: Pele de Lobo — guardada [H para equipar]"
+
+func is_armor_equipped() -> bool:
+	return armor_equipped
 
 func add_xp(amount: int) -> void:
 	if amount <= 0:
@@ -474,6 +511,8 @@ func _get_recipe_costs(item_key: String) -> Dictionary:
 			return {"wood": 2, "stone": 4}
 		"campfire_kit":
 			return {"wood": 3, "stone": 3}
+		"wolf_armor":
+			return {"wolf_hide": 3, "vine": 2}
 		_:
 			return {}
 
@@ -487,6 +526,18 @@ func _draw() -> void:
 	draw_colored_polygon(cape, Color("6d0f1f"))
 
 	draw_rect(Rect2(-10, -14, 20, 30), Color("15151a"), true)
+
+	if armor_equipped and int(inventory.get("wolf_armor", 0)) > 0:
+		var armor_shape: PackedVector2Array = PackedVector2Array([
+			Vector2(-12, -13),
+			Vector2(12, -13),
+			Vector2(10, 12),
+			Vector2(0, 16),
+			Vector2(-10, 12)
+		])
+		draw_colored_polygon(armor_shape, Color("705846"))
+		draw_line(Vector2(-8, -7), Vector2(8, 8), Color("a3886c"), 3.0)
+
 	draw_circle(Vector2(0, -23), 9.5, Color("e5d7d2"))
 	draw_rect(Rect2(-9, -34, 18, 8), Color("111117"), true)
 
