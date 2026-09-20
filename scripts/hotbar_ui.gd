@@ -32,7 +32,7 @@ func select_slot(slot_index: int) -> void:
 		slot_6
 	]
 
-	for i: int in range(slots.size()):
+	for i in range(slots.size()):
 		if i == selected_slot:
 			slots[i].modulate = Color(1.0, 0.82, 0.48, 1.0)
 		else:
