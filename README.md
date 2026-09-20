@@ -1,58 +1,54 @@
-# Fantasy Sandbox — V0.0.10
+# Fantasy Sandbox — V0.0.11
 
-## Sistema desta versão: recompensa da caça
+## Sistema desta versão: fome
 
-Matar um lobo agora completa a primeira parte útil do ciclo de caça.
+O personagem agora possui uma necessidade básica de alimentação.
 
-### XP
+### Fome
 
-- Cada lobo morto concede **25 XP** imediatamente.
-- O HUD mostra **Nível** e **XP atual**.
-- Nível 1 precisa de 100 XP.
-- Ao subir de nível, o próximo requisito passa a ser 200 XP, depois 300 XP e assim por diante.
+- Fome máxima: **100**.
+- O HUD mostra o valor atual.
+- A fome cai continuamente.
+- No balanceamento atual de teste, 100 pontos duram aproximadamente **100 segundos**.
+- Ao chegar a 0, o HUD mostra **FAMINTO**.
 
-Nesta fase, subir de nível ainda não aumenta atributos. O sistema existe para preparar a progressão futura.
+Esse ritmo é propositalmente rápido nesta fase para permitir testar o sistema sem esperar muitos minutos. O balanceamento será revisto depois que o primeiro loop estiver completo.
+
+### Fome zerada
+
+Enquanto a fome estiver em 0:
+
+- o personagem sofre **5 de dano**;
+- o dano acontece aproximadamente a cada **2 segundos**;
+- esse dano pode matar o jogador normalmente.
+
+Ao morrer e reaparecer nesta fase do protótipo, Vida e Fome voltam ao máximo.
 
 ### Carne Crua
 
-Quando um lobo morre, o cadáver permanece no chão.
+A Carne Crua obtida dos lobos agora pode ser consumida.
 
-Aproxime-se e pressione **E**:
+Pressione **F** quando possuir Carne Crua e a fome não estiver cheia.
 
-- você coleta **2 Carnes Cruas**;
-- a Carne Crua aparece no inventário apenas depois de ser obtida;
-- o cadáver continua no chão após retirar a carne.
+Cada unidade:
 
-### Pele do Lobo
+- consome **1 Carne Crua**;
+- recupera **20 pontos de fome**;
+- causa **5 de dano** ao jogador.
 
-Depois de retirar a carne:
+Isso torna a Carne Crua uma comida emergencial, mas ruim. O objetivo é criar uma vantagem real para cozinhar a carne na próxima etapa.
 
-1. fabrique a **Faca Improvisada**;
-2. selecione o slot **3**;
-3. aproxime-se do cadáver;
-4. pressione **E**.
+Se a quantidade chegar a zero, Carne Crua desaparece do inventário normalmente.
 
-Isso concede:
+## Fluxo atual
 
-- **1 Pele de Lobo**.
-
-Sem a Faca Improvisada equipada, o jogo avisa que ela é necessária.
-
-Depois que carne e pele são retiradas, o cadáver desaparece porque foi totalmente aproveitado.
-
-## Inventário
-
-Foram adicionados:
-
-- Carne Crua;
-- Pele de Lobo.
-
-Como no restante do inventário dinâmico, esses itens não aparecem enquanto a quantidade for zero.
-
-## Fluxo atual do protótipo
-
-Coletar Graveto/Pedra Pequena/Cipó → fabricar ferramentas improvisadas → obter Madeira/Pedra → fabricar Espada → caçar Lobo → ganhar XP → coletar Carne Crua → retirar Pele com Faca Improvisada.
+Coletar recursos primitivos → fabricar ferramentas improvisadas → obter Madeira/Pedra → fabricar Espada → caçar Lobo → ganhar XP → obter Carne Crua/Pele → administrar Fome.
 
 ## Próxima etapa
 
-A próxima etapa do loop será **Fome + consumo de comida**, preparando depois a fogueira e o cozimento da Carne Crua.
+A próxima versão adicionará a **Fogueira e o cozimento**:
+
+- construir/fabricar uma fogueira;
+- usar Carne Crua;
+- transformar em Carne Assada;
+- comer Carne Assada sem a penalidade da carne crua e com recuperação de fome melhor.
