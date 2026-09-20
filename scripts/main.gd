@@ -6,6 +6,7 @@ extends Node2D
 @onready var health_label: Label = $HUD/Panel/Margin/VBox/HealthLabel
 @onready var hunger_label: Label = $HUD/Panel/Margin/VBox/HungerLabel
 @onready var armor_label: Label = $HUD/Panel/Margin/VBox/ArmorLabel
+@onready var building_label: Label = $HUD/Panel/Margin/VBox/BuildingLabel
 @onready var progression_label: Label = $HUD/Panel/Margin/VBox/ProgressionLabel
 @onready var inventory_label: Label = $HUD/Panel/Margin/VBox/InventoryLabel
 @onready var interaction_panel: PanelContainer = $HUD/InteractionPanel
@@ -13,6 +14,7 @@ extends Node2D
 @onready var inventory_ui: Control = $HUD/InventoryUI as Control
 @onready var hotbar_ui: Control = $HUD/HotbarUI as Control
 @onready var crafting_ui: Control = $HUD/CraftingUI as Control
+@onready var building_system: Node2D = $BuildingSystem as Node2D
 
 func _ready() -> void:
 	player.connect("inventory_changed", Callable(self, "_update_inventory"))
@@ -27,15 +29,47 @@ func _unhandled_input(event: InputEvent) -> void:
 
 		if key_event.keycode == KEY_I:
 			crafting_ui.call("close_crafting")
+			if bool(building_system.call("is_build_mode")):
+				building_system.call("toggle_build_mode")
 			inventory_ui.call("toggle_inventory")
 			get_viewport().set_input_as_handled()
 			return
 
 		if key_event.keycode == KEY_C:
 			inventory_ui.call("close_inventory")
+			if bool(building_system.call("is_build_mode")):
+				building_system.call("toggle_build_mode")
 			crafting_ui.call("toggle_crafting")
 			get_viewport().set_input_as_handled()
 			return
+
+		if key_event.keycode == KEY_B:
+			inventory_ui.call("close_inventory")
+			crafting_ui.call("close_crafting")
+			building_system.call("toggle_build_mode")
+			get_viewport().set_input_as_handled()
+			return
+
+		if bool(building_system.call("is_build_mode")):
+			if key_event.keycode == KEY_Q:
+				building_system.call("cycle_piece")
+				get_viewport().set_input_as_handled()
+				return
+
+			if key_event.keycode == KEY_R:
+				building_system.call("rotate_piece")
+				get_viewport().set_input_as_handled()
+				return
+
+			if key_event.keycode == KEY_ENTER or key_event.keycode == KEY_KP_ENTER:
+				building_system.call("try_place_piece")
+				get_viewport().set_input_as_handled()
+				return
+
+			if key_event.keycode == KEY_ESCAPE:
+				building_system.call("toggle_build_mode")
+				get_viewport().set_input_as_handled()
+				return
 
 		if key_event.keycode == KEY_G:
 			player.call("place_campfire")
@@ -71,6 +105,7 @@ func _process(_delta: float) -> void:
 	health_label.text = str(player.call("get_health_text"))
 	hunger_label.text = str(player.call("get_hunger_text"))
 	armor_label.text = str(player.call("get_armor_text"))
+	building_label.text = str(building_system.call("get_status_text"))
 	progression_label.text = str(player.call("get_progression_text"))
 	position_label.text = "Posição: %d, %d" % [
 		roundi(player.global_position.x),
