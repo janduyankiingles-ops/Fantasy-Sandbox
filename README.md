@@ -1,79 +1,60 @@
-# Fantasy Sandbox — V0.0.12
+# Fantasy Sandbox — V0.0.13
 
-## Sistema desta versão: fogueira e cozimento
+## Sistema desta versão: Armadura de Pele do Lobo
 
-A alimentação agora possui uma alternativa realmente melhor que comer Carne Crua.
+A Pele de Lobo agora entra diretamente no loop de sobrevivência.
 
-## Fabricar Fogueira
+## Receita
 
 Abra o crafting com **C**.
 
 Receita:
 
-- Fogueira = **3 Madeira + 3 Pedra**.
+- Armadura de Pele = **2 Peles de Lobo + 2 Cipós**.
 
-Ao fabricar, o item **Fogueira** aparece no inventário.
+O custo de 2 peles foi escolhido para permitir fabricar a armadura após dois lobos e ainda deixar um terceiro vivo para testar a proteção.
 
-Enquanto houver uma Fogueira ainda não colocada, não é possível fabricar outra. Depois de colocá-la, a receita fica disponível novamente.
+## Equipar
 
-## Colocar no mundo
+Depois de fabricar:
 
-Pressione **G**.
+- a Armadura de Pele aparece no inventário;
+- o HUD informa que ela está guardada;
+- pressione **H** para equipar;
+- pressione **H** novamente para desequipar.
 
-A fogueira é colocada à frente do personagem, considerando a direção em que ele está olhando.
+Quando equipada, uma camada de pele aparece visualmente sobre o corpo do personagem.
 
-Depois de colocada:
+## Proteção
 
-- o item Fogueira é consumido do inventário;
-- a fogueira permanece no mundo;
-- é possível fabricar e colocar outras fogueiras depois.
+A Armadura de Pele reduz em **25% o dano de combate recebido**.
 
-## Cozinhar
+Atualmente:
 
-Tenha Carne Crua no inventário e aproxime-se da fogueira.
+- mordida de Lobo sem armadura: **8 de dano**;
+- mordida de Lobo com armadura: **6 de dano**.
 
-O aviso mostrará:
+A proteção é aplicada apenas a dano de combate.
 
-**E - Assar 1 Carne Crua**
+Ela **não reduz**:
 
-Cada uso de **E** transforma:
+- dano de fome;
+- dano causado ao comer Carne Crua.
 
-- 1 Carne Crua
-- em 1 Carne Assada.
-
-A Carne Assada aparece dinamicamente no inventário.
-
-## Comer
-
-A tecla **F** continua sendo a tecla de alimentação.
-
-Prioridade:
-
-1. se houver Carne Assada, o personagem come Carne Assada;
-2. se não houver, mas houver Carne Crua, come Carne Crua.
-
-### Carne Assada
-
-- recupera **45 de fome**;
-- não causa dano.
-
-### Carne Crua
-
-- recupera **20 de fome**;
-- causa **5 de dano**.
-
-Assim, cozinhar agora possui uma vantagem clara dentro do loop de sobrevivência.
+Isso evita que a armadura interfira em sistemas de sobrevivência que não representam ataques físicos de inimigos.
 
 ## Fluxo atual do primeiro loop
 
-Coletar Graveto/Pedra Pequena/Cipó → fabricar ferramentas improvisadas → obter Madeira/Pedra → fabricar ferramentas e Espada → caçar Lobo → ganhar XP → retirar Carne/Pele → controlar Fome → fabricar Fogueira → assar Carne → comer.
+Coletar recursos primitivos → fabricar ferramentas improvisadas → obter Madeira/Pedra → fabricar Espada → caçar Lobos → ganhar XP → retirar Carne e Pele → controlar Fome → fabricar Fogueira → cozinhar Carne → fabricar e equipar Armadura de Pele.
 
 ## Próxima etapa
 
-A próxima versão utilizará a **Pele de Lobo**:
+Com coleta, caça, alimentação e armadura funcionando, a próxima grande etapa do primeiro loop será a **construção da base** usando Madeira e Pedra.
 
-- fabricação de uma Armadura de Couro/Pele;
-- equipamento da armadura;
-- redução do dano recebido dos lobos.
+A primeira versão de construção deve começar pequena:
 
-Depois disso, avançaremos para a construção da primeira base com Madeira e Pedra.
+- chão;
+- parede;
+- porta;
+- posicionamento em grade;
+- consumo real de recursos.
