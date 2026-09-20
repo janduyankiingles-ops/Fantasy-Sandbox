@@ -13,6 +13,7 @@ var preview: Node2D = null
 var player: CharacterBody2D = null
 var current_position: Vector2 = Vector2.ZERO
 var current_valid: bool = false
+var current_block_reason: String = ""
 
 var piece_types: Array[String] = ["floor", "wall", "door"]
 
@@ -146,7 +147,11 @@ func get_status_text() -> String:
 	var piece_type: String = get_selected_piece_type()
 	var piece_name: String = str(piece_names.get(piece_type, piece_type))
 	var cost_text: String = _get_cost_text(piece_type)
-	var validity: String = "VÁLIDO" if current_valid else "BLOQUEADO"
+	var validity: String = "VÁLIDO"
+	if not current_valid:
+		validity = current_block_reason
+		if validity.is_empty():
+			validity = "BLOQUEADO"
 
 	return "Construção: %s | %s | %s" % [piece_name, cost_text, validity]
 
@@ -175,19 +180,25 @@ func _update_preview_position() -> void:
 		preview.global_position = current_position
 
 func _can_place_current_piece() -> bool:
+	current_block_reason = ""
+
 	if player == null:
+		current_block_reason = "SEM JOGADOR"
 		return false
 
 	if player.global_position.distance_to(current_position) < 48.0:
+		current_block_reason = "MUITO PERTO"
 		return false
 
 	var piece_type: String = get_selected_piece_type()
 	var costs_value: Variant = piece_costs.get(piece_type, {})
 	if costs_value is not Dictionary:
+		current_block_reason = "CUSTO INVÁLIDO"
 		return false
 
 	var costs: Dictionary = costs_value
 	if not bool(player.call("has_build_resources", costs)):
+		current_block_reason = "SEM RECURSOS"
 		return false
 
 	for node in get_tree().get_nodes_in_group("build_obstacles"):
@@ -198,6 +209,7 @@ func _can_place_current_piece() -> bool:
 
 		var obstacle: Node2D = node
 		if obstacle.global_position.distance_to(current_position) < 46.0:
+			current_block_reason = "ESPAÇO OCUPADO"
 			return false
 
 	return true
