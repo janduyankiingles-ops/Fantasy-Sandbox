@@ -219,24 +219,25 @@ func _animate_walk() -> void:
 	head.position = head_base + Vector2(0, body_bob)
 
 	var scarf_swing: int = roundi(wave)
+	var scarf_abs: int = scarf_swing if scarf_swing >= 0 else -scarf_swing
 
 	match facing_direction:
 		"left":
 			scarf_left.position = scarf_left_base + Vector2(
-				abs(scarf_swing),
+				scarf_abs,
 				body_bob
 			)
 			scarf_right.position = scarf_right_base + Vector2(
-				abs(scarf_swing),
+				scarf_abs,
 				body_bob
 			)
 		"right":
 			scarf_left.position = scarf_left_base + Vector2(
-				-abs(scarf_swing),
+				-scarf_abs,
 				body_bob
 			)
 			scarf_right.position = scarf_right_base + Vector2(
-				-abs(scarf_swing),
+				-scarf_abs,
 				body_bob
 			)
 		_:
@@ -267,3 +268,6 @@ func _apply_idle_pose(body_bob: int) -> void:
 	scarf_left.position = scarf_left_base + Vector2(0, body_bob)
 	scarf_right.position = scarf_right_base + Vector2(0, body_bob)
 	shadow.position = shadow_base
+
+func get_facing_direction() -> String:
+	return facing_direction
