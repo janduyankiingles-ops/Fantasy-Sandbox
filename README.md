@@ -1,43 +1,73 @@
-# Fantasy Sandbox — V0.0.18.1
+# Fantasy Sandbox — V0.0.18.2
 
-## Hotfix definitivo do playback do personagem
+## Correção estrutural do personagem
 
-Esta versão mantém os sprites de alta qualidade da V0.0.18 e corrige especificamente os dois problemas restantes:
+Esta versão troca completamente a forma como o personagem é desenhado.
 
-- caminhada visualmente congelada;
-- pequenos vazamentos/falhas nas bordas dos recortes.
+A análise dos pixels reais da folha de caminhada mostrou que os quadros estavam deslocados dentro das células de 64 x 64. O personagem mudava de posição interna entre um frame e outro, causando sensação de recorte incorreto, tremor e uma caminhada visualmente parecida com uma imagem deslizando.
+
+## Sprite2D simples
+
+O nó visual do jogador não é mais um AnimatedSprite2D.
+
+Agora ele é um Sprite2D simples e o jogo troca diretamente a propriedade `texture`.
+
+Isso remove da cadeia:
+
+- playback automático do AnimatedSprite2D;
+- SpriteFrames do Godot;
+- AtlasTexture;
+- recortes por região durante a renderização.
+
+## Frames independentes
+
+As folhas PNG de alta qualidade continuam sendo usadas apenas como fonte.
+
+Ao iniciar o jogo, cada célula é extraída para uma nova imagem 64 x 64 e transformada em uma ImageTexture independente.
+
+Portanto, na renderização, um frame não tem qualquer acesso aos pixels do frame vizinho.
+
+## Limpeza de transparência
+
+Os PNGs possuíam pixels de fundo com alpha extremamente baixo.
+
+A V0.0.18.2 remove esses pixels antes de montar cada frame:
+
+- alpha abaixo de 0,15 vira transparência total;
+- pixels reais da arte são preservados.
+
+Isso elimina halos e resíduos que podiam parecer falhas de recorte.
+
+## Alinhamento dos frames
+
+Cada quadro é realinhado usando a parte inferior do personagem como âncora.
+
+O algoritmo:
+
+1. encontra os pixels visíveis;
+2. encontra a região dos pés;
+3. calcula o centro dessa região;
+4. move o quadro para manter os pés no mesmo ponto;
+5. mantém uma linha de chão consistente.
+
+Assim o personagem não percorre a própria célula enquanto a animação avança.
 
 ## Caminhada
 
-O estado de caminhada agora é decidido diretamente pelo vetor de input do jogador (WASD/setas), e não pela velocidade suavizada do CharacterBody2D.
+A caminhada continua sendo decidida diretamente pelo input WASD/setas.
 
-Além disso, o AnimatedSprite2D não depende mais de seu playback automático para avançar a animação. O script visual mantém um relógio próprio e avança os frames manualmente em `_process(delta)`.
+O script troca diretamente entre seis texturas independentes a 10 FPS.
 
-Com isso, enquanto o jogador mantém uma direção pressionada, a sequência percorre explicitamente:
+Também existe um movimento vertical de apenas 1 pixel durante o ciclo para reforçar visualmente o passo sem deformar a arte.
 
-`0 → 1 → 2 → 3 → 4 → 5 → 0`
+## Qualidade
 
-a 10 FPS.
-
-Idle também é avançado manualmente, enquanto ataque e coleta avançam até o último frame e aguardam a troca do estado do jogador.
-
-## Recorte
-
-Cada quadro continua sendo uma textura independente dentro do SpriteFrames, mas agora o AtlasTexture usa `filter_clip = true`.
-
-Isso impede que pixels do quadro vizinho vazem para a borda do frame durante a renderização.
-
-Também foram ajustados:
+A arte de 64 x 64 da V0.0.18 foi mantida.
 
 - filtro Nearest;
-- escala para 1,25x, produzindo 80 x 80 pixels em tela a partir do frame de 64 x 64;
-- centralização explícita do sprite.
-
-## Arte
-
-Nenhum dos PNGs de alta qualidade da V0.0.18 foi reduzido ou recomprimido nesta correção.
-
-Os mesmos sprites de 64 x 64 continuam sendo usados para preservar os detalhes e as cores que ficaram boas na versão anterior.
+- escala 1,25x;
+- nenhuma nova compressão dos PNGs;
+- cores e detalhes preservados.
 
 ## Gameplay
 
