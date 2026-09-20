@@ -2,7 +2,7 @@
   "schema": 2,
   "app": "Fantasy Sandbox",
   "channel": "stable",
-  "version": "0.0.16",
+  "version": "0.0.16.1",
   "minimum_updater": "1.1.0",
   "source_commit": "57ac4fed3440a9a552e0de01068297f669344cab",
   "files": [
@@ -132,7 +132,7 @@
     },
     {
       "path": "assets/player/player_atlas.png",
-      "sha256": "1d20fd7ca37afb220dc34c8c02235f7a61379762730b92b8199c96331cc67f55"
+      "sha256": "0e0066265321de3103d4552a38072b686bdd01d6adea781dc46460ec6fd921f7"
     }
   ],
   "delete": []
