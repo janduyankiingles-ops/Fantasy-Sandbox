@@ -48,7 +48,7 @@ theme_override_constants/separation = 5
 
 [node name="Title" type="Label" parent="HUD/Panel/Margin/VBox"]
 theme_override_font_sizes/font_size = 20
-text = "FANTASY SANDBOX — V0.0.11"
+text = "FANTASY SANDBOX — V0.0.12"
 
 [node name="PositionLabel" type="Label" parent="HUD/Panel/Margin/VBox"]
 text = "Posição: 0, 0"
@@ -73,7 +73,7 @@ theme_override_font_sizes/font_size = 17
 text = "Gravetos: 0 | Pedrinhas: 0 | Cipó: 0\nMadeira: 0 | Pedra: 0"
 
 [node name="Controls" type="Label" parent="HUD/Panel/Margin/VBox"]
-text = "WASD/Setas: mover   Shift: correr\nE: coletar   Espaço: atacar   F: comer carne crua\nI: inventário   C: crafting   1-6: ferramentas"
+text = "WASD/Setas: mover   Shift: correr\nE: interagir/cozinhar   Espaço: atacar   F: comer\nG: colocar fogueira   I: inventário   C: crafting   1-6: ferramentas"
 
 [node name="InteractionPanel" type="PanelContainer" parent="HUD"]
 visible = false
