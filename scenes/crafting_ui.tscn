@@ -127,7 +127,7 @@ text = "ARMADURA"
 [node name="WolfArmorButton" type="Button" parent="CraftingPanel/Margin/VBox/Recipes"]
 layout_mode = 2
 custom_minimum_size = Vector2(0, 44)
-text = "Armadura de Pele — 3 Peles de Lobo + 2 Cipós"
+text = "Armadura de Pele — 2 Peles de Lobo + 2 Cipós"
 
 [node name="Status" type="Label" parent="CraftingPanel/Margin/VBox"]
 layout_mode = 2
