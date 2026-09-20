@@ -21,8 +21,9 @@ var selected_hotbar_slot: int = 0
 var inventory: Dictionary = {
 	"wood": 0,
 	"stone": 0,
-	"axe": 1,
-	"pickaxe": 1
+	"axe": 0,
+	"pickaxe": 0,
+	"sword": 0
 }
 
 func _ready() -> void:
@@ -135,6 +136,38 @@ func get_inventory_text() -> String:
 
 func get_inventory_amount(item_key: String) -> int:
 	return int(inventory.get(item_key, 0))
+
+func craft_item(item_key: String) -> bool:
+	var wood_cost: int = 0
+	var stone_cost: int = 0
+
+	match item_key:
+		"axe":
+			wood_cost = 3
+			stone_cost = 2
+		"pickaxe":
+			wood_cost = 2
+			stone_cost = 3
+		"sword":
+			wood_cost = 2
+			stone_cost = 4
+		_:
+			return false
+
+	if int(inventory.get(item_key, 0)) > 0:
+		return false
+
+	var current_wood: int = int(inventory.get("wood", 0))
+	var current_stone: int = int(inventory.get("stone", 0))
+
+	if current_wood < wood_cost or current_stone < stone_cost:
+		return false
+
+	inventory["wood"] = current_wood - wood_cost
+	inventory["stone"] = current_stone - stone_cost
+	inventory[item_key] = 1
+	inventory_changed.emit()
+	return true
 
 func _draw() -> void:
 	draw_circle(Vector2(0, 13), 14.0, Color(0.05, 0.05, 0.06, 0.35))
