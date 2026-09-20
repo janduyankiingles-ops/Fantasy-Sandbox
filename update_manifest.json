@@ -2,9 +2,9 @@
   "schema": 2,
   "app": "Fantasy Sandbox",
   "channel": "stable",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "minimum_updater": "1.1.0",
-  "source_commit": "32102b635d358c72b000d590c76449b6dc3a454c",
+  "source_commit": "cbcc059214d2db37813c2e4b6aff0271b5520b40",
   "files": [
     {
       "path": ".gitignore",
@@ -16,7 +16,7 @@
     },
     {
       "path": "README.md",
-      "sha256": "a40e8fa3b1bf583dc9e5ba42052f0e677401a1501262a7e4de179530ffac38d1"
+      "sha256": "3a3e05c7119105acf663dd64bbf0256917025b1edd27170a61339fc68070ae8d"
     },
     {
       "path": "project.godot",
@@ -24,7 +24,7 @@
     },
     {
       "path": "scenes/main.tscn",
-      "sha256": "ca3c9be2a9c94188a8618b918e6826eb9b7dd4b42321e9702b86a681ad9cb5a1"
+      "sha256": "abcf2744489e19d87b2339bba88670ff2d657b579fd0f372335938d814eb9b20"
     },
     {
       "path": "scenes/player.tscn",
@@ -32,19 +32,23 @@
     },
     {
       "path": "scenes/inventory_ui.tscn",
-      "sha256": "ad6883305020a181aa86f0e28e1be96f08589c5c7c9d3fb1ba55c20424365634"
+      "sha256": "2734e961a2a71e380b68f8cbb0d7196678a8aa31805affd8b7d2754f6e9a35ab"
     },
     {
       "path": "scenes/hotbar_ui.tscn",
-      "sha256": "075b44d665e3e1c2528be43f68b382d2e8038abdbb01ad914489e75981b2699b"
+      "sha256": "2f4c3b49114ab4329e4e5f41e0c1ca702a1a06cc0a4786bdd5a552c3e1ad4272"
+    },
+    {
+      "path": "scenes/crafting_ui.tscn",
+      "sha256": "d880a199f157ebb3ccfdf768c470b1a8a7625f97697b913ec7c6622e7a768f7e"
     },
     {
       "path": "scripts/main.gd",
-      "sha256": "6e00f7be200907dd6a84b2b77b4261b49a0776fb08630802a153c28b00982bc8"
+      "sha256": "1af54d4925b0b2d488703f76a90c562182d0d47b7cac7294e8bc768743701356"
     },
     {
       "path": "scripts/player.gd",
-      "sha256": "d83454b5c839a71926b9a2de57f14606298a4221e08f1021ec9669bbead4153c"
+      "sha256": "0c35cd8974737f2e18405acd74f97889d21a5943b4b4eb4f805d72429b882b45"
     },
     {
       "path": "scripts/resource_node.gd",
@@ -56,11 +60,15 @@
     },
     {
       "path": "scripts/inventory_ui.gd",
-      "sha256": "7f24b764730b6b05742a8f512ed91b02bb2bf2338cac85d3bcc99d632adef507"
+      "sha256": "4942f207ceae14b892e81750aeea21c9827148cbdbe6428257374805cb6535b5"
     },
     {
       "path": "scripts/hotbar_ui.gd",
-      "sha256": "9733ed300a3b7fd43f804b2583628a9fd084ad574d0ee44f4229528ec7ece4a8"
+      "sha256": "9f02f40cfde32d5a8a0c888d783bf671e6b7fa47b576ec32c45733a358f619ab"
+    },
+    {
+      "path": "scripts/crafting_ui.gd",
+      "sha256": "793cd40ba63cc2735d3e2e2155bbbf1e62a40b8062a0d68f5eb8ef600a7eb238"
     },
     {
       "path": "update_config.json",
