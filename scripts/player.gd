@@ -75,7 +75,7 @@ func _update_nearby_resource() -> void:
 	nearby_resource = null
 	var best_distance: float = interaction_distance
 
-	for node: Node in get_tree().get_nodes_in_group("resource_nodes"):
+	for node in get_tree().get_nodes_in_group("resource_nodes"):
 		if not is_instance_valid(node):
 			continue
 
