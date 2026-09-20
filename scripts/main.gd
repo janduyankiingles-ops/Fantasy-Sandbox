@@ -99,7 +99,11 @@ func _get_item_name(item_key: String) -> String:
 func _update_inventory() -> void:
 	inventory_label.text = str(player.call("get_inventory_text"))
 
-	var snapshot: Dictionary = player.call("get_inventory_snapshot") as Dictionary
+	var snapshot_value: Variant = player.call("get_inventory_snapshot")
+	if snapshot_value is not Dictionary:
+		return
+
+	var snapshot: Dictionary = snapshot_value
 	inventory_ui.call("refresh_inventory", snapshot)
 	hotbar_ui.call("refresh_hotbar", snapshot)
 	crafting_ui.call("refresh_crafting", snapshot)
