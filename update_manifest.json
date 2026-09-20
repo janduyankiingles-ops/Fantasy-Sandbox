@@ -2,9 +2,9 @@
   "schema": 2,
   "app": "Fantasy Sandbox",
   "channel": "stable",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "minimum_updater": "1.1.0",
-  "source_commit": "ad7a1048955794aa89495541bd1748afb1a05fa6",
+  "source_commit": "f2c1502d6ef981f63b50fcefdda7f1fc19d89291",
   "files": [
     {
       "path": ".gitignore",
@@ -16,7 +16,7 @@
     },
     {
       "path": "README.md",
-      "sha256": "81625d630595dc0bed1792cce108ddf37e17aaf518cd1dc2b6e6920711605d71"
+      "sha256": "3b16e8d6df9e9d6308fbd46d1f397193426c4befb96c889f82ebcfa9ed20c302"
     },
     {
       "path": "project.godot",
@@ -24,7 +24,7 @@
     },
     {
       "path": "scenes/main.tscn",
-      "sha256": "e2a7bca3fd2af297b5059c2602b7b14c4a2d8aa9e056a4f2ddb17fd7eef169d5"
+      "sha256": "b14be799db7fd650e8f2fe638cbc07615281e35092ecc61db3b5f34902380d95"
     },
     {
       "path": "scenes/player.tscn",
@@ -40,7 +40,7 @@
     },
     {
       "path": "scenes/crafting_ui.tscn",
-      "sha256": "aa3f3d9cbee6ef6c63fc33f43e71fab0acc4a30ab9ff8dbd7f43e465055dd854"
+      "sha256": "5b48b19d6214e6b96bd7ffd127634b7f5486777b327a1634ae8fad28db7a731b"
     },
     {
       "path": "scenes/combat_dummy.tscn",
@@ -48,11 +48,11 @@
     },
     {
       "path": "scripts/main.gd",
-      "sha256": "73275a6a036f185ab58b41d4949d006eb79877e2a6c1a5e9574f98334b043972"
+      "sha256": "f36e029b0fef5d4f30a1f08daee93a293fe4d60b6b985cb15abc5b0bd78bd2c7"
     },
     {
       "path": "scripts/player.gd",
-      "sha256": "c9055e29cf60545449c3fd453604cc16120285ff5bb790cafd6e2296084e62a7"
+      "sha256": "c166f658636a8ff176443e9bedbc80bf8c804ffc25c3c16cf8186026fa982065"
     },
     {
       "path": "scripts/resource_node.gd",
@@ -64,7 +64,7 @@
     },
     {
       "path": "scripts/inventory_ui.gd",
-      "sha256": "e68351eb73e295f22a6a367f81f9dbe54b5cde3e0aedd8543d5bea1cb5390991"
+      "sha256": "8791b0e00faf99564f852f8b0d2053bccb1a0d1686cc134b556747127d8fc214"
     },
     {
       "path": "scripts/hotbar_ui.gd",
@@ -72,7 +72,7 @@
     },
     {
       "path": "scripts/crafting_ui.gd",
-      "sha256": "d375209ef0b8afcbdb7570d9ab8f74b561f6b17e879d5e87062515eb79117c0b"
+      "sha256": "1e9db5fbacbdc3c783a6285d9bb137be6df3cf6b2e5c5e84e2cb6993d7162b2b"
     },
     {
       "path": "scripts/combat_dummy.gd",
