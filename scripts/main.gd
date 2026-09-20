@@ -36,6 +36,11 @@ func _unhandled_input(event: InputEvent) -> void:
 			get_viewport().set_input_as_handled()
 			return
 
+		if key_event.keycode == KEY_G:
+			player.call("place_campfire")
+			get_viewport().set_input_as_handled()
+			return
+
 		var selected_slot: int = -1
 		match key_event.keycode:
 			KEY_1:
@@ -99,6 +104,8 @@ func _get_item_name(item_key: String) -> String:
 			return "Picareta"
 		"sword":
 			return "Espada"
+		"campfire_kit":
+			return "Fogueira"
 		_:
 			return "Item"
 
