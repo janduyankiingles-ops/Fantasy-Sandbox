@@ -108,6 +108,9 @@ func get_interaction_prompt() -> String:
 func get_inventory_text() -> String:
 	return "Madeira: %d    Pedra: %d" % [inventory["wood"], inventory["stone"]]
 
+func get_inventory_amount(item_key: String) -> int:
+	return int(inventory.get(item_key, 0))
+
 func _draw() -> void:
 	# Placeholder visual until the top-down/isometric vampire sheet is integrated.
 	draw_circle(Vector2(0, 13), 14.0, Color(0.05, 0.05, 0.06, 0.35))
