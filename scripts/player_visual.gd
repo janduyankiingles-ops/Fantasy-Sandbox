@@ -1,12 +1,13 @@
 extends AnimatedSprite2D
 
 const ATLAS: Texture2D = preload("res://assets/player/player_atlas.png")
-const CELL_WIDTH: int = 72
-const CELL_HEIGHT: int = 81
+const CELL_WIDTH: int = 48
+const CELL_HEIGHT: int = 54
 
 func _ready() -> void:
 	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	position = Vector2(0, -17)
+	scale = Vector2(1.5, 1.5)
 	z_index = 1
 	_build_sprite_frames()
 	play("idle_down")
