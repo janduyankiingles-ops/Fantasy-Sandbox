@@ -2,9 +2,9 @@
   "schema": 2,
   "app": "Fantasy Sandbox",
   "channel": "stable",
-  "version": "0.0.20",
+  "version": "0.0.21",
   "minimum_updater": "1.1.0",
-  "source_commit": "f4006abd16a208c2f2f6ab0eec04bbfc480066b2",
+  "source_commit": "c60f77543f7aca5ec8ebfdc15ba26ae3e27c874e",
   "files": [
     {
       "path": ".gitignore",
@@ -16,7 +16,7 @@
     },
     {
       "path": "README.md",
-      "sha256": "adb0560dbb6ca77d374da8157303d52e1d72b8ce51fa3684d2e9fd91ed36ca46"
+      "sha256": "a583104d176c37bddaf7fc421e4a56732eb6123ee1eafe543e2bd15d26f66cf9"
     },
     {
       "path": "project.godot",
@@ -24,11 +24,11 @@
     },
     {
       "path": "scenes/main.tscn",
-      "sha256": "af9640e155695cd15a1ce08c818ce230f7e93b5d823542aa8b08f8d1c0605f3e"
+      "sha256": "7210a96e31cc211497b518254737ac728877a409c594b7995452719773225bdc"
     },
     {
       "path": "scenes/player.tscn",
-      "sha256": "55e1e6ebf79f44af304b4ec88ac73368b94efb2f49ff9e135dce1ab45da5737e"
+      "sha256": "ba66806b32dd0ccb6e4fc1195abbe722de482bc48fd65571ce85ffad50caae29"
     },
     {
       "path": "scenes/inventory_ui.tscn",
@@ -48,11 +48,11 @@
     },
     {
       "path": "scripts/main.gd",
-      "sha256": "e14a538250a50801377e2ecabd85435ca17a995d4096bf87ddf85a76ec2f9f80"
+      "sha256": "2b21ae283c04eb17025b74113235da8274ce0b562cee2cbb2774db3dded6d111"
     },
     {
       "path": "scripts/player.gd",
-      "sha256": "758bbff7a1d5cbc059a91d9feb24e7ab9b9050594a70ebd1a3df4ad9d871dfaf"
+      "sha256": "84766d58b654796c9c4a30c726cfa8aaf36795f97ad4cb7329f84e69c72e248a"
     },
     {
       "path": "scripts/resource_node.gd",
@@ -185,6 +185,14 @@
     {
       "path": "scripts/player_v2_part.gd",
       "sha256": "746327733dc8c85e58ebd6385b8f88c803afdda8a4b5f68acd31bbe1e1110b21"
+    },
+    {
+      "path": "scripts/player_modular_part.gd",
+      "sha256": "5dec202c69dde563caeeb859780c97e73e45d06c6c2a7d98fe1767154763fe17"
+    },
+    {
+      "path": "scripts/player_modular_visual.gd",
+      "sha256": "8498100f377af66ca1671e39d827d3d4a6d34afd5d885e5f2af5c0d1f7bda9d2"
     }
   ],
   "delete": [
