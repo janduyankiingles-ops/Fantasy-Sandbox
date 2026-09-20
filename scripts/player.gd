@@ -317,4 +317,13 @@ func _draw() -> void:
 			dir = Vector2.RIGHT
 
 		var center: Vector2 = dir * 30.0
-		draw_arc(center, 24.0, -1.1, 1.1, 18, Color("ef3340"), 5.0)
+		var attack_angle: float = dir.angle()
+		draw_arc(
+			center,
+			24.0,
+			attack_angle - 1.1,
+			attack_angle + 1.1,
+			18,
+			Color("ef3340"),
+			5.0
+		)
