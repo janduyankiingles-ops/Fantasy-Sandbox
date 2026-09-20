@@ -5,6 +5,7 @@ extends Node2D
 @onready var state_label: Label = $HUD/Panel/Margin/VBox/StateLabel
 @onready var health_label: Label = $HUD/Panel/Margin/VBox/HealthLabel
 @onready var hunger_label: Label = $HUD/Panel/Margin/VBox/HungerLabel
+@onready var armor_label: Label = $HUD/Panel/Margin/VBox/ArmorLabel
 @onready var progression_label: Label = $HUD/Panel/Margin/VBox/ProgressionLabel
 @onready var inventory_label: Label = $HUD/Panel/Margin/VBox/InventoryLabel
 @onready var interaction_panel: PanelContainer = $HUD/InteractionPanel
@@ -41,6 +42,11 @@ func _unhandled_input(event: InputEvent) -> void:
 			get_viewport().set_input_as_handled()
 			return
 
+		if key_event.keycode == KEY_H:
+			player.call("toggle_armor")
+			get_viewport().set_input_as_handled()
+			return
+
 		var selected_slot: int = -1
 		match key_event.keycode:
 			KEY_1:
@@ -64,6 +70,7 @@ func _unhandled_input(event: InputEvent) -> void:
 func _process(_delta: float) -> void:
 	health_label.text = str(player.call("get_health_text"))
 	hunger_label.text = str(player.call("get_hunger_text"))
+	armor_label.text = str(player.call("get_armor_text"))
 	progression_label.text = str(player.call("get_progression_text"))
 	position_label.text = "Posição: %d, %d" % [
 		roundi(player.global_position.x),
@@ -106,6 +113,8 @@ func _get_item_name(item_key: String) -> String:
 			return "Espada"
 		"campfire_kit":
 			return "Fogueira"
+		"wolf_armor":
+			return "Armadura de Pele"
 		_:
 			return "Item"
 
