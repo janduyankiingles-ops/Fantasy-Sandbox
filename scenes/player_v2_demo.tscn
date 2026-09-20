@@ -23,7 +23,7 @@ offset_right = 1050.0
 offset_bottom = 118.0
 theme_override_colors/font_color = Color(0.78, 0.8, 0.73, 1)
 theme_override_font_sizes/font_size = 16
-text = "WASD / Setas: mover   |   ESC: voltar ao jogo\nNesta etapa valide a animação frontal, consistência do corpo e nitidez do pixel art."
+text = "WASD / Setas: mover   |   ESC: voltar ao jogo\nAgora teste pernas visíveis e as quatro direções: baixo, cima, esquerda e direita."
 
 [node name="ModularPlayer" type="Node2D" parent="."]
 position = Vector2(640, 380)
@@ -83,6 +83,15 @@ position = Vector2(0, -14)
 script = ExtResource("3_part")
 part_type = "head"
 
+[node name="DirectionLabel" type="Label" parent="."]
+offset_left = 32.0
+offset_top = 118.0
+offset_right = 420.0
+offset_bottom = 148.0
+theme_override_colors/font_color = Color(0.9, 0.78, 0.5, 1)
+theme_override_font_sizes/font_size = 16
+text = "Direção visual: BAIXO"
+
 [node name="PrototypeNote" type="Label" parent="."]
 offset_left = 32.0
 offset_top = 660.0
@@ -90,4 +99,4 @@ offset_right = 1150.0
 offset_bottom = 700.0
 theme_override_colors/font_color = Color(0.65, 0.7, 0.64, 1)
 theme_override_font_sizes/font_size = 14
-text = "A direção visual ainda é frontal de propósito. Esquerda/direita/costas só serão feitas após validar este rig."
+text = "Protótipo modular: idle + caminhada em 4 direções. Ataque e coleta serão adicionados depois desta validação."
