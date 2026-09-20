@@ -1,65 +1,58 @@
-# Fantasy Sandbox — V0.0.9
+# Fantasy Sandbox — V0.0.10
 
-## Sistema desta versão: primeiro inimigo — Lobo
+## Sistema desta versão: recompensa da caça
 
-O mundo agora possui lobos vivos e hostis.
+Matar um lobo agora completa a primeira parte útil do ciclo de caça.
 
-### Comportamento
+### XP
 
-- Existem 3 lobos espalhados pelo mapa.
-- Quando estão tranquilos, vagam pela região onde nasceram.
-- Detectam o jogador a aproximadamente 300 unidades.
-- Ao detectar, perseguem o jogador.
-- Se o jogador fugir para longe, desistem da perseguição.
-- Quando alcançam o jogador, mordem.
-- Cada mordida causa 8 de dano.
-- O ataque do lobo possui intervalo de aproximadamente 1,1 segundo.
+- Cada lobo morto concede **25 XP** imediatamente.
+- O HUD mostra **Nível** e **XP atual**.
+- Nível 1 precisa de 100 XP.
+- Ao subir de nível, o próximo requisito passa a ser 200 XP, depois 300 XP e assim por diante.
 
-### Vida do lobo
+Nesta fase, subir de nível ainda não aumenta atributos. O sistema existe para preparar a progressão futura.
 
-- Vida máxima: 24 HP.
-- A barra de vida aparece acima do lobo.
-- O lobo pisca quando recebe dano.
-- Todos os ataques implementados anteriormente podem causar dano nele.
-- Espada continua causando 7 de dano e é a melhor arma atual.
+### Carne Crua
 
-### Morte
+Quando um lobo morre, o cadáver permanece no chão.
 
-Quando a vida chega a zero:
+Aproxime-se e pressione **E**:
 
-- o lobo morre;
-- deixa de perseguir e atacar;
-- deixa de bloquear fisicamente o jogador;
-- o corpo permanece no chão.
+- você coleta **2 Carnes Cruas**;
+- a Carne Crua aparece no inventário apenas depois de ser obtida;
+- o cadáver continua no chão após retirar a carne.
 
-O cadáver permanecer no chão é intencional: a próxima etapa utilizará esse corpo para carne e pele.
+### Pele do Lobo
 
-### Direção visual
+Depois de retirar a carne:
 
-O desenho do lobo gira conforme a direção em que ele se move, inclusive durante perseguição.
+1. fabrique a **Faca Improvisada**;
+2. selecione o slot **3**;
+3. aproxime-se do cadáver;
+4. pressione **E**.
 
-## Morte do jogador
+Isso concede:
 
-O jogador agora pode morrer.
+- **1 Pele de Lobo**.
 
-- Vida máxima: 100.
-- Ao chegar a 0 HP, fica morto por aproximadamente 2 segundos.
-- Depois reaparece no ponto inicial com a vida cheia.
-- O inventário e as ferramentas não são apagados no respawn nesta fase do protótipo.
+Sem a Faca Improvisada equipada, o jogo avisa que ela é necessária.
 
-## Sistemas preservados
+Depois que carne e pele são retiradas, o cadáver desaparece porque foi totalmente aproveitado.
 
-- coleta primitiva;
-- ferramentas improvisadas;
-- crafting em duas etapas;
-- Machado/Picareta;
-- Espada;
-- inventário dinâmico;
-- hotbar;
-- combate direcional.
+## Inventário
 
-## Próxima etapa do loop
+Foram adicionados:
 
-Depois de validar o Lobo, a próxima versão adicionará a recompensa da caça:
+- Carne Crua;
+- Pele de Lobo.
 
-**XP + cadáver aproveitável + Carne Crua + retirada de Pele com a Faca Improvisada.**
+Como no restante do inventário dinâmico, esses itens não aparecem enquanto a quantidade for zero.
+
+## Fluxo atual do protótipo
+
+Coletar Graveto/Pedra Pequena/Cipó → fabricar ferramentas improvisadas → obter Madeira/Pedra → fabricar Espada → caçar Lobo → ganhar XP → coletar Carne Crua → retirar Pele com Faca Improvisada.
+
+## Próxima etapa
+
+A próxima etapa do loop será **Fome + consumo de comida**, preparando depois a fogueira e o cozimento da Carne Crua.
