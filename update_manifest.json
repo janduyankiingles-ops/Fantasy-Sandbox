@@ -2,9 +2,9 @@
   "schema": 2,
   "app": "Fantasy Sandbox",
   "channel": "stable",
-  "version": "0.0.8",
+  "version": "0.0.8.1",
   "minimum_updater": "1.1.0",
-  "source_commit": "db9def1d9be2c2ebbf1e4aa5a880bfadab504570",
+  "source_commit": "49dace6929876cacc9bc87999f55852d03d3ca71",
   "files": [
     {
       "path": ".gitignore",
@@ -52,7 +52,7 @@
     },
     {
       "path": "scripts/player.gd",
-      "sha256": "a7ea2a4c948a29476c6b3bf6d42284d8c7b88498f5def0163bb2d54712a8287a"
+      "sha256": "209a7c110432b45909430fa70088e01c6780d8c13e6d18bf68d34e65e6e84e68"
     },
     {
       "path": "scripts/resource_node.gd",
