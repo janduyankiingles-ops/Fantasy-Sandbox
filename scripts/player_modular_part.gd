@@ -314,7 +314,6 @@ func _draw_tool_handle(root: Vector2, tip: Vector2) -> void:
 	draw_line(root, tip, WOOD_LIGHT, 1.0, false)
 
 func _draw_blade(root: Vector2, tip: Vector2, long_blade: bool) -> void:
-	var direction: Vector2 = (tip - root).normalized()
 	var blade_start: Vector2 = root.lerp(tip, 0.32 if long_blade else 0.48)
 	draw_line(blade_start, tip, METAL_DARK, 4.0, false)
 	draw_line(blade_start, tip, METAL, 2.0, false)
