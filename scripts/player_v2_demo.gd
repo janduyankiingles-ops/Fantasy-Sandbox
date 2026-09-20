@@ -3,6 +3,7 @@ extends Node2D
 @export var move_speed: float = 170.0
 
 @onready var modular_player: Node2D = $ModularPlayer
+@onready var direction_label: Label = $DirectionLabel as Label
 
 func _ready() -> void:
 	queue_redraw()
@@ -25,9 +26,24 @@ func _process(delta: float) -> void:
 	modular_player.position.x = clampf(modular_player.position.x, 100.0, 1180.0)
 	modular_player.position.y = clampf(modular_player.position.y, 150.0, 620.0)
 	modular_player.call("set_move_input", input_vector)
+	_update_direction_label()
 
 	if Input.is_key_pressed(KEY_ESCAPE):
 		get_tree().change_scene_to_file("res://scenes/main.tscn")
+
+func _update_direction_label() -> void:
+	var direction_name: String = str(modular_player.call("get_facing_direction"))
+	var translated_name: String = "BAIXO"
+
+	match direction_name:
+		"up":
+			translated_name = "CIMA"
+		"left":
+			translated_name = "ESQUERDA"
+		"right":
+			translated_name = "DIREITA"
+
+	direction_label.text = "Direção visual: " + translated_name
 
 func _draw() -> void:
 	draw_rect(Rect2(0, 0, 1280, 720), Color("1d2b22"), true)
