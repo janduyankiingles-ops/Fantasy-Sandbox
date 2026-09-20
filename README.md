@@ -1,60 +1,118 @@
-# Fantasy Sandbox — V0.0.13
+# Fantasy Sandbox — V0.0.14
 
-## Sistema desta versão: Armadura de Pele do Lobo
+## Sistema desta versão: construção básica
 
-A Pele de Lobo agora entra diretamente no loop de sobrevivência.
+A última grande etapa do primeiro loop agora existe: o jogador pode usar Madeira e Pedra para construir uma pequena base diretamente no mundo.
 
-## Receita
+## Modo de construção
 
-Abra o crafting com **C**.
+Pressione **B** para entrar ou sair do modo construção.
 
-Receita:
+Enquanto estiver ativo:
 
-- Armadura de Pele = **2 Peles de Lobo + 2 Cipós**.
+- **Q** troca a peça selecionada;
+- **R** gira Parede ou Porta;
+- **Enter** coloca a peça;
+- **Esc** sai do modo construção.
 
-O custo de 2 peles foi escolhido para permitir fabricar a armadura após dois lobos e ainda deixar um terceiro vivo para testar a proteção.
+Abrir o Inventário (**I**) ou Crafting (**C**) também encerra automaticamente o modo construção.
 
-## Equipar
+## Grade e preview
 
-Depois de fabricar:
+A construção usa uma grade de **64 px**.
 
-- a Armadura de Pele aparece no inventário;
-- o HUD informa que ela está guardada;
-- pressione **H** para equipar;
-- pressione **H** novamente para desequipar.
+A peça aparece à frente do personagem antes de ser colocada.
 
-Quando equipada, uma camada de pele aparece visualmente sobre o corpo do personagem.
+- preview verde = posição válida;
+- preview vermelho = posição bloqueada.
 
-## Proteção
+O HUD também informa:
 
-A Armadura de Pele reduz em **25% o dano de combate recebido**.
+- peça selecionada;
+- custo;
+- VÁLIDO ou BLOQUEADO.
 
-Atualmente:
+## Peças
 
-- mordida de Lobo sem armadura: **8 de dano**;
-- mordida de Lobo com armadura: **6 de dano**.
+### Chão de Madeira
 
-A proteção é aplicada apenas a dano de combate.
+Custo:
 
-Ela **não reduz**:
+- **1 Madeira**.
 
-- dano de fome;
-- dano causado ao comer Carne Crua.
+Características:
 
-Isso evita que a armadura interfira em sistemas de sobrevivência que não representam ataques físicos de inimigos.
+- peça de 1 célula;
+- não possui colisão;
+- o personagem pode caminhar sobre ela.
 
-## Fluxo atual do primeiro loop
+### Parede
 
-Coletar recursos primitivos → fabricar ferramentas improvisadas → obter Madeira/Pedra → fabricar Espada → caçar Lobos → ganhar XP → retirar Carne e Pele → controlar Fome → fabricar Fogueira → cozinhar Carne → fabricar e equipar Armadura de Pele.
+Custo:
 
-## Próxima etapa
+- **2 Madeira + 1 Pedra**.
 
-Com coleta, caça, alimentação e armadura funcionando, a próxima grande etapa do primeiro loop será a **construção da base** usando Madeira e Pedra.
+Características:
 
-A primeira versão de construção deve começar pequena:
+- possui colisão;
+- pode ser girada com **R**;
+- bloqueia o jogador e os lobos.
 
-- chão;
-- parede;
-- porta;
-- posicionamento em grade;
-- consumo real de recursos.
+### Porta
+
+Custo:
+
+- **2 Madeira + 1 Pedra**.
+
+Características:
+
+- pode ser girada com **R**;
+- possui estrutura lateral;
+- o vão central é atravessável.
+
+Nesta primeira versão a Porta funciona como uma entrada permanentemente aberta. Abrir/fechar portas poderá ser aprofundado depois.
+
+## Bloqueios de construção
+
+O jogo não permite colocar uma nova peça:
+
+- em cima do jogador;
+- em cima de árvore;
+- em cima de rocha;
+- em cima de lobo vivo ou cadáver;
+- em cima de uma fogueira;
+- em cima de outra peça construída;
+- quando os recursos necessários não estão disponíveis.
+
+Gravetos, Pedras Pequenas e Cipós no chão não bloqueiam construção.
+
+Os recursos são descontados **somente quando a peça é efetivamente colocada**.
+
+## Primeiro loop jogável
+
+O protótipo agora permite completar o ciclo planejado:
+
+Coletar Graveto/Pedra Pequena/Cipó
+→ fabricar ferramentas improvisadas
+→ obter Madeira e Pedra
+→ fabricar Machado, Picareta e Espada
+→ caçar Lobos
+→ ganhar XP
+→ obter Carne e Pele
+→ controlar Fome
+→ fabricar Fogueira
+→ cozinhar Carne
+→ fabricar Armadura de Pele
+→ construir uma pequena base.
+
+## Próximo passo
+
+Depois de validar a V0.0.14, o primeiro loop pode ser considerado funcional.
+
+A próxima etapa deve ser uma revisão do loop completo para identificar:
+
+- bugs;
+- problemas de balanceamento;
+- partes pouco intuitivas;
+- melhorias de interface;
+- sistemas que precisam ser aprofundados antes de expandir o jogo.
