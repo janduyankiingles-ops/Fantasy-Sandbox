@@ -2,9 +2,9 @@
   "schema": 2,
   "app": "Fantasy Sandbox",
   "channel": "stable",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "minimum_updater": "1.1.0",
-  "source_commit": "0e86c496c9d6932c94258e86b062927ea478501b",
+  "source_commit": "ad7a1048955794aa89495541bd1748afb1a05fa6",
   "files": [
     {
       "path": ".gitignore",
@@ -16,7 +16,7 @@
     },
     {
       "path": "README.md",
-      "sha256": "9cb9ca8995f5b0308b486cb286c2014b5d8e311d3d4daf3a177f0d4dec327378"
+      "sha256": "81625d630595dc0bed1792cce108ddf37e17aaf518cd1dc2b6e6920711605d71"
     },
     {
       "path": "project.godot",
@@ -24,7 +24,7 @@
     },
     {
       "path": "scenes/main.tscn",
-      "sha256": "916177486f59ae1ee45065072f9a8d983756d60b0dc5f1397c802a2a80ec986e"
+      "sha256": "e2a7bca3fd2af297b5059c2602b7b14c4a2d8aa9e056a4f2ddb17fd7eef169d5"
     },
     {
       "path": "scenes/player.tscn",
@@ -40,7 +40,7 @@
     },
     {
       "path": "scenes/crafting_ui.tscn",
-      "sha256": "44980f7a3ea854f483012e26af620df592af5bfa1f829fea6f39b7d079e6340c"
+      "sha256": "aa3f3d9cbee6ef6c63fc33f43e71fab0acc4a30ab9ff8dbd7f43e465055dd854"
     },
     {
       "path": "scenes/combat_dummy.tscn",
@@ -48,11 +48,11 @@
     },
     {
       "path": "scripts/main.gd",
-      "sha256": "3543891c98469d4bdffe7c0805be7886f8ce8392ece33d31bd7da45970c5c7c2"
+      "sha256": "73275a6a036f185ab58b41d4949d006eb79877e2a6c1a5e9574f98334b043972"
     },
     {
       "path": "scripts/player.gd",
-      "sha256": "2d89287814fc84248975862ff731cf701bdea360735784d65b77fe6b23385db4"
+      "sha256": "c9055e29cf60545449c3fd453604cc16120285ff5bb790cafd6e2296084e62a7"
     },
     {
       "path": "scripts/resource_node.gd",
@@ -64,7 +64,7 @@
     },
     {
       "path": "scripts/inventory_ui.gd",
-      "sha256": "4caf9b3396fbe77b3dd32d41a4e277d62964b95cf9856a731ca1c981167ef532"
+      "sha256": "e68351eb73e295f22a6a367f81f9dbe54b5cde3e0aedd8543d5bea1cb5390991"
     },
     {
       "path": "scripts/hotbar_ui.gd",
@@ -72,7 +72,7 @@
     },
     {
       "path": "scripts/crafting_ui.gd",
-      "sha256": "ebba09a38217e6fa59941264c11d7936b830d291fb8902c0661e240c7af9339c"
+      "sha256": "d375209ef0b8afcbdb7570d9ab8f74b561f6b17e879d5e87062515eb79117c0b"
     },
     {
       "path": "scripts/combat_dummy.gd",
@@ -97,6 +97,14 @@
     {
       "path": "scripts/wolf.gd",
       "sha256": "0394be3bbe3aa92af1d6906f0c5f0e96da32e8ab9b557cbf799317f3178aa0d6"
+    },
+    {
+      "path": "scenes/campfire.tscn",
+      "sha256": "0409dedea7028a2d6b963b5f7c5fe0d9bfdefca246788928b91e468eb0b0b55e"
+    },
+    {
+      "path": "scripts/campfire.gd",
+      "sha256": "51fa0af151f8f24bccd73155ca950b76a4bcfe0d3e6f7c5c17992a8d8aef3bdf"
     }
   ],
   "delete": []
