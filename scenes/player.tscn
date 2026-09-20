@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene load_steps=5 format=3]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1"]
-[ext_resource type="Script" path="res://scripts/player_visual.gd" id="2_visual"]
+[ext_resource type="Script" path="res://scripts/player_modular_visual.gd" id="2_visual"]
+[ext_resource type="Script" path="res://scripts/player_modular_part.gd" id="3_part"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_player"]
 radius = 11.0
@@ -10,8 +11,64 @@ height = 34.0
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1")
 
-[node name="Visual" type="Sprite2D" parent="."]
+[node name="Visual" type="Node2D" parent="."]
+position = Vector2(0, -2)
 script = ExtResource("2_visual")
+
+[node name="Shadow" type="Node2D" parent="Visual"]
+z_index = -3
+position = Vector2(0, 15)
+script = ExtResource("3_part")
+part_type = "shadow"
+
+[node name="LegLeft" type="Node2D" parent="Visual"]
+position = Vector2(-3, 7)
+script = ExtResource("3_part")
+part_type = "leg_left"
+
+[node name="LegRight" type="Node2D" parent="Visual"]
+position = Vector2(3, 7)
+script = ExtResource("3_part")
+part_type = "leg_right"
+
+[node name="ScarfLeft" type="Node2D" parent="Visual"]
+position = Vector2(-3, -7)
+script = ExtResource("3_part")
+part_type = "scarf_left"
+
+[node name="ScarfRight" type="Node2D" parent="Visual"]
+position = Vector2(3, -7)
+script = ExtResource("3_part")
+part_type = "scarf_right"
+
+[node name="Body" type="Node2D" parent="Visual"]
+z_index = 1
+position = Vector2(0, -2)
+script = ExtResource("3_part")
+part_type = "body"
+
+[node name="ArmLeft" type="Node2D" parent="Visual"]
+z_index = 2
+position = Vector2(-7, -3)
+script = ExtResource("3_part")
+part_type = "arm_left"
+
+[node name="ArmRight" type="Node2D" parent="Visual"]
+z_index = 2
+position = Vector2(7, -3)
+script = ExtResource("3_part")
+part_type = "arm_right"
+
+[node name="Tool" type="Node2D" parent="Visual"]
+z_index = 3
+script = ExtResource("3_part")
+part_type = "tool"
+
+[node name="Head" type="Node2D" parent="Visual"]
+z_index = 4
+position = Vector2(0, -14)
+script = ExtResource("3_part")
+part_type = "head"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 2)
