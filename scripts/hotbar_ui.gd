@@ -1,78 +1,84 @@
 extends Control
 
 var selected_slot: int = 0
-var axe_amount: int = 0
-var pickaxe_amount: int = 0
-var sword_amount: int = 0
+var snapshot: Dictionary = {}
+
+var slot_item_keys: Array[String] = [
+	"improvised_axe",
+	"improvised_pickaxe",
+	"improvised_knife",
+	"axe",
+	"pickaxe",
+	"sword"
+]
+
+var item_names: Dictionary = {
+	"improvised_axe": "Machado Improvisado",
+	"improvised_pickaxe": "Picareta Improvisada",
+	"improvised_knife": "Faca Improvisada",
+	"axe": "Machado",
+	"pickaxe": "Picareta",
+	"sword": "Espada"
+}
+
+@onready var slots: Array[PanelContainer] = [
+	$HotbarBox/VBox/Slots/Slot1,
+	$HotbarBox/VBox/Slots/Slot2,
+	$HotbarBox/VBox/Slots/Slot3,
+	$HotbarBox/VBox/Slots/Slot4,
+	$HotbarBox/VBox/Slots/Slot5,
+	$HotbarBox/VBox/Slots/Slot6
+]
+
+@onready var labels: Array[Label] = [
+	$HotbarBox/VBox/Slots/Slot1/Label,
+	$HotbarBox/VBox/Slots/Slot2/Label,
+	$HotbarBox/VBox/Slots/Slot3/Label,
+	$HotbarBox/VBox/Slots/Slot4/Label,
+	$HotbarBox/VBox/Slots/Slot5/Label,
+	$HotbarBox/VBox/Slots/Slot6/Label
+]
 
 @onready var selected_label: Label = $HotbarBox/VBox/SelectedLabel
-@onready var slot_1: PanelContainer = $HotbarBox/VBox/Slots/Slot1
-@onready var slot_2: PanelContainer = $HotbarBox/VBox/Slots/Slot2
-@onready var slot_3: PanelContainer = $HotbarBox/VBox/Slots/Slot3
-@onready var slot_4: PanelContainer = $HotbarBox/VBox/Slots/Slot4
-@onready var slot_5: PanelContainer = $HotbarBox/VBox/Slots/Slot5
-@onready var slot_6: PanelContainer = $HotbarBox/VBox/Slots/Slot6
-@onready var wood_count: Label = $HotbarBox/VBox/Slots/Slot1/Margin/VBox/Count
-@onready var stone_count: Label = $HotbarBox/VBox/Slots/Slot2/Margin/VBox/Count
-@onready var axe_label: Label = $HotbarBox/VBox/Slots/Slot3/Label
-@onready var pickaxe_label: Label = $HotbarBox/VBox/Slots/Slot4/Label
-@onready var sword_label: Label = $HotbarBox/VBox/Slots/Slot5/Label
 
 func _ready() -> void:
 	select_slot(0)
 
-func refresh_hotbar(
-	wood_amount: int,
-	stone_amount: int,
-	new_axe_amount: int,
-	new_pickaxe_amount: int,
-	new_sword_amount: int
-) -> void:
-	axe_amount = new_axe_amount
-	pickaxe_amount = new_pickaxe_amount
-	sword_amount = new_sword_amount
+func refresh_hotbar(new_snapshot: Dictionary) -> void:
+	snapshot = new_snapshot.duplicate()
 
-	wood_count.text = "x%d" % wood_amount
-	stone_count.text = "x%d" % stone_amount
-	axe_label.text = "3\nMachado\nx%d" % axe_amount
-	pickaxe_label.text = "4\nPicareta\nx%d" % pickaxe_amount
-	sword_label.text = "5\nEspada\nx%d" % sword_amount
+	for index in range(slot_item_keys.size()):
+		var item_key: String = slot_item_keys[index]
+		var amount: int = int(snapshot.get(item_key, 0))
+		var display_name: String = str(item_names.get(item_key, item_key))
+
+		if amount > 0:
+			labels[index].text = "%d\n%s\nx%d" % [index + 1, display_name, amount]
+		else:
+			labels[index].text = "%d\nVazio" % [index + 1]
+
 	_update_selected_label()
 
 func select_slot(slot_index: int) -> void:
 	selected_slot = clampi(slot_index, 0, 5)
 
-	var slots: Array[PanelContainer] = [
-		slot_1,
-		slot_2,
-		slot_3,
-		slot_4,
-		slot_5,
-		slot_6
-	]
-
-	for i in range(slots.size()):
-		if i == selected_slot:
-			slots[i].modulate = Color(1.0, 0.82, 0.48, 1.0)
+	for index in range(slots.size()):
+		if index == selected_slot:
+			slots[index].modulate = Color(1.0, 0.82, 0.48, 1.0)
 		else:
-			slots[i].modulate = Color.WHITE
+			slots[index].modulate = Color.WHITE
 
 	_update_selected_label()
 
 func _update_selected_label() -> void:
-	match selected_slot:
-		0:
-			selected_label.text = "Selecionado: Madeira"
-		1:
-			selected_label.text = "Selecionado: Pedra"
-		2:
-			selected_label.text = "Selecionado: Machado" if axe_amount > 0 else "Selecionado: Machado (não possui)"
-		3:
-			selected_label.text = "Selecionado: Picareta" if pickaxe_amount > 0 else "Selecionado: Picareta (não possui)"
-		4:
-			selected_label.text = "Selecionado: Espada" if sword_amount > 0 else "Selecionado: Espada (não possui)"
-		_:
-			selected_label.text = "Selecionado: Vazio"
+	var item_key: String = slot_item_keys[selected_slot]
+	var amount: int = int(snapshot.get(item_key, 0))
+
+	if amount <= 0:
+		selected_label.text = "Selecionado: Vazio"
+		return
+
+	selected_label.text = "Selecionado: %s" % str(item_names.get(item_key, item_key))
 
 func get_selected_slot() -> int:
 	return selected_slot
