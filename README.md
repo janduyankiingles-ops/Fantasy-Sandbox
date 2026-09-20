@@ -1,37 +1,34 @@
-# Fantasy Sandbox — V0.0.2
+# Fantasy Sandbox — V0.0.3
 
-Protótipo inicial de um RPG sandbox de fantasia inspirado por sobrevivência sistêmica, exploração, coleta, construção e progressão.
+Protótipo de RPG sandbox de fantasia em Godot 4.7.x.
 
-## O que já funciona
+## Sistema desta versão: inventário visual básico
+
+- Tecla **I** abre e fecha o inventário.
+- Grade com 12 espaços.
+- Madeira e Pedra ocupam os dois primeiros slots.
+- As quantidades são atualizadas imediatamente quando o jogador coleta recursos.
+- Os outros slots ficam vazios e serão usados em sistemas futuros.
+
+## Sistemas já estáveis
 
 - Movimento em 8 direções.
 - Corrida.
-- Câmera suave seguindo o jogador.
-- Colisão do jogador com recursos.
-- Ataque visual provisório.
-- Árvores e pedras espalhadas pelo mapa.
-- Interação por proximidade.
-- Coleta de madeira e pedra.
-- Recursos com múltiplos golpes antes de serem destruídos.
-- Inventário básico com contagem de Madeira e Pedra.
-- HUD com posição, estado, inventário e prompt de interação.
+- Câmera seguindo o jogador.
+- Colisões.
+- Árvores e pedras.
+- Coleta por proximidade com **E**.
+- Contagem de Madeira e Pedra.
+- Atualizador incremental V1.1.
 
 ## Controles
 
 - WASD ou setas: mover.
 - Shift: correr.
-- E: coletar/interagir com árvore ou pedra próxima.
+- E: coletar/interagir.
 - Espaço: ataque provisório.
+- I: abrir/fechar inventário.
 
-## Próxima etapa sugerida — V0.0.3
+## Escopo
 
-- Inventário visual em grade.
-- Itens reais no chão.
-- Hotbar.
-- Ferramentas (machado/picareta).
-- Crafting inicial.
-- Primeiro sistema de construção.
-
-## Godot
-
-Projeto preparado para Godot 4.7.x usando o renderer Compatibility.
+Esta versão adiciona somente o inventário visual. Hotbar, equipamentos, crafting e itens no chão ainda não fazem parte da V0.0.3.
