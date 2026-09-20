@@ -32,7 +32,7 @@ theme_override_constants/separation = 4
 
 [node name="SelectedLabel" type="Label" parent="HotbarBox/VBox"]
 layout_mode = 2
-text = "Selecionado: Madeira"
+text = "Selecionado: Vazio"
 horizontal_alignment = 1
 
 [node name="Slots" type="HBoxContainer" parent="HotbarBox/VBox"]
@@ -106,7 +106,7 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="HotbarBox/VBox/Slots/Slot3"]
 layout_mode = 2
-text = "3\nMachado\nx0"
+text = "3\nVazio"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -116,7 +116,7 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="HotbarBox/VBox/Slots/Slot4"]
 layout_mode = 2
-text = "4\nPicareta\nx0"
+text = "4\nVazio"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -126,7 +126,7 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="HotbarBox/VBox/Slots/Slot5"]
 layout_mode = 2
-text = "5\nEspada\nx0"
+text = "5\nVazio"
 horizontal_alignment = 1
 vertical_alignment = 1
 
