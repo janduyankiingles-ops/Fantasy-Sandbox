@@ -52,7 +52,7 @@ theme_override_constants/separation = 5
 
 [node name="Title" type="Label" parent="HUD/Panel/Margin/VBox"]
 theme_override_font_sizes/font_size = 20
-text = "FANTASY SANDBOX — V0.0.19.2"
+text = "FANTASY SANDBOX — V0.0.20"
 
 [node name="PositionLabel" type="Label" parent="HUD/Panel/Margin/VBox"]
 visible = false
