@@ -15,7 +15,8 @@ var item_order: Array[String] = [
 	"raw_meat",
 	"cooked_meat",
 	"wolf_hide",
-	"campfire_kit"
+	"campfire_kit",
+	"wolf_armor"
 ]
 
 var item_names: Dictionary = {
@@ -33,7 +34,8 @@ var item_names: Dictionary = {
 	"raw_meat": "Carne Crua",
 	"cooked_meat": "Carne Assada",
 	"wolf_hide": "Pele de Lobo",
-	"campfire_kit": "Fogueira"
+	"campfire_kit": "Fogueira",
+	"wolf_armor": "Armadura de Pele"
 }
 
 @onready var slots: Array[PanelContainer] = [
