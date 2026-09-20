@@ -512,7 +512,7 @@ func _get_recipe_costs(item_key: String) -> Dictionary:
 		"campfire_kit":
 			return {"wood": 3, "stone": 3}
 		"wolf_armor":
-			return {"wolf_hide": 3, "vine": 2}
+			return {"wolf_hide": 2, "vine": 2}
 		_:
 			return {}
 
