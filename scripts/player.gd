@@ -387,11 +387,6 @@ func place_campfire() -> bool:
 	if kit_amount <= 0 or dead:
 		return false
 
-	var campfire_node: Node = CampfireScene.instantiate()
-	if campfire_node is not Node2D:
-		return false
-
-	var campfire: Node2D = campfire_node
 	var parent_node: Node = get_parent()
 	if parent_node == null:
 		return false
@@ -412,6 +407,11 @@ func place_campfire() -> bool:
 		if obstacle.global_position.distance_to(target_position) < 46.0:
 			return false
 
+	var campfire_node: Node = CampfireScene.instantiate()
+	if campfire_node is not Node2D:
+		return false
+
+	var campfire: Node2D = campfire_node
 	parent_node.add_child(campfire)
 	campfire.global_position = target_position
 	inventory["campfire_kit"] = kit_amount - 1
