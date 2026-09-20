@@ -3,6 +3,7 @@ extends Node2D
 @onready var player: CharacterBody2D = $Player as CharacterBody2D
 @onready var position_label: Label = $HUD/Panel/Margin/VBox/PositionLabel
 @onready var state_label: Label = $HUD/Panel/Margin/VBox/StateLabel
+@onready var health_label: Label = $HUD/Panel/Margin/VBox/HealthLabel
 @onready var inventory_label: Label = $HUD/Panel/Margin/VBox/InventoryLabel
 @onready var interaction_panel: PanelContainer = $HUD/InteractionPanel
 @onready var interaction_label: Label = $HUD/InteractionPanel/Margin/InteractionLabel
@@ -54,6 +55,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			get_viewport().set_input_as_handled()
 
 func _process(_delta: float) -> void:
+	health_label.text = str(player.call("get_health_text"))
 	position_label.text = "Posição: %d, %d" % [
 		roundi(player.global_position.x),
 		roundi(player.global_position.y)
