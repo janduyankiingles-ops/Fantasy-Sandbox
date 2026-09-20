@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
 signal inventory_changed
+signal health_changed
 
 @export var walk_speed: float = 180.0
 @export var run_speed: float = 290.0
@@ -8,6 +9,9 @@ signal inventory_changed
 @export var friction: float = 1600.0
 @export var interaction_distance: float = 92.0
 @export var interaction_cooldown: float = 0.25
+@export var max_health: int = 100
+@export var attack_range: float = 72.0
+@export var attack_facing_dot: float = 0.15
 
 var facing: Vector2 = Vector2.DOWN
 var is_attacking: bool = false
@@ -17,6 +21,7 @@ var interact_was_down: bool = false
 var interact_cooldown_left: float = 0.0
 var nearby_resource: Node2D = null
 var selected_hotbar_slot: int = 0
+var current_health: int = 100
 
 var inventory: Dictionary = {
 	"stick": 0,
@@ -33,6 +38,7 @@ var inventory: Dictionary = {
 }
 
 func _ready() -> void:
+	current_health = max_health
 	queue_redraw()
 
 func _physics_process(delta: float) -> void:
@@ -61,6 +67,7 @@ func _physics_process(delta: float) -> void:
 	if attack_down and not attack_was_down and not is_attacking:
 		is_attacking = true
 		attack_time = 0.18
+		_perform_attack()
 	attack_was_down = attack_down
 
 	if is_attacking:
@@ -77,6 +84,73 @@ func _physics_process(delta: float) -> void:
 
 	move_and_slide()
 	queue_redraw()
+
+func _perform_attack() -> void:
+	var damage: int = _get_attack_damage()
+	var best_target: Node2D = null
+	var best_distance: float = attack_range
+	var facing_direction: Vector2 = facing.normalized()
+
+	if facing_direction == Vector2.ZERO:
+		facing_direction = Vector2.DOWN
+
+	for node in get_tree().get_nodes_in_group("damageable"):
+		if not is_instance_valid(node):
+			continue
+		if not node.has_method("take_damage"):
+			continue
+
+		var target: Node2D = node as Node2D
+		if target == null:
+			continue
+
+		var offset: Vector2 = target.global_position - global_position
+		var distance: float = offset.length()
+
+		if distance <= 0.0 or distance > best_distance:
+			continue
+
+		var direction_to_target: Vector2 = offset.normalized()
+		if facing_direction.dot(direction_to_target) < attack_facing_dot:
+			continue
+
+		best_distance = distance
+		best_target = target
+
+	if best_target != null:
+		best_target.call("take_damage", damage)
+
+func _get_attack_damage() -> int:
+	var item_key: String = get_selected_item_key()
+
+	match item_key:
+		"improvised_knife":
+			return 3
+		"improvised_axe", "improvised_pickaxe":
+			return 2
+		"axe", "pickaxe":
+			return 4
+		"sword":
+			return 7
+		_:
+			return 1
+
+func take_damage(amount: int) -> void:
+	if amount <= 0 or current_health <= 0:
+		return
+
+	current_health = maxi(0, current_health - amount)
+	health_changed.emit()
+	queue_redraw()
+
+func get_health_text() -> String:
+	return "Vida: %d/%d" % [current_health, max_health]
+
+func get_current_health() -> int:
+	return current_health
+
+func get_max_health() -> int:
+	return max_health
 
 func _update_nearby_resource() -> void:
 	nearby_resource = null
