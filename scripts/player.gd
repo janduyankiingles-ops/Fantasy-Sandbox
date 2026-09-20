@@ -174,6 +174,11 @@ func _respawn() -> void:
 	dead = false
 	current_health = max_health
 	global_position = spawn_position
+	is_attacking = false
+	attack_time = 0.0
+	attack_was_down = false
+	interact_was_down = false
+	nearby_resource = null
 	health_changed.emit()
 	queue_redraw()
 
