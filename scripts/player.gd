@@ -127,9 +127,13 @@ func _get_attack_damage() -> int:
 	match item_key:
 		"improvised_knife":
 			return 3
-		"improvised_axe", "improvised_pickaxe":
+		"improvised_axe":
 			return 2
-		"axe", "pickaxe":
+		"improvised_pickaxe":
+			return 2
+		"axe":
+			return 4
+		"pickaxe":
 			return 4
 		"sword":
 			return 7
