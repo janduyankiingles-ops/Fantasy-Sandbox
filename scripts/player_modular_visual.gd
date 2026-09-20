@@ -31,7 +31,7 @@ var scarf_right_base: Vector2 = Vector2(3, -7)
 var tool_base: Vector2 = Vector2.ZERO
 
 func _ready() -> void:
-	scale = Vector2(3.0, 3.0)
+	scale = Vector2(2.0, 2.0)
 	_set_facing("down")
 	_apply_idle_pose(0)
 	tool.call("set_tool", "none", 0)
@@ -100,7 +100,7 @@ func _direction_from_vector(value: Vector2) -> String:
 func _set_facing(direction_name: String) -> void:
 	facing_direction = direction_name
 
-	for part in [
+	var parts: Array[Node2D] = [
 		shadow,
 		leg_left,
 		leg_right,
@@ -111,7 +111,9 @@ func _set_facing(direction_name: String) -> void:
 		scarf_left,
 		scarf_right,
 		tool
-	]:
+	]
+
+	for part: Node2D in parts:
 		part.call("set_facing", direction_name)
 
 	_apply_direction_layout()
