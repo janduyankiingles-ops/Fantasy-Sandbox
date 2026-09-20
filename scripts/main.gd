@@ -61,7 +61,7 @@ func _unhandled_input(event: InputEvent) -> void:
 				get_viewport().set_input_as_handled()
 				return
 
-			if key_event.keycode == KEY_ENTER or key_event.keycode == KEY_KP_ENTER:
+			if key_event.keycode == KEY_ENTER:
 				building_system.call("try_place_piece")
 				get_viewport().set_input_as_handled()
 				return
