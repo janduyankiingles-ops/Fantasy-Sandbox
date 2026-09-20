@@ -81,10 +81,10 @@ func _can_craft(item_key: String) -> bool:
 		return false
 
 	var costs_value: Variant = recipe_costs.get(item_key, {})
-	if not costs_value is Dictionary:
+	if costs_value is not Dictionary:
 		return false
 
-	var costs: Dictionary = costs_value as Dictionary
+	var costs: Dictionary = costs_value
 	if costs.is_empty():
 		return false
 
