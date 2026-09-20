@@ -22,6 +22,9 @@ var interact_cooldown_left: float = 0.0
 var nearby_resource: Node2D = null
 var selected_hotbar_slot: int = 0
 var current_health: int = 100
+var dead: bool = false
+var respawn_time_left: float = 0.0
+var spawn_position: Vector2 = Vector2.ZERO
 
 var inventory: Dictionary = {
 	"stick": 0,
@@ -38,10 +41,23 @@ var inventory: Dictionary = {
 }
 
 func _ready() -> void:
+	add_to_group("player")
 	current_health = max_health
+	spawn_position = global_position
 	queue_redraw()
 
 func _physics_process(delta: float) -> void:
+	if dead:
+		respawn_time_left = maxf(0.0, respawn_time_left - delta)
+		velocity = Vector2.ZERO
+
+		if respawn_time_left <= 0.0:
+			_respawn()
+
+		move_and_slide()
+		queue_redraw()
+		return
+
 	interact_cooldown_left = maxf(0.0, interact_cooldown_left - delta)
 
 	var left: bool = Input.is_key_pressed(KEY_A) or Input.is_key_pressed(KEY_LEFT)
@@ -141,14 +157,29 @@ func _get_attack_damage() -> int:
 			return 1
 
 func take_damage(amount: int) -> void:
-	if amount <= 0 or current_health <= 0:
+	if amount <= 0 or current_health <= 0 or dead:
 		return
 
 	current_health = maxi(0, current_health - amount)
 	health_changed.emit()
+
+	if current_health <= 0:
+		dead = true
+		respawn_time_left = 2.0
+		velocity = Vector2.ZERO
+
+	queue_redraw()
+
+func _respawn() -> void:
+	dead = false
+	current_health = max_health
+	global_position = spawn_position
+	health_changed.emit()
 	queue_redraw()
 
 func get_health_text() -> String:
+	if dead:
+		return "Vida: 0/%d — REAPARECENDO" % max_health
 	return "Vida: %d/%d" % [current_health, max_health]
 
 func get_current_health() -> int:
@@ -156,6 +187,9 @@ func get_current_health() -> int:
 
 func get_max_health() -> int:
 	return max_health
+
+func is_dead() -> bool:
+	return dead
 
 func _update_nearby_resource() -> void:
 	nearby_resource = null
