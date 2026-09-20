@@ -9,10 +9,13 @@ extends Node2D
 	"arm_right",
 	"head",
 	"scarf_left",
-	"scarf_right"
+	"scarf_right",
+	"tool"
 ) var part_type: String = "body"
 
 var facing_direction: String = "down"
+var tool_mode: String = "none"
+var tool_pose: int = 0
 
 const OUTLINE: Color = Color("1b1210")
 const HAIR_DARK: Color = Color("2a1716")
@@ -43,6 +46,14 @@ func set_facing(direction_name: String) -> void:
 	facing_direction = direction_name
 	queue_redraw()
 
+func set_tool_state(mode_name: String, pose_index: int) -> void:
+	if mode_name == tool_mode and pose_index == tool_pose:
+		return
+
+	tool_mode = mode_name
+	tool_pose = pose_index
+	queue_redraw()
+
 func _draw() -> void:
 	match part_type:
 		"shadow":
@@ -63,6 +74,8 @@ func _draw() -> void:
 			_draw_scarf_tail(false)
 		"scarf_right":
 			_draw_scarf_tail(true)
+		"tool":
+			_draw_tool()
 
 func _px(x: int, y: int, width: int, height: int, color: Color) -> void:
 	draw_rect(
@@ -335,3 +348,169 @@ func _draw_scarf_back(mirrored: bool) -> void:
 	_px(offset_x, 2, 3, 5, OUTLINE)
 	_px(offset_x + 1, 2, 2, 4, SCARF_DARK)
 	_px(offset_x, 6, 3, 1, SCARF_LIGHT)
+
+func _draw_tool() -> void:
+	if tool_mode == "none":
+		return
+
+	if tool_mode == "attack":
+		_draw_sword()
+		return
+
+	if tool_mode == "gather":
+		_draw_axe()
+
+func _draw_sword() -> void:
+	var blade: Color = Color("c8d0cf")
+	var blade_light: Color = Color("edf0e9")
+	var guard: Color = METAL
+	var handle: Color = BELT
+
+	var points: Array[Vector2i] = _get_tool_points(true)
+	var handle_point: Vector2i = points[0]
+	var guard_point: Vector2i = points[1]
+	var tip_point: Vector2i = points[2]
+
+	draw_line(
+		Vector2(handle_point),
+		Vector2(tip_point),
+		OUTLINE,
+		4.0,
+		false
+	)
+	draw_line(
+		Vector2(guard_point),
+		Vector2(tip_point),
+		blade,
+		2.0,
+		false
+	)
+	draw_line(
+		Vector2(guard_point),
+		Vector2(tip_point),
+		blade_light,
+		1.0,
+		false
+	)
+
+	_px(handle_point.x - 1, handle_point.y - 1, 3, 3, handle)
+	_px(guard_point.x - 2, guard_point.y - 1, 5, 2, guard)
+
+func _draw_axe() -> void:
+	var wood: Color = Color("6c472f")
+	var wood_light: Color = Color("8c6242")
+	var metal_dark: Color = Color("596264")
+	var metal_light: Color = Color("aab5b4")
+
+	var points: Array[Vector2i] = _get_tool_points(false)
+	var handle_point: Vector2i = points[0]
+	var head_point: Vector2i = points[1]
+	var tip_point: Vector2i = points[2]
+
+	draw_line(
+		Vector2(handle_point),
+		Vector2(tip_point),
+		OUTLINE,
+		4.0,
+		false
+	)
+	draw_line(
+		Vector2(handle_point),
+		Vector2(tip_point),
+		wood,
+		2.0,
+		false
+	)
+	draw_line(
+		Vector2(handle_point),
+		Vector2(tip_point),
+		wood_light,
+		1.0,
+		false
+	)
+
+	_px(head_point.x - 2, head_point.y - 2, 5, 4, OUTLINE)
+	_px(head_point.x - 1, head_point.y - 1, 4, 2, metal_dark)
+	_px(head_point.x, head_point.y - 1, 3, 1, metal_light)
+
+func _get_tool_points(is_sword: bool) -> Array[Vector2i]:
+	var length_bonus: int = 2 if is_sword else 0
+	var handle_point: Vector2i = Vector2i(0, 3)
+	var middle_point: Vector2i = Vector2i(0, -1)
+	var tip_point: Vector2i = Vector2i(0, -8 - length_bonus)
+
+	match facing_direction:
+		"down":
+			match tool_pose:
+				0:
+					handle_point = Vector2i(4, -1)
+					middle_point = Vector2i(7, -4)
+					tip_point = Vector2i(10, -9 - length_bonus)
+				1:
+					handle_point = Vector2i(5, 0)
+					middle_point = Vector2i(8, 1)
+					tip_point = Vector2i(11, 4 + length_bonus)
+				2:
+					handle_point = Vector2i(4, 1)
+					middle_point = Vector2i(4, 5)
+					tip_point = Vector2i(3, 9 + length_bonus)
+				_:
+					handle_point = Vector2i(4, 0)
+					middle_point = Vector2i(7, -2)
+					tip_point = Vector2i(9, -7 - length_bonus)
+		"up":
+			match tool_pose:
+				0:
+					handle_point = Vector2i(-4, -1)
+					middle_point = Vector2i(-7, -4)
+					tip_point = Vector2i(-10, -9 - length_bonus)
+				1:
+					handle_point = Vector2i(-5, 0)
+					middle_point = Vector2i(-8, 1)
+					tip_point = Vector2i(-11, 4 + length_bonus)
+				2:
+					handle_point = Vector2i(-4, 1)
+					middle_point = Vector2i(-4, 5)
+					tip_point = Vector2i(-3, 9 + length_bonus)
+				_:
+					handle_point = Vector2i(-4, 0)
+					middle_point = Vector2i(-7, -2)
+					tip_point = Vector2i(-9, -7 - length_bonus)
+		"left":
+			match tool_pose:
+				0:
+					handle_point = Vector2i(-3, -1)
+					middle_point = Vector2i(-6, -5)
+					tip_point = Vector2i(-10 - length_bonus, -8)
+				1:
+					handle_point = Vector2i(-4, 0)
+					middle_point = Vector2i(-8, 0)
+					tip_point = Vector2i(-12 - length_bonus, 1)
+				2:
+					handle_point = Vector2i(-3, 1)
+					middle_point = Vector2i(-6, 5)
+					tip_point = Vector2i(-10 - length_bonus, 8)
+				_:
+					handle_point = Vector2i(-3, 0)
+					middle_point = Vector2i(-7, -3)
+					tip_point = Vector2i(-11 - length_bonus, -6)
+		_:
+			match tool_pose:
+				0:
+					handle_point = Vector2i(3, -1)
+					middle_point = Vector2i(6, -5)
+					tip_point = Vector2i(10 + length_bonus, -8)
+				1:
+					handle_point = Vector2i(4, 0)
+					middle_point = Vector2i(8, 0)
+					tip_point = Vector2i(12 + length_bonus, 1)
+				2:
+					handle_point = Vector2i(3, 1)
+					middle_point = Vector2i(6, 5)
+					tip_point = Vector2i(10 + length_bonus, 8)
+				_:
+					handle_point = Vector2i(3, 0)
+					middle_point = Vector2i(7, -3)
+					tip_point = Vector2i(11 + length_bonus, -6)
+
+	return [handle_point, middle_point, tip_point]
