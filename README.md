@@ -1,54 +1,79 @@
-# Fantasy Sandbox — V0.0.11
+# Fantasy Sandbox — V0.0.12
 
-## Sistema desta versão: fome
+## Sistema desta versão: fogueira e cozimento
 
-O personagem agora possui uma necessidade básica de alimentação.
+A alimentação agora possui uma alternativa realmente melhor que comer Carne Crua.
 
-### Fome
+## Fabricar Fogueira
 
-- Fome máxima: **100**.
-- O HUD mostra o valor atual.
-- A fome cai continuamente.
-- No balanceamento atual de teste, 100 pontos duram aproximadamente **100 segundos**.
-- Ao chegar a 0, o HUD mostra **FAMINTO**.
+Abra o crafting com **C**.
 
-Esse ritmo é propositalmente rápido nesta fase para permitir testar o sistema sem esperar muitos minutos. O balanceamento será revisto depois que o primeiro loop estiver completo.
+Receita:
 
-### Fome zerada
+- Fogueira = **3 Madeira + 3 Pedra**.
 
-Enquanto a fome estiver em 0:
+Ao fabricar, o item **Fogueira** aparece no inventário.
 
-- o personagem sofre **5 de dano**;
-- o dano acontece aproximadamente a cada **2 segundos**;
-- esse dano pode matar o jogador normalmente.
+Enquanto houver uma Fogueira ainda não colocada, não é possível fabricar outra. Depois de colocá-la, a receita fica disponível novamente.
 
-Ao morrer e reaparecer nesta fase do protótipo, Vida e Fome voltam ao máximo.
+## Colocar no mundo
+
+Pressione **G**.
+
+A fogueira é colocada à frente do personagem, considerando a direção em que ele está olhando.
+
+Depois de colocada:
+
+- o item Fogueira é consumido do inventário;
+- a fogueira permanece no mundo;
+- é possível fabricar e colocar outras fogueiras depois.
+
+## Cozinhar
+
+Tenha Carne Crua no inventário e aproxime-se da fogueira.
+
+O aviso mostrará:
+
+**E - Assar 1 Carne Crua**
+
+Cada uso de **E** transforma:
+
+- 1 Carne Crua
+- em 1 Carne Assada.
+
+A Carne Assada aparece dinamicamente no inventário.
+
+## Comer
+
+A tecla **F** continua sendo a tecla de alimentação.
+
+Prioridade:
+
+1. se houver Carne Assada, o personagem come Carne Assada;
+2. se não houver, mas houver Carne Crua, come Carne Crua.
+
+### Carne Assada
+
+- recupera **45 de fome**;
+- não causa dano.
 
 ### Carne Crua
 
-A Carne Crua obtida dos lobos agora pode ser consumida.
+- recupera **20 de fome**;
+- causa **5 de dano**.
 
-Pressione **F** quando possuir Carne Crua e a fome não estiver cheia.
+Assim, cozinhar agora possui uma vantagem clara dentro do loop de sobrevivência.
 
-Cada unidade:
+## Fluxo atual do primeiro loop
 
-- consome **1 Carne Crua**;
-- recupera **20 pontos de fome**;
-- causa **5 de dano** ao jogador.
-
-Isso torna a Carne Crua uma comida emergencial, mas ruim. O objetivo é criar uma vantagem real para cozinhar a carne na próxima etapa.
-
-Se a quantidade chegar a zero, Carne Crua desaparece do inventário normalmente.
-
-## Fluxo atual
-
-Coletar recursos primitivos → fabricar ferramentas improvisadas → obter Madeira/Pedra → fabricar Espada → caçar Lobo → ganhar XP → obter Carne Crua/Pele → administrar Fome.
+Coletar Graveto/Pedra Pequena/Cipó → fabricar ferramentas improvisadas → obter Madeira/Pedra → fabricar ferramentas e Espada → caçar Lobo → ganhar XP → retirar Carne/Pele → controlar Fome → fabricar Fogueira → assar Carne → comer.
 
 ## Próxima etapa
 
-A próxima versão adicionará a **Fogueira e o cozimento**:
+A próxima versão utilizará a **Pele de Lobo**:
 
-- construir/fabricar uma fogueira;
-- usar Carne Crua;
-- transformar em Carne Assada;
-- comer Carne Assada sem a penalidade da carne crua e com recuperação de fome melhor.
+- fabricação de uma Armadura de Couro/Pele;
+- equipamento da armadura;
+- redução do dano recebido dos lobos.
+
+Depois disso, avançaremos para a construção da primeira base com Madeira e Pedra.
