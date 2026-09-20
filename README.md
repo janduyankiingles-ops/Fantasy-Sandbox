@@ -96,3 +96,21 @@ Depois de validar o personagem dentro do jogo, podemos aplicar a mesma direção
 7. efeitos de luz, partículas e atmosfera.
 
 A ideia é trocar os gráficos gradualmente sem alterar os sistemas que já estão funcionando.
+
+
+## Hotfix V0.0.16.2
+
+O atlas do personagem foi reexportado como PNG compacto e validado antes da publicação.
+
+A versão anterior podia ser baixada com integridade de hash, mas o arquivo binário remoto estava truncado e o Godot o rejeitava como `ERR_FILE_CORRUPT`.
+
+Correções:
+
+- atlas reduzido para **480 x 144 px**;
+- cada frame agora usa **32 x 36 px**;
+- escala visual no Godot: **2,25x**;
+- filtragem continua em **Nearest**;
+- PNG remoto validado com assinatura correta;
+- SHA-256 verificado sobre os bytes reais publicados.
+
+Nenhuma regra de gameplay foi alterada.
