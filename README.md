@@ -1,4 +1,4 @@
-# Fantasy Sandbox — V0.0.19
+# Fantasy Sandbox — V0.0.19.1
 
 ## Protótipo do novo personagem modular
 
@@ -11,7 +11,7 @@ O personagem oficial atual continua intacto.
 ## Como testar
 
 1. Abra o jogo normalmente.
-2. Pressione **F8**.
+2. Pressione **P**.
 3. Será aberta a cena de demonstração do novo personagem.
 4. Use **WASD** ou as setas para mover.
 5. Pressione **ESC** para voltar ao jogo normal.
@@ -74,4 +74,9 @@ Se essa técnica for aprovada, ela substituirá gradualmente o sistema antigo se
 
 ## Gameplay
 
-O gameplay principal da V0.0.18.2 não foi alterado. O protótipo é uma cena separada acessível por F8.
+O gameplay principal da V0.0.18.2 não foi alterado. O protótipo é uma cena separada acessível pela tecla **P**.
+
+
+## Hotfix V0.0.19.1
+
+O atalho F8 foi removido porque pode ser interceptado pelo próprio editor do Godot. O protótipo agora é aberto com **P**, capturado em `_input()` antes da interface do jogo. A HUD também mostra esse atalho.
