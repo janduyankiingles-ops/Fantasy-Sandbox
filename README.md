@@ -1,42 +1,64 @@
-# Fantasy Sandbox — V0.0.6
+# Fantasy Sandbox — V0.0.7
 
-Primeiro passo do loop inicial de gameplay: **crafting básico**.
+## Sistema desta versão: sobrevivência primitiva
 
-## Como começa
+O início do jogo agora tem duas etapas de progressão.
 
-O jogador inicia sem Machado, Picareta ou Espada. Madeira e Pedra ainda podem ser coletadas com as mãos.
+### 1. Coleta do chão
 
-## Crafting
+O jogador começa sem ferramentas e **não consegue retirar Madeira de árvores nem Pedra de rochas grandes com as mãos**.
 
-Pressione **C** para abrir/fechar a tela de crafting.
+Primeiro precisa procurar no chão:
 
-Receitas iniciais:
+- Graveto.
+- Pedra Pequena.
+- Cipó.
 
-- Machado: 3 Madeira + 2 Pedra.
-- Picareta: 2 Madeira + 3 Pedra.
-- Espada: 2 Madeira + 4 Pedra.
+Esses itens são coletados com **E**.
 
-Nesta versão cada ferramenta pode ser criada uma única vez.
+### 2. Ferramentas improvisadas
+
+No crafting (**C**):
+
+- Machado Improvisado = 2 Gravetos + 1 Pedra Pequena + 1 Cipó.
+- Picareta Improvisada = 2 Gravetos + 2 Pedras Pequenas + 1 Cipó.
+- Faca Improvisada = 1 Graveto + 1 Pedra Pequena + 1 Cipó.
+
+O Machado Improvisado libera a coleta de Madeira em árvores.
+
+A Picareta Improvisada libera a coleta de Pedra em rochas.
+
+A Faca Improvisada será usada mais adiante para retirar pele/carne de animais.
+
+### 3. Ferramentas melhores
+
+Depois de obter Madeira e Pedra:
+
+- Machado = 3 Madeira + 2 Pedra.
+- Picareta = 2 Madeira + 3 Pedra.
+- Espada = 2 Madeira + 4 Pedra.
+
+Machado e Picareta normais trabalham mais rápido que suas versões improvisadas.
 
 ## Hotbar
 
-- 1: Madeira.
-- 2: Pedra.
-- 3: Machado.
-- 4: Picareta.
-- 5: Espada.
-- 6: vazio.
+- 1: Machado Improvisado.
+- 2: Picareta Improvisada.
+- 3: Faca Improvisada.
+- 4: Machado.
+- 5: Picareta.
+- 6: Espada.
 
-Antes do crafting, Machado/Picareta/Espada aparecem como x0. Após fabricar, passam para x1.
+Um slot permanece como **Vazio** enquanto o item correspondente não tiver sido fabricado.
 
-## Ferramentas
+## Inventário
 
-- Machado continua sendo 2x eficiente em árvores.
-- Picareta continua sendo 2x eficiente em pedras.
-- A Espada já pode ser fabricada e selecionada, mas o dano de combate real será implementado no próximo sistema.
+O inventário agora é dinâmico.
 
-## Objetivo do primeiro loop
+**Itens com quantidade zero não aparecem.**
 
-Coletar recursos -> fabricar ferramentas e espada -> combate com lobos -> XP/loot -> fome/cozimento -> pele/armadura -> construção de base.
+Se o jogador pegar um Graveto, somente então Graveto aparece no inventário. O mesmo vale para recursos e ferramentas.
 
-A V0.0.6 implementa somente a etapa de **fabricar Machado, Picareta e Espada**.
+## Próximo passo do loop
+
+A próxima versão passa a ser o combate básico, preparando a entrada dos lobos.
