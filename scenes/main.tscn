@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene load_steps=7 format=3]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_main"]
 [ext_resource type="Script" path="res://scripts/world.gd" id="2_world"]
 [ext_resource type="PackedScene" path="res://scenes/player.tscn" id="3_player"]
 [ext_resource type="PackedScene" path="res://scenes/inventory_ui.tscn" id="4_inventory"]
 [ext_resource type="PackedScene" path="res://scenes/hotbar_ui.tscn" id="5_hotbar"]
+[ext_resource type="PackedScene" path="res://scenes/crafting_ui.tscn" id="6_crafting"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_main")
@@ -34,7 +35,7 @@ theme_override_constants/separation = 5
 
 [node name="Title" type="Label" parent="HUD/Panel/Margin/VBox"]
 theme_override_font_sizes/font_size = 20
-text = "FANTASY SANDBOX — V0.0.5"
+text = "FANTASY SANDBOX — V0.0.6"
 
 [node name="PositionLabel" type="Label" parent="HUD/Panel/Margin/VBox"]
 text = "Posição: 0, 0"
@@ -47,7 +48,7 @@ theme_override_font_sizes/font_size = 17
 text = "Madeira: 0    Pedra: 0"
 
 [node name="Controls" type="Label" parent="HUD/Panel/Margin/VBox"]
-text = "WASD/Setas: mover   Shift: correr\nE: coletar   Espaço: ataque   I: inventário   1-6: hotbar"
+text = "WASD/Setas: mover   Shift: correr\nE: coletar   Espaço: ataque   I: inventário   C: crafting   1-6: hotbar"
 
 [node name="InteractionPanel" type="PanelContainer" parent="HUD"]
 visible = false
@@ -78,3 +79,5 @@ horizontal_alignment = 1
 [node name="InventoryUI" parent="HUD" instance=ExtResource("4_inventory")]
 
 [node name="HotbarUI" parent="HUD" instance=ExtResource("5_hotbar")]
+
+[node name="CraftingUI" parent="HUD" instance=ExtResource("6_crafting")]
