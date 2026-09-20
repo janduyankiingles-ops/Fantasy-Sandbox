@@ -18,6 +18,7 @@ var wander_target: Vector2 = Vector2.ZERO
 var wander_time_left: float = 0.0
 var chasing: bool = false
 var player_target: CharacterBody2D = null
+var facing: Vector2 = Vector2.RIGHT
 var rng: RandomNumberGenerator = RandomNumberGenerator.new()
 
 func _ready() -> void:
@@ -75,6 +76,9 @@ func _physics_process(delta: float) -> void:
 		_chase_player(distance_to_player)
 	else:
 		_wander(delta)
+
+	if velocity.length() > 1.0:
+		facing = velocity.normalized()
 
 	move_and_slide()
 	queue_redraw()
@@ -151,8 +155,16 @@ func is_dead() -> bool:
 	return not alive
 
 func _draw() -> void:
+	var facing_direction: Vector2 = facing
+	if facing_direction == Vector2.ZERO:
+		facing_direction = Vector2.RIGHT
+
+	var facing_angle: float = facing_direction.angle()
+	draw_set_transform(Vector2.ZERO, facing_angle, Vector2.ONE)
+
 	if not alive:
-		_draw_corpse()
+		_draw_corpse_body()
+		draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 		return
 
 	var body_color: Color = Color("6f7376") if flash_time <= 0.0 else Color("d9d9d9")
@@ -177,11 +189,13 @@ func _draw() -> void:
 	draw_circle(Vector2(23, -7), 2.0, Color("e7c84c"))
 	draw_circle(Vector2(30, -2), 2.5, Color("222222"))
 
+	draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
+
 	draw_rect(Rect2(-22, -31, 44, 6), Color(0.12, 0.12, 0.12, 0.9), true)
 	var ratio: float = float(current_health) / float(max_health)
 	draw_rect(Rect2(-21, -30, 42.0 * ratio, 4), Color("b83a3a"), true)
 
-func _draw_corpse() -> void:
+func _draw_corpse_body() -> void:
 	_draw_flat_ellipse(Vector2(0, 8), Vector2(27, 12), Color("4e5052"))
 	draw_circle(Vector2(21, 7), 10.0, Color("4e5052"))
 	draw_line(Vector2(-10, 2), Vector2(15, 15), Color("7b2626"), 4.0)
