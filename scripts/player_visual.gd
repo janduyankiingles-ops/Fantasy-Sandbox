@@ -15,23 +15,32 @@ const GATHER_RIGHT: Texture2D = preload("res://assets/player/gather_right.png")
 
 const CELL_SIZE: int = 64
 
-var current_state: String = ""
+var current_state: String = "idle"
 var current_direction: String = "down"
+var current_animation_name: String = ""
+var animation_clock: float = 0.0
+var animation_frame_index: int = 0
 
 func _ready() -> void:
 	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	centered = true
 	position = Vector2(0, -17)
-	scale = Vector2(1.2, 1.2)
+	scale = Vector2(1.25, 1.25)
 	z_index = 1
+
 	_build_sprite_frames()
-	current_state = "idle"
-	current_direction = "down"
-	play("idle_down")
+	_switch_animation("idle", "down")
+
+func _process(delta: float) -> void:
+	_advance_animation(delta)
 
 func _build_sprite_frames() -> void:
 	var frames: SpriteFrames = SpriteFrames.new()
 
-	# Ordem das linhas das folhas Idle/Walk:
+	if frames.has_animation("default"):
+		frames.remove_animation("default")
+
+	# Ordem das linhas nas folhas Idle/Walk:
 	# 0 = frente, 1 = esquerda, 2 = costas, 3 = direita.
 	_add_direction_animations(frames, "down", 0, ATTACK_DOWN, GATHER_DOWN)
 	_add_direction_animations(frames, "left", 1, ATTACK_LEFT, GATHER_LEFT)
@@ -96,13 +105,14 @@ func _add_sheet_animation(
 	frames.set_animation_loop(animation_name, loop_animation)
 
 	for index in range(frame_count):
-		var frame_texture: AtlasTexture = AtlasTexture.new()
-		frame_texture.atlas = sheet
-		frame_texture.region = Rect2(
-			float(index * CELL_SIZE),
-			float(row * CELL_SIZE),
-			float(CELL_SIZE),
-			float(CELL_SIZE)
+		var frame_texture: AtlasTexture = _make_frame_texture(
+			sheet,
+			Rect2(
+				float(index * CELL_SIZE),
+				float(row * CELL_SIZE),
+				float(CELL_SIZE),
+				float(CELL_SIZE)
+			)
 		)
 		frames.add_frame(animation_name, frame_texture)
 
@@ -119,15 +129,27 @@ func _add_row_animation(
 	frames.set_animation_loop(animation_name, loop_animation)
 
 	for index in range(frame_count):
-		var frame_texture: AtlasTexture = AtlasTexture.new()
-		frame_texture.atlas = sheet
-		frame_texture.region = Rect2(
-			float(index * CELL_SIZE),
-			0.0,
-			float(CELL_SIZE),
-			float(CELL_SIZE)
+		var frame_texture: AtlasTexture = _make_frame_texture(
+			sheet,
+			Rect2(
+				float(index * CELL_SIZE),
+				0.0,
+				float(CELL_SIZE),
+				float(CELL_SIZE)
+			)
 		)
 		frames.add_frame(animation_name, frame_texture)
+
+func _make_frame_texture(sheet: Texture2D, frame_region: Rect2) -> AtlasTexture:
+	var frame_texture: AtlasTexture = AtlasTexture.new()
+	frame_texture.atlas = sheet
+	frame_texture.region = frame_region
+
+	# Impede que pixels do quadro vizinho apareçam nas bordas quando
+	# o atlas é escalado.
+	frame_texture.filter_clip = true
+
+	return frame_texture
 
 func set_visual_state(state_name: String, facing_direction: Vector2) -> void:
 	var direction_name: String = _get_direction_name(facing_direction)
@@ -138,15 +160,59 @@ func set_visual_state(state_name: String, facing_direction: Vector2) -> void:
 		final_state = "idle"
 		desired_animation = "idle_" + direction_name
 
-	# Não reinicia a animação a cada frame.
-	# Enquanto estado e direção não mudarem, o AnimatedSprite2D continua
-	# avançando normalmente pelos frames atuais.
 	if final_state == current_state and direction_name == current_direction:
 		return
 
-	current_state = final_state
+	_switch_animation(final_state, direction_name)
+
+func _switch_animation(state_name: String, direction_name: String) -> void:
+	var desired_animation: String = state_name + "_" + direction_name
+
+	if not sprite_frames.has_animation(desired_animation):
+		state_name = "idle"
+		desired_animation = "idle_" + direction_name
+
+	current_state = state_name
 	current_direction = direction_name
-	play(desired_animation)
+	current_animation_name = desired_animation
+	animation_clock = 0.0
+	animation_frame_index = 0
+
+	# A animação é avançada manualmente em _process().
+	# Assim não dependemos do estado interno de play/pause do AnimatedSprite2D.
+	stop()
+	animation = current_animation_name
+	frame = 0
+
+func _advance_animation(delta: float) -> void:
+	if current_animation_name.is_empty():
+		return
+	if sprite_frames == null:
+		return
+	if not sprite_frames.has_animation(current_animation_name):
+		return
+
+	var frame_count: int = sprite_frames.get_frame_count(current_animation_name)
+	if frame_count <= 1:
+		frame = 0
+		return
+
+	var fps: float = sprite_frames.get_animation_speed(current_animation_name)
+	if fps <= 0.0:
+		return
+
+	var frame_duration: float = 1.0 / fps
+	animation_clock += delta
+
+	while animation_clock >= frame_duration:
+		animation_clock -= frame_duration
+
+		if sprite_frames.get_animation_loop(current_animation_name):
+			animation_frame_index = (animation_frame_index + 1) % frame_count
+		else:
+			animation_frame_index = mini(animation_frame_index + 1, frame_count - 1)
+
+		frame = animation_frame_index
 
 func _get_direction_name(direction: Vector2) -> String:
 	if direction == Vector2.ZERO:
@@ -161,9 +227,8 @@ func _get_direction_name(direction: Vector2) -> String:
 	if abs_y > abs_x + 0.05:
 		return "down" if direction.y > 0.0 else "up"
 
-	# Em diagonais perfeitas, preserva a direção anterior somente quando
-	# ela ainda faz parte do movimento atual. Isso evita piscar entre
-	# duas animações enquanto duas teclas permanecem pressionadas.
+	# Em diagonais perfeitas, mantém a direção visual anterior enquanto
+	# ela ainda fizer parte do movimento.
 	if current_direction == "left" and direction.x < 0.0:
 		return "left"
 	if current_direction == "right" and direction.x > 0.0:
