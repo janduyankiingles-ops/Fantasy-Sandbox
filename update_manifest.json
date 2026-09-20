@@ -2,9 +2,9 @@
   "schema": 2,
   "app": "Fantasy Sandbox",
   "channel": "stable",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "minimum_updater": "1.1.0",
-  "source_commit": "9ed6527bfa1afd850980ee3c1e7b54ec86f5e4f6",
+  "source_commit": "0e86c496c9d6932c94258e86b062927ea478501b",
   "files": [
     {
       "path": ".gitignore",
@@ -16,7 +16,7 @@
     },
     {
       "path": "README.md",
-      "sha256": "23b18ed7fb652ac1eb0fed95d2dd9c3d61e202c6ba19e075104faaf9c0910390"
+      "sha256": "9cb9ca8995f5b0308b486cb286c2014b5d8e311d3d4daf3a177f0d4dec327378"
     },
     {
       "path": "project.godot",
@@ -24,7 +24,7 @@
     },
     {
       "path": "scenes/main.tscn",
-      "sha256": "b9b4655008fb4a4e645350a4ab0f623fb1472c3b3d9b46f39b5535609218c873"
+      "sha256": "916177486f59ae1ee45065072f9a8d983756d60b0dc5f1397c802a2a80ec986e"
     },
     {
       "path": "scenes/player.tscn",
@@ -48,11 +48,11 @@
     },
     {
       "path": "scripts/main.gd",
-      "sha256": "91c16de49c8963a1dedff65a392d76494a7de8d6c6abceeea7a82d53ab7eebc6"
+      "sha256": "3543891c98469d4bdffe7c0805be7886f8ce8392ece33d31bd7da45970c5c7c2"
     },
     {
       "path": "scripts/player.gd",
-      "sha256": "6c12231c9ffa9034ed7c4fed27afb012322713e039690cf2f8af9dc31af20e8c"
+      "sha256": "2d89287814fc84248975862ff731cf701bdea360735784d65b77fe6b23385db4"
     },
     {
       "path": "scripts/resource_node.gd",
