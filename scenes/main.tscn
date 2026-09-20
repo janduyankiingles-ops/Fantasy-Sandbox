@@ -35,7 +35,7 @@ z_index = 4
 offset_left = 18.0
 offset_top = 18.0
 offset_right = 430.0
-offset_bottom = 270.0
+offset_bottom = 300.0
 
 [node name="Margin" type="MarginContainer" parent="HUD/Panel"]
 theme_override_constants/margin_left = 14
@@ -48,7 +48,7 @@ theme_override_constants/separation = 5
 
 [node name="Title" type="Label" parent="HUD/Panel/Margin/VBox"]
 theme_override_font_sizes/font_size = 20
-text = "FANTASY SANDBOX — V0.0.10"
+text = "FANTASY SANDBOX — V0.0.11"
 
 [node name="PositionLabel" type="Label" parent="HUD/Panel/Margin/VBox"]
 text = "Posição: 0, 0"
@@ -60,6 +60,10 @@ text = "Estado: PARADO"
 theme_override_font_sizes/font_size = 17
 text = "Vida: 100/100"
 
+[node name="HungerLabel" type="Label" parent="HUD/Panel/Margin/VBox"]
+theme_override_font_sizes/font_size = 17
+text = "Fome: 100/100"
+
 [node name="ProgressionLabel" type="Label" parent="HUD/Panel/Margin/VBox"]
 theme_override_font_sizes/font_size = 17
 text = "Nível: 1 | XP: 0/100"
@@ -69,7 +73,7 @@ theme_override_font_sizes/font_size = 17
 text = "Gravetos: 0 | Pedrinhas: 0 | Cipó: 0\nMadeira: 0 | Pedra: 0"
 
 [node name="Controls" type="Label" parent="HUD/Panel/Margin/VBox"]
-text = "WASD/Setas: mover   Shift: correr\nE: coletar   Espaço: atacar   I: inventário   C: crafting   1-6: ferramentas"
+text = "WASD/Setas: mover   Shift: correr\nE: coletar   Espaço: atacar   F: comer carne crua\nI: inventário   C: crafting   1-6: ferramentas"
 
 [node name="InteractionPanel" type="PanelContainer" parent="HUD"]
 visible = false
