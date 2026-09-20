@@ -11,7 +11,9 @@ var item_order: Array[String] = [
 	"improvised_knife",
 	"axe",
 	"pickaxe",
-	"sword"
+	"sword",
+	"raw_meat",
+	"wolf_hide"
 ]
 
 var item_names: Dictionary = {
@@ -25,7 +27,9 @@ var item_names: Dictionary = {
 	"improvised_knife": "Faca Improvisada",
 	"axe": "Machado",
 	"pickaxe": "Picareta",
-	"sword": "Espada"
+	"sword": "Espada",
+	"raw_meat": "Carne Crua",
+	"wolf_hide": "Pele de Lobo"
 }
 
 @onready var slots: Array[PanelContainer] = [
@@ -40,7 +44,11 @@ var item_names: Dictionary = {
 	$InventoryPanel/Margin/VBox/Grid/Slot9,
 	$InventoryPanel/Margin/VBox/Grid/Slot10,
 	$InventoryPanel/Margin/VBox/Grid/Slot11,
-	$InventoryPanel/Margin/VBox/Grid/Slot12
+	$InventoryPanel/Margin/VBox/Grid/Slot12,
+	$InventoryPanel/Margin/VBox/Grid/Slot13,
+	$InventoryPanel/Margin/VBox/Grid/Slot14,
+	$InventoryPanel/Margin/VBox/Grid/Slot15,
+	$InventoryPanel/Margin/VBox/Grid/Slot16
 ]
 
 func _ready() -> void:
