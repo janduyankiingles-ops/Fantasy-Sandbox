@@ -100,9 +100,10 @@ func _perform_attack() -> void:
 		if not node.has_method("take_damage"):
 			continue
 
-		var target: Node2D = node as Node2D
-		if target == null:
+		if node is not Node2D:
 			continue
+
+		var target: Node2D = node
 
 		var offset: Vector2 = target.global_position - global_position
 		var distance: float = offset.length()
