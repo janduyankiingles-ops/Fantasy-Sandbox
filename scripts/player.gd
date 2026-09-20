@@ -473,6 +473,26 @@ func get_inventory_amount(item_key: String) -> int:
 func get_inventory_snapshot() -> Dictionary:
 	return inventory.duplicate()
 
+func has_build_resources(costs: Dictionary) -> bool:
+	for resource_key in costs.keys():
+		var needed: int = int(costs[resource_key])
+		var available: int = int(inventory.get(resource_key, 0))
+		if available < needed:
+			return false
+
+	return true
+
+func consume_build_resources(costs: Dictionary) -> bool:
+	if not has_build_resources(costs):
+		return false
+
+	for resource_key in costs.keys():
+		var needed: int = int(costs[resource_key])
+		inventory[resource_key] = int(inventory.get(resource_key, 0)) - needed
+
+	inventory_changed.emit()
+	return true
+
 func craft_item(item_key: String) -> bool:
 	var costs: Dictionary = _get_recipe_costs(item_key)
 	if costs.is_empty():
