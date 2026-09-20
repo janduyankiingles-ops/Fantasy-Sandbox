@@ -41,6 +41,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 		if selected_slot >= 0:
 			hotbar_ui.call("select_slot", selected_slot)
+			player.call("set_selected_hotbar_slot", selected_slot)
 			get_viewport().set_input_as_handled()
 
 func _process(_delta: float) -> void:
