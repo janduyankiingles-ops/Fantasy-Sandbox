@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 const CampfireScene = preload("res://scenes/campfire.tscn")
 
-@onready var visual: Sprite2D = $Visual as Sprite2D
+@onready var visual: Node2D = $Visual as Node2D
 
 signal inventory_changed
 signal health_changed
@@ -154,7 +154,7 @@ func _update_visual_state(move_input: Vector2) -> void:
 	elif move_input.length_squared() > 0.0:
 		state_name = "walk"
 
-	visual.call("set_visual_state", state_name, facing)
+	visual.call("set_visual_state", state_name, facing, get_selected_item_key())
 
 func _start_gather_animation() -> void:
 	if is_attacking:
