@@ -157,7 +157,11 @@ func _update_preview_position() -> void:
 	if player == null:
 		return
 
-	var direction: Vector2 = player.get("facing")
+	var direction_value: Variant = player.get("facing")
+	var direction: Vector2 = Vector2.DOWN
+	if direction_value is Vector2:
+		direction = direction_value
+
 	if direction == Vector2.ZERO:
 		direction = Vector2.DOWN
 
