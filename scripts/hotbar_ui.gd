@@ -20,8 +20,7 @@ func refresh_hotbar(wood_amount: int, stone_amount: int) -> void:
 	stone_count.text = "x%d" % stone_amount
 
 func select_slot(slot_index: int) -> void:
-	var clamped_index: int = clampi(slot_index, 0, 5)
-	selected_slot = clamped_index
+	selected_slot = clampi(slot_index, 0, 5)
 
 	var slots: Array[PanelContainer] = [
 		slot_1,
@@ -38,12 +37,17 @@ func select_slot(slot_index: int) -> void:
 		else:
 			slots[i].modulate = Color.WHITE
 
-	if selected_slot == 0:
-		selected_label.text = "Selecionado: Madeira"
-	elif selected_slot == 1:
-		selected_label.text = "Selecionado: Pedra"
-	else:
-		selected_label.text = "Selecionado: Vazio"
+	match selected_slot:
+		0:
+			selected_label.text = "Selecionado: Madeira"
+		1:
+			selected_label.text = "Selecionado: Pedra"
+		2:
+			selected_label.text = "Selecionado: Machado"
+		3:
+			selected_label.text = "Selecionado: Picareta"
+		_:
+			selected_label.text = "Selecionado: Vazio"
 
 func get_selected_slot() -> int:
 	return selected_slot
