@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+const CampfireScene = preload("res://scenes/campfire.tscn")
+
 signal inventory_changed
 signal health_changed
 
@@ -34,7 +36,7 @@ var current_xp: int = 0
 var xp_to_next_level: int = 100
 var current_hunger: float = 100.0
 var starvation_tick_left: float = 2.0
-var eat_raw_was_down: bool = false
+var eat_food_was_down: bool = false
 
 var inventory: Dictionary = {
 	"stick": 0,
@@ -49,7 +51,9 @@ var inventory: Dictionary = {
 	"pickaxe": 0,
 	"sword": 0,
 	"raw_meat": 0,
-	"wolf_hide": 0
+	"cooked_meat": 0,
+	"wolf_hide": 0,
+	"campfire_kit": 0
 }
 
 func _ready() -> void:
@@ -113,10 +117,10 @@ func _physics_process(delta: float) -> void:
 		_try_harvest()
 	interact_was_down = interact_down
 
-	var eat_raw_down: bool = Input.is_key_pressed(KEY_F)
-	if eat_raw_down and not eat_raw_was_down:
-		_try_eat_raw_meat()
-	eat_raw_was_down = eat_raw_down
+	var eat_food_down: bool = Input.is_key_pressed(KEY_F)
+	if eat_food_down and not eat_food_was_down:
+		_try_eat_food()
+	eat_food_was_down = eat_food_down
 
 	move_and_slide()
 	queue_redraw()
@@ -132,17 +136,24 @@ func _update_hunger(delta: float) -> void:
 		starvation_tick_left = starvation_interval
 		take_damage(starvation_damage)
 
-func _try_eat_raw_meat() -> void:
+func _try_eat_food() -> void:
 	if dead:
 		return
 	if current_hunger >= max_hunger:
 		return
 
-	var amount: int = int(inventory.get("raw_meat", 0))
-	if amount <= 0:
+	var cooked_amount: int = int(inventory.get("cooked_meat", 0))
+	if cooked_amount > 0:
+		inventory["cooked_meat"] = cooked_amount - 1
+		current_hunger = minf(max_hunger, current_hunger + 45.0)
+		inventory_changed.emit()
 		return
 
-	inventory["raw_meat"] = amount - 1
+	var raw_amount: int = int(inventory.get("raw_meat", 0))
+	if raw_amount <= 0:
+		return
+
+	inventory["raw_meat"] = raw_amount - 1
 	current_hunger = minf(max_hunger, current_hunger + 20.0)
 	inventory_changed.emit()
 
@@ -240,7 +251,7 @@ func _respawn() -> void:
 	attack_time = 0.0
 	attack_was_down = false
 	interact_was_down = false
-	eat_raw_was_down = false
+	eat_food_was_down = false
 	nearby_resource = null
 	health_changed.emit()
 	queue_redraw()
@@ -305,8 +316,13 @@ func _try_harvest() -> void:
 
 	var selected_tool: String = get_selected_item_key()
 	var result: Dictionary = nearby_resource.call("harvest", selected_tool)
-	var amount: int = int(result.get("amount", 0))
 
+	var action: String = str(result.get("action", ""))
+	if action == "cook":
+		_try_cook_raw_meat()
+		return
+
+	var amount: int = int(result.get("amount", 0))
 	if amount <= 0:
 		return
 
@@ -318,6 +334,41 @@ func _try_harvest() -> void:
 	inventory[inventory_key] = int(inventory.get(inventory_key, 0)) + amount
 	interact_cooldown_left = interaction_cooldown
 	inventory_changed.emit()
+
+func _try_cook_raw_meat() -> void:
+	var raw_amount: int = int(inventory.get("raw_meat", 0))
+	if raw_amount <= 0:
+		return
+
+	inventory["raw_meat"] = raw_amount - 1
+	inventory["cooked_meat"] = int(inventory.get("cooked_meat", 0)) + 1
+	interact_cooldown_left = interaction_cooldown
+	inventory_changed.emit()
+
+func place_campfire() -> bool:
+	var kit_amount: int = int(inventory.get("campfire_kit", 0))
+	if kit_amount <= 0 or dead:
+		return false
+
+	var campfire_node: Node = CampfireScene.instantiate()
+	if campfire_node is not Node2D:
+		return false
+
+	var campfire: Node2D = campfire_node
+	var parent_node: Node = get_parent()
+	if parent_node == null:
+		return false
+
+	parent_node.add_child(campfire)
+
+	var placement_direction: Vector2 = facing.normalized()
+	if placement_direction == Vector2.ZERO:
+		placement_direction = Vector2.DOWN
+
+	campfire.global_position = global_position + placement_direction * 82.0
+	inventory["campfire_kit"] = kit_amount - 1
+	inventory_changed.emit()
+	return true
 
 func _resource_type_to_inventory_key(resource_type: String) -> String:
 	match resource_type:
@@ -335,6 +386,8 @@ func _resource_type_to_inventory_key(resource_type: String) -> String:
 			return "raw_meat"
 		"wolf_hide":
 			return "wolf_hide"
+		"cooked_meat":
+			return "cooked_meat"
 		_:
 			return ""
 
@@ -419,6 +472,8 @@ func _get_recipe_costs(item_key: String) -> Dictionary:
 			return {"wood": 2, "stone": 3}
 		"sword":
 			return {"wood": 2, "stone": 4}
+		"campfire_kit":
+			return {"wood": 3, "stone": 3}
 		_:
 			return {}
 
