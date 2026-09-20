@@ -2,47 +2,57 @@ extends Control
 
 signal craft_requested(item_key: String)
 
-@onready var wood_label: Label = $CraftingPanel/Margin/VBox/Resources
+@onready var resources_label: Label = $CraftingPanel/Margin/VBox/Resources
+@onready var improvised_axe_button: Button = $CraftingPanel/Margin/VBox/Recipes/ImprovisedAxeButton
+@onready var improvised_pickaxe_button: Button = $CraftingPanel/Margin/VBox/Recipes/ImprovisedPickaxeButton
+@onready var improvised_knife_button: Button = $CraftingPanel/Margin/VBox/Recipes/ImprovisedKnifeButton
 @onready var axe_button: Button = $CraftingPanel/Margin/VBox/Recipes/AxeButton
 @onready var pickaxe_button: Button = $CraftingPanel/Margin/VBox/Recipes/PickaxeButton
 @onready var sword_button: Button = $CraftingPanel/Margin/VBox/Recipes/SwordButton
 @onready var status_label: Label = $CraftingPanel/Margin/VBox/Status
 
-var wood_amount: int = 0
-var stone_amount: int = 0
-var axe_amount: int = 0
-var pickaxe_amount: int = 0
-var sword_amount: int = 0
+var snapshot: Dictionary = {}
+
+var recipe_costs: Dictionary = {
+	"improvised_axe": {"stick": 2, "small_stone": 1, "vine": 1},
+	"improvised_pickaxe": {"stick": 2, "small_stone": 2, "vine": 1},
+	"improvised_knife": {"stick": 1, "small_stone": 1, "vine": 1},
+	"axe": {"wood": 3, "stone": 2},
+	"pickaxe": {"wood": 2, "stone": 3},
+	"sword": {"wood": 2, "stone": 4}
+}
 
 func _ready() -> void:
 	visible = false
+
+	improvised_axe_button.pressed.connect(_on_improvised_axe_pressed)
+	improvised_pickaxe_button.pressed.connect(_on_improvised_pickaxe_pressed)
+	improvised_knife_button.pressed.connect(_on_improvised_knife_pressed)
 	axe_button.pressed.connect(_on_axe_pressed)
 	pickaxe_button.pressed.connect(_on_pickaxe_pressed)
 	sword_button.pressed.connect(_on_sword_pressed)
+
 	_refresh_buttons()
 
 func toggle_crafting() -> void:
 	visible = not visible
 	if visible:
-		status_label.text = "Escolha uma receita."
+		status_label.text = "Fabrique primeiro ferramentas improvisadas."
 
 func close_crafting() -> void:
 	visible = false
 
-func refresh_crafting(
-	new_wood_amount: int,
-	new_stone_amount: int,
-	new_axe_amount: int,
-	new_pickaxe_amount: int,
-	new_sword_amount: int
-) -> void:
-	wood_amount = new_wood_amount
-	stone_amount = new_stone_amount
-	axe_amount = new_axe_amount
-	pickaxe_amount = new_pickaxe_amount
-	sword_amount = new_sword_amount
+func refresh_crafting(new_snapshot: Dictionary) -> void:
+	snapshot = new_snapshot.duplicate()
 
-	wood_label.text = "Recursos: Madeira %d | Pedra %d" % [wood_amount, stone_amount]
+	resources_label.text = "Chão: Graveto %d | Pedra Pequena %d | Cipó %d\nGrandes: Madeira %d | Pedra %d" % [
+		int(snapshot.get("stick", 0)),
+		int(snapshot.get("small_stone", 0)),
+		int(snapshot.get("vine", 0)),
+		int(snapshot.get("wood", 0)),
+		int(snapshot.get("stone", 0))
+	]
+
 	_refresh_buttons()
 
 func show_result(success: bool, item_name: String) -> void:
@@ -52,13 +62,49 @@ func show_result(success: bool, item_name: String) -> void:
 		status_label.text = "Não foi possível fabricar %s." % item_name
 
 func _refresh_buttons() -> void:
-	axe_button.disabled = axe_amount > 0 or wood_amount < 3 or stone_amount < 2
-	pickaxe_button.disabled = pickaxe_amount > 0 or wood_amount < 2 or stone_amount < 3
-	sword_button.disabled = sword_amount > 0 or wood_amount < 2 or stone_amount < 4
+	improvised_axe_button.disabled = not _can_craft("improvised_axe")
+	improvised_pickaxe_button.disabled = not _can_craft("improvised_pickaxe")
+	improvised_knife_button.disabled = not _can_craft("improvised_knife")
+	axe_button.disabled = not _can_craft("axe")
+	pickaxe_button.disabled = not _can_craft("pickaxe")
+	sword_button.disabled = not _can_craft("sword")
 
-	axe_button.text = "Machado — 3 Madeira + 2 Pedra" + ("  [CRIADO]" if axe_amount > 0 else "")
-	pickaxe_button.text = "Picareta — 2 Madeira + 3 Pedra" + ("  [CRIADA]" if pickaxe_amount > 0 else "")
-	sword_button.text = "Espada — 2 Madeira + 4 Pedra" + ("  [CRIADA]" if sword_amount > 0 else "")
+	improvised_axe_button.text = "Machado Improvisado — 2 Gravetos + 1 Pedra Pequena + 1 Cipó" + _crafted_suffix("improvised_axe")
+	improvised_pickaxe_button.text = "Picareta Improvisada — 2 Gravetos + 2 Pedras Pequenas + 1 Cipó" + _crafted_suffix("improvised_pickaxe")
+	improvised_knife_button.text = "Faca Improvisada — 1 Graveto + 1 Pedra Pequena + 1 Cipó" + _crafted_suffix("improvised_knife")
+	axe_button.text = "Machado — 3 Madeira + 2 Pedra" + _crafted_suffix("axe")
+	pickaxe_button.text = "Picareta — 2 Madeira + 3 Pedra" + _crafted_suffix("pickaxe")
+	sword_button.text = "Espada — 2 Madeira + 4 Pedra" + _crafted_suffix("sword")
+
+func _can_craft(item_key: String) -> bool:
+	if int(snapshot.get(item_key, 0)) > 0:
+		return false
+
+	var costs: Dictionary = recipe_costs.get(item_key, {})
+	if costs.is_empty():
+		return false
+
+	for resource_key in costs.keys():
+		var needed: int = int(costs[resource_key])
+		var available: int = int(snapshot.get(resource_key, 0))
+		if available < needed:
+			return false
+
+	return true
+
+func _crafted_suffix(item_key: String) -> String:
+	if int(snapshot.get(item_key, 0)) > 0:
+		return "  [CRIADO]"
+	return ""
+
+func _on_improvised_axe_pressed() -> void:
+	craft_requested.emit("improvised_axe")
+
+func _on_improvised_pickaxe_pressed() -> void:
+	craft_requested.emit("improvised_pickaxe")
+
+func _on_improvised_knife_pressed() -> void:
+	craft_requested.emit("improvised_knife")
 
 func _on_axe_pressed() -> void:
 	craft_requested.emit("axe")
