@@ -25,6 +25,9 @@ var current_health: int = 100
 var dead: bool = false
 var respawn_time_left: float = 0.0
 var spawn_position: Vector2 = Vector2.ZERO
+var level: int = 1
+var current_xp: int = 0
+var xp_to_next_level: int = 100
 
 var inventory: Dictionary = {
 	"stick": 0,
@@ -37,7 +40,9 @@ var inventory: Dictionary = {
 	"improvised_knife": 0,
 	"axe": 0,
 	"pickaxe": 0,
-	"sword": 0
+	"sword": 0,
+	"raw_meat": 0,
+	"wolf_hide": 0
 }
 
 func _ready() -> void:
@@ -135,7 +140,14 @@ func _perform_attack() -> void:
 		best_target = target
 
 	if best_target != null:
-		best_target.call("take_damage", damage)
+		var damage_result: Variant = best_target.call("take_damage", damage)
+
+		if damage_result is Dictionary:
+			var result: Dictionary = damage_result
+			if bool(result.get("killed", false)):
+				var xp_reward: int = int(result.get("xp", 0))
+				if xp_reward > 0:
+					add_xp(xp_reward)
 
 func _get_attack_damage() -> int:
 	var item_key: String = get_selected_item_key()
@@ -193,6 +205,27 @@ func get_current_health() -> int:
 func get_max_health() -> int:
 	return max_health
 
+func add_xp(amount: int) -> void:
+	if amount <= 0:
+		return
+
+	current_xp += amount
+
+	while current_xp >= xp_to_next_level:
+		current_xp -= xp_to_next_level
+		level += 1
+		xp_to_next_level = level * 100
+
+func get_progression_text() -> String:
+	return "Nível: %d | XP: %d/%d" % [level, current_xp, xp_to_next_level]
+
+func get_level() -> int:
+	return level
+
+func get_current_xp() -> int:
+	return current_xp
+
+
 func is_dead() -> bool:
 	return dead
 
@@ -247,6 +280,10 @@ func _resource_type_to_inventory_key(resource_type: String) -> String:
 			return "wood"
 		"rock":
 			return "stone"
+		"raw_meat":
+			return "raw_meat"
+		"wolf_hide":
+			return "wolf_hide"
 		_:
 			return ""
 
