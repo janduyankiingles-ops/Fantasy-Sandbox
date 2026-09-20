@@ -2,9 +2,9 @@
   "schema": 2,
   "app": "Fantasy Sandbox",
   "channel": "stable",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "minimum_updater": "1.1.0",
-  "source_commit": "14a2e4a76396d0b12c8cf589d4a503e2c52b1781",
+  "source_commit": "eba98281e6aed04d352dffd6bf52229ab6d7f05e",
   "files": [
     {
       "path": ".gitignore",
@@ -16,7 +16,7 @@
     },
     {
       "path": "README.md",
-      "sha256": "6d107773a15209ab6c3f3b42d662f3207659c212a5a9197375546d4e8fd90faa"
+      "sha256": "646a850d881a5db87497ccb9fde640cfcaed48e4b3903adf03ac51fe634d69d4"
     },
     {
       "path": "project.godot",
@@ -24,7 +24,7 @@
     },
     {
       "path": "scenes/main.tscn",
-      "sha256": "2d8a7962db9048318814e20fa5067d44c0e8e28cfe824c32d662f39840a735ca"
+      "sha256": "c0ac8d4fddf74f8f1100f466033c588f470cf76c79a19afc28679b1025004ff9"
     },
     {
       "path": "scenes/player.tscn",
@@ -52,7 +52,7 @@
     },
     {
       "path": "scripts/player.gd",
-      "sha256": "09ab1b24d1357b77fcaae572597e7e462730f9ddf7440644174d97f18cdc96b7"
+      "sha256": "63ea30f2c416fd31a9f7519fb1e57b909a496295ad830400c461dea08f3eacb8"
     },
     {
       "path": "scripts/resource_node.gd",
@@ -60,7 +60,7 @@
     },
     {
       "path": "scripts/world.gd",
-      "sha256": "f2bf8f56876392f632ab2ad4bc6a142f5fe11a9d6cb10787bde8b5365fe5ea58"
+      "sha256": "2c03fbc38e8ed4b9d95790e799e1ed07ecb34f0bf466bd740292a33d9ee50542"
     },
     {
       "path": "scripts/inventory_ui.gd",
@@ -96,7 +96,7 @@
     },
     {
       "path": "scripts/wolf.gd",
-      "sha256": "791f81172a14a682a60515ca2cfcfdba924ea9d1d7951331ee411766d78ac8e2"
+      "sha256": "0dbddc6c6dcc33bc55fc6f86f1ced4118f309246062a080620ea33a7323cdf9f"
     },
     {
       "path": "scenes/campfire.tscn",
@@ -124,7 +124,7 @@
     },
     {
       "path": "scripts/building_system.gd",
-      "sha256": "db09977a9b8db312c5a1b8d1a64e8d52f5c7945d60e184e7a2a185d54e79e94f"
+      "sha256": "3d4601fe73774b8d3139c4c600b5527abb5f9e4cb96375d635e01403eac281b8"
     }
   ],
   "delete": []
