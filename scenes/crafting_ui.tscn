@@ -30,23 +30,23 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -280.0
-offset_top = -205.0
-offset_right = 280.0
-offset_bottom = 205.0
+offset_left = -355.0
+offset_top = -300.0
+offset_right = 355.0
+offset_bottom = 300.0
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Margin" type="MarginContainer" parent="CraftingPanel"]
 layout_mode = 2
 theme_override_constants/margin_left = 24
-theme_override_constants/margin_top = 20
+theme_override_constants/margin_top = 18
 theme_override_constants/margin_right = 24
-theme_override_constants/margin_bottom = 20
+theme_override_constants/margin_bottom = 18
 
 [node name="VBox" type="VBoxContainer" parent="CraftingPanel/Margin"]
 layout_mode = 2
-theme_override_constants/separation = 12
+theme_override_constants/separation = 9
 
 [node name="Title" type="Label" parent="CraftingPanel/Margin/VBox"]
 layout_mode = 2
@@ -56,35 +56,60 @@ horizontal_alignment = 1
 
 [node name="Hint" type="Label" parent="CraftingPanel/Margin/VBox"]
 layout_mode = 2
-text = "C: abrir/fechar | Fabrique uma unidade de cada ferramenta"
+text = "C para fechar | Etapa 1: improvisado → Etapa 2: madeira e pedra"
 horizontal_alignment = 1
 
 [node name="Resources" type="Label" parent="CraftingPanel/Margin/VBox"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 18
-text = "Recursos: Madeira 0 | Pedra 0"
+theme_override_font_sizes/font_size = 17
+text = "Chão: Graveto 0 | Pedra Pequena 0 | Cipó 0\nGrandes: Madeira 0 | Pedra 0"
 horizontal_alignment = 1
 
 [node name="Recipes" type="VBoxContainer" parent="CraftingPanel/Margin/VBox"]
 layout_mode = 2
-theme_override_constants/separation = 8
+theme_override_constants/separation = 6
+
+[node name="PrimitiveTitle" type="Label" parent="CraftingPanel/Margin/VBox/Recipes"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "FERRAMENTAS IMPROVISADAS"
+
+[node name="ImprovisedAxeButton" type="Button" parent="CraftingPanel/Margin/VBox/Recipes"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 44)
+text = "Machado Improvisado"
+
+[node name="ImprovisedPickaxeButton" type="Button" parent="CraftingPanel/Margin/VBox/Recipes"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 44)
+text = "Picareta Improvisada"
+
+[node name="ImprovisedKnifeButton" type="Button" parent="CraftingPanel/Margin/VBox/Recipes"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 44)
+text = "Faca Improvisada"
+
+[node name="StoneTitle" type="Label" parent="CraftingPanel/Margin/VBox/Recipes"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "FERRAMENTAS DE MADEIRA E PEDRA"
 
 [node name="AxeButton" type="Button" parent="CraftingPanel/Margin/VBox/Recipes"]
 layout_mode = 2
-custom_minimum_size = Vector2(0, 52)
-text = "Machado — 3 Madeira + 2 Pedra"
+custom_minimum_size = Vector2(0, 44)
+text = "Machado"
 
 [node name="PickaxeButton" type="Button" parent="CraftingPanel/Margin/VBox/Recipes"]
 layout_mode = 2
-custom_minimum_size = Vector2(0, 52)
-text = "Picareta — 2 Madeira + 3 Pedra"
+custom_minimum_size = Vector2(0, 44)
+text = "Picareta"
 
 [node name="SwordButton" type="Button" parent="CraftingPanel/Margin/VBox/Recipes"]
 layout_mode = 2
-custom_minimum_size = Vector2(0, 52)
-text = "Espada — 2 Madeira + 4 Pedra"
+custom_minimum_size = Vector2(0, 44)
+text = "Espada"
 
 [node name="Status" type="Label" parent="CraftingPanel/Margin/VBox"]
 layout_mode = 2
-text = "Escolha uma receita."
+text = "Fabrique primeiro ferramentas improvisadas."
 horizontal_alignment = 1
