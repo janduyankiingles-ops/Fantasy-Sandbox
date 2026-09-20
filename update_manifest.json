@@ -2,9 +2,9 @@
   "schema": 2,
   "app": "Fantasy Sandbox",
   "channel": "stable",
-  "version": "0.0.17",
+  "version": "0.0.18",
   "minimum_updater": "1.1.0",
-  "source_commit": "30aab9cc87eef566661d6a1c815cb2f6361f1f18",
+  "source_commit": "98a6fd10a4445845c0ad3222573eceac6999ea7b",
   "files": [
     {
       "path": ".gitignore",
@@ -16,7 +16,7 @@
     },
     {
       "path": "README.md",
-      "sha256": "22011a3b1155522d687e88d50127568a6807b23610ed9f00d42e64d00027cba3"
+      "sha256": "d0f31b36f377d7758a56e972609f81caaddb4a96af9d6104d705c12a99d8d61d"
     },
     {
       "path": "project.godot",
@@ -24,7 +24,7 @@
     },
     {
       "path": "scenes/main.tscn",
-      "sha256": "8929402f6ec51d51f76a2ece0ec7724b0c2d8c5665e3c35f47883196966d7964"
+      "sha256": "b6cea3e40f5fb3a981656474fc73493e501c92e7d22ca631e22a3dbd25b65aba"
     },
     {
       "path": "scenes/player.tscn",
@@ -128,26 +128,52 @@
     },
     {
       "path": "scripts/player_visual.gd",
-      "sha256": "2d0cbe3b0b672de2be9515f9c75135b2af6eefebef92586ed25c3d83a3dbab3e"
+      "sha256": "9a662b04d1dbe5d68b4c2cb9695414131e25916e820a18266c67345810ffea17"
     },
     {
       "path": "assets/player/idle.png",
-      "sha256": "83879db02cd96df1a4a8997d0d9c685fa044bf7d36e7abb45ee2a9a150cc9ca9"
+      "sha256": "dcec07c41bc38a16535d45d60eec21c022744b88c58f24f7e3e593638630d2d4"
     },
     {
       "path": "assets/player/walk.png",
-      "sha256": "3d960ddd6e69da13f0ee5efabe79fb3cbc8e65254ccbd8e7b6d3d8ce92d4023c"
+      "sha256": "f0327cd0cac8567304914c2843678bb6f8706b421ec2f29a0de5f33a1632c264"
     },
     {
-      "path": "assets/player/attack.png",
-      "sha256": "0a82a7e87f69fab33bd0e0e627f1b2b05f77849d1fbaea9ffd8c6bf6990dca00"
+      "path": "assets/player/attack_down.png",
+      "sha256": "811be927d402ce324382fafedf8e4fe88ff3eccefcdb788b671de8ebde9dbee7"
     },
     {
-      "path": "assets/player/gather.png",
-      "sha256": "5853e0a2d804565499ca4a9d9d9136f8cb8c7a156fe876c93c574023de4e3709"
+      "path": "assets/player/attack_left.png",
+      "sha256": "67dd5bb0848457aaac96b4af51fac7ea0a048569ed14e7dfac19358e8d79822f"
+    },
+    {
+      "path": "assets/player/attack_up.png",
+      "sha256": "cddad5944dc4bd58da147dc3fd543325722008563666c9c851aca37e54649038"
+    },
+    {
+      "path": "assets/player/attack_right.png",
+      "sha256": "feeb56884c9216b7d90233b7d3f4cbb3cb6b42470a19456014ead14a6d816dd5"
+    },
+    {
+      "path": "assets/player/gather_down.png",
+      "sha256": "ecc7221963ae05c2397f510fb28f1b90fd51ab765fc478cd0b0a8f3396e44a32"
+    },
+    {
+      "path": "assets/player/gather_left.png",
+      "sha256": "eeeda450966ee327649ef826a6c565b9781cf5b29648b19daba745e07d75ad0a"
+    },
+    {
+      "path": "assets/player/gather_up.png",
+      "sha256": "e179ca95b901b170c47a0f54d592c1e3127ce7429374d3991b68a2ef0b040fec"
+    },
+    {
+      "path": "assets/player/gather_right.png",
+      "sha256": "4b8e87aa45e2c7dffe5b866116cd7e2a25aabd487f96cb409cd7018750e803e4"
     }
   ],
   "delete": [
-    "assets/player/player_atlas.png"
+    "assets/player/player_atlas.png",
+    "assets/player/attack.png",
+    "assets/player/gather.png"
   ]
 }
