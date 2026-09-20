@@ -17,6 +17,8 @@ var home_position: Vector2 = Vector2.ZERO
 var wander_target: Vector2 = Vector2.ZERO
 var wander_time_left: float = 0.0
 var chasing: bool = false
+var meat_collected: bool = false
+var hide_collected: bool = false
 var player_target: CharacterBody2D = null
 var facing: Vector2 = Vector2.RIGHT
 var rng: RandomNumberGenerator = RandomNumberGenerator.new()
@@ -128,9 +130,9 @@ func _choose_wander_target() -> void:
 	wander_target = home_position + Vector2(cos(angle), sin(angle)) * distance
 	wander_time_left = rng.randf_range(2.0, 4.5)
 
-func take_damage(amount: int) -> void:
+func take_damage(amount: int) -> Dictionary:
 	if not alive or amount <= 0:
-		return
+		return {"killed": false}
 
 	current_health = maxi(0, current_health - amount)
 	flash_time = 0.12
@@ -138,18 +140,69 @@ func take_damage(amount: int) -> void:
 
 	if current_health <= 0:
 		_die()
+		queue_redraw()
+		return {
+			"killed": true,
+			"xp": 25
+		}
 
 	queue_redraw()
+	return {"killed": false}
 
 func _die() -> void:
 	alive = false
 	velocity = Vector2.ZERO
 	remove_from_group("damageable")
+	add_to_group("resource_nodes")
 
 	var collision_node: Node = get_node_or_null("CollisionShape2D")
 	if collision_node is CollisionShape2D:
 		var collision: CollisionShape2D = collision_node
 		collision.set_deferred("disabled", true)
+
+func harvest(tool_key: String = "") -> Dictionary:
+	if alive:
+		return {"type": "", "amount": 0}
+
+	if not meat_collected:
+		meat_collected = true
+		queue_redraw()
+		return {
+			"type": "raw_meat",
+			"amount": 2
+		}
+
+	if not hide_collected:
+		if tool_key != "improvised_knife":
+			return {
+				"type": "",
+				"amount": 0,
+				"blocked": true
+			}
+
+		hide_collected = true
+		remove_from_group("resource_nodes")
+		call_deferred("queue_free")
+		return {
+			"type": "wolf_hide",
+			"amount": 1
+		}
+
+	return {"type": "", "amount": 0}
+
+func get_interaction_text(tool_key: String = "") -> String:
+	if alive:
+		return ""
+
+	if not meat_collected:
+		return "E - Coletar Carne Crua do Lobo"
+
+	if not hide_collected:
+		if tool_key == "improvised_knife":
+			return "E - Retirar Pele do Lobo"
+		return "Equipe a Faca Improvisada para retirar a pele"
+
+	return ""
 
 func is_dead() -> bool:
 	return not alive
@@ -199,6 +252,11 @@ func _draw_corpse_body() -> void:
 	_draw_flat_ellipse(Vector2(0, 8), Vector2(27, 12), Color("4e5052"))
 	draw_circle(Vector2(21, 7), 10.0, Color("4e5052"))
 	draw_line(Vector2(-10, 2), Vector2(15, 15), Color("7b2626"), 4.0)
+
+	if not meat_collected:
+		draw_circle(Vector2(0, -9), 5.0, Color("b94747"))
+	elif not hide_collected:
+		draw_line(Vector2(-12, -9), Vector2(12, -9), Color("c49a6c"), 4.0)
 
 func _draw_flat_ellipse(center: Vector2, radius: Vector2, color: Color) -> void:
 	var points: PackedVector2Array = PackedVector2Array()
