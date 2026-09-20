@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3]
+[gd_scene load_steps=8 format=3]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_main"]
 [ext_resource type="Script" path="res://scripts/world.gd" id="2_world"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" path="res://scenes/inventory_ui.tscn" id="4_inventory"]
 [ext_resource type="PackedScene" path="res://scenes/hotbar_ui.tscn" id="5_hotbar"]
 [ext_resource type="PackedScene" path="res://scenes/crafting_ui.tscn" id="6_crafting"]
+[ext_resource type="PackedScene" path="res://scenes/combat_dummy.tscn" id="7_dummy"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_main")
@@ -16,13 +17,17 @@ script = ExtResource("2_world")
 [node name="Player" parent="." instance=ExtResource("3_player")]
 z_index = 5
 
+[node name="CombatDummy" parent="." instance=ExtResource("7_dummy")]
+position = Vector2(320, 0)
+z_index = 3
+
 [node name="HUD" type="CanvasLayer" parent="."]
 
 [node name="Panel" type="PanelContainer" parent="HUD"]
 offset_left = 18.0
 offset_top = 18.0
 offset_right = 430.0
-offset_bottom = 220.0
+offset_bottom = 245.0
 
 [node name="Margin" type="MarginContainer" parent="HUD/Panel"]
 theme_override_constants/margin_left = 14
@@ -35,7 +40,7 @@ theme_override_constants/separation = 5
 
 [node name="Title" type="Label" parent="HUD/Panel/Margin/VBox"]
 theme_override_font_sizes/font_size = 20
-text = "FANTASY SANDBOX — V0.0.7"
+text = "FANTASY SANDBOX — V0.0.8"
 
 [node name="PositionLabel" type="Label" parent="HUD/Panel/Margin/VBox"]
 text = "Posição: 0, 0"
@@ -43,12 +48,16 @@ text = "Posição: 0, 0"
 [node name="StateLabel" type="Label" parent="HUD/Panel/Margin/VBox"]
 text = "Estado: PARADO"
 
+[node name="HealthLabel" type="Label" parent="HUD/Panel/Margin/VBox"]
+theme_override_font_sizes/font_size = 17
+text = "Vida: 100/100"
+
 [node name="InventoryLabel" type="Label" parent="HUD/Panel/Margin/VBox"]
 theme_override_font_sizes/font_size = 17
 text = "Gravetos: 0 | Pedrinhas: 0 | Cipó: 0\nMadeira: 0 | Pedra: 0"
 
 [node name="Controls" type="Label" parent="HUD/Panel/Margin/VBox"]
-text = "WASD/Setas: mover   Shift: correr\nE: coletar   Espaço: ataque   I: inventário   C: crafting   1-6: ferramentas"
+text = "WASD/Setas: mover   Shift: correr\nE: coletar   Espaço: atacar   I: inventário   C: crafting   1-6: ferramentas"
 
 [node name="InteractionPanel" type="PanelContainer" parent="HUD"]
 visible = false
