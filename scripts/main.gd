@@ -4,6 +4,7 @@ extends Node2D
 @onready var position_label: Label = $HUD/Panel/Margin/VBox/PositionLabel
 @onready var state_label: Label = $HUD/Panel/Margin/VBox/StateLabel
 @onready var health_label: Label = $HUD/Panel/Margin/VBox/HealthLabel
+@onready var hunger_label: Label = $HUD/Panel/Margin/VBox/HungerLabel
 @onready var progression_label: Label = $HUD/Panel/Margin/VBox/ProgressionLabel
 @onready var inventory_label: Label = $HUD/Panel/Margin/VBox/InventoryLabel
 @onready var interaction_panel: PanelContainer = $HUD/InteractionPanel
@@ -57,6 +58,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _process(_delta: float) -> void:
 	health_label.text = str(player.call("get_health_text"))
+	hunger_label.text = str(player.call("get_hunger_text"))
 	progression_label.text = str(player.call("get_progression_text"))
 	position_label.text = "Posição: %d, %d" % [
 		roundi(player.global_position.x),
