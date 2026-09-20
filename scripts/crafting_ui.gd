@@ -23,7 +23,7 @@ var recipe_costs: Dictionary = {
 	"pickaxe": {"wood": 2, "stone": 3},
 	"sword": {"wood": 2, "stone": 4},
 	"campfire_kit": {"wood": 3, "stone": 3},
-	"wolf_armor": {"wolf_hide": 3, "vine": 2}
+	"wolf_armor": {"wolf_hide": 2, "vine": 2}
 }
 
 func _ready() -> void:
@@ -85,7 +85,7 @@ func _refresh_buttons() -> void:
 	pickaxe_button.text = "Picareta — 2 Madeira + 3 Pedra" + _crafted_suffix("pickaxe")
 	sword_button.text = "Espada — 2 Madeira + 4 Pedra" + _crafted_suffix("sword")
 	campfire_button.text = "Fogueira — 3 Madeira + 3 Pedra" + _crafted_suffix("campfire_kit")
-	wolf_armor_button.text = "Armadura de Pele — 3 Peles de Lobo + 2 Cipós" + _crafted_suffix("wolf_armor")
+	wolf_armor_button.text = "Armadura de Pele — 2 Peles de Lobo + 2 Cipós" + _crafted_suffix("wolf_armor")
 
 func _can_craft(item_key: String) -> bool:
 	if int(snapshot.get(item_key, 0)) > 0:
