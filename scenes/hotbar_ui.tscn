@@ -1,0 +1,141 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/hotbar_ui.gd" id="1_hotbar"]
+
+[node name="HotbarUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_hotbar")
+
+[node name="HotbarBox" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -238.0
+offset_top = -116.0
+offset_right = 238.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="VBox" type="VBoxContainer" parent="HotbarBox"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="SelectedLabel" type="Label" parent="HotbarBox/VBox"]
+layout_mode = 2
+text = "Selecionado: Madeira"
+horizontal_alignment = 1
+
+[node name="Slots" type="HBoxContainer" parent="HotbarBox/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 6
+alignment = 1
+
+[node name="Slot1" type="PanelContainer" parent="HotbarBox/VBox/Slots"]
+custom_minimum_size = Vector2(70, 70)
+layout_mode = 2
+
+[node name="Margin" type="MarginContainer" parent="HotbarBox/VBox/Slots/Slot1"]
+layout_mode = 2
+theme_override_constants/margin_left = 6
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 6
+theme_override_constants/margin_bottom = 4
+
+[node name="VBox" type="VBoxContainer" parent="HotbarBox/VBox/Slots/Slot1/Margin"]
+layout_mode = 2
+alignment = 1
+
+[node name="Number" type="Label" parent="HotbarBox/VBox/Slots/Slot1/Margin/VBox"]
+layout_mode = 2
+text = "1"
+horizontal_alignment = 1
+
+[node name="Item" type="Label" parent="HotbarBox/VBox/Slots/Slot1/Margin/VBox"]
+layout_mode = 2
+text = "Madeira"
+horizontal_alignment = 1
+
+[node name="Count" type="Label" parent="HotbarBox/VBox/Slots/Slot1/Margin/VBox"]
+layout_mode = 2
+text = "x0"
+horizontal_alignment = 1
+
+[node name="Slot2" type="PanelContainer" parent="HotbarBox/VBox/Slots"]
+custom_minimum_size = Vector2(70, 70)
+layout_mode = 2
+
+[node name="Margin" type="MarginContainer" parent="HotbarBox/VBox/Slots/Slot2"]
+layout_mode = 2
+theme_override_constants/margin_left = 6
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 6
+theme_override_constants/margin_bottom = 4
+
+[node name="VBox" type="VBoxContainer" parent="HotbarBox/VBox/Slots/Slot2/Margin"]
+layout_mode = 2
+alignment = 1
+
+[node name="Number" type="Label" parent="HotbarBox/VBox/Slots/Slot2/Margin/VBox"]
+layout_mode = 2
+text = "2"
+horizontal_alignment = 1
+
+[node name="Item" type="Label" parent="HotbarBox/VBox/Slots/Slot2/Margin/VBox"]
+layout_mode = 2
+text = "Pedra"
+horizontal_alignment = 1
+
+[node name="Count" type="Label" parent="HotbarBox/VBox/Slots/Slot2/Margin/VBox"]
+layout_mode = 2
+text = "x0"
+horizontal_alignment = 1
+
+[node name="Slot3" type="PanelContainer" parent="HotbarBox/VBox/Slots"]
+custom_minimum_size = Vector2(70, 70)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HotbarBox/VBox/Slots/Slot3"]
+layout_mode = 2
+text = "3\nVazio"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Slot4" type="PanelContainer" parent="HotbarBox/VBox/Slots"]
+custom_minimum_size = Vector2(70, 70)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HotbarBox/VBox/Slots/Slot4"]
+layout_mode = 2
+text = "4\nVazio"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Slot5" type="PanelContainer" parent="HotbarBox/VBox/Slots"]
+custom_minimum_size = Vector2(70, 70)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HotbarBox/VBox/Slots/Slot5"]
+layout_mode = 2
+text = "5\nVazio"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Slot6" type="PanelContainer" parent="HotbarBox/VBox/Slots"]
+custom_minimum_size = Vector2(70, 70)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HotbarBox/VBox/Slots/Slot6"]
+layout_mode = 2
+text = "6\nVazio"
+horizontal_alignment = 1
+vertical_alignment = 1
