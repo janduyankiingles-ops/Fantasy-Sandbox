@@ -8,9 +8,11 @@ extends Node2D
 @onready var interaction_label: Label = $HUD/InteractionPanel/Margin/InteractionLabel
 @onready var inventory_ui: Control = $HUD/InventoryUI as Control
 @onready var hotbar_ui: Control = $HUD/HotbarUI as Control
+@onready var crafting_ui: Control = $HUD/CraftingUI as Control
 
 func _ready() -> void:
 	player.connect("inventory_changed", Callable(self, "_update_inventory"))
+	crafting_ui.connect("craft_requested", Callable(self, "_on_craft_requested"))
 	_update_inventory()
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -20,7 +22,14 @@ func _unhandled_input(event: InputEvent) -> void:
 			return
 
 		if key_event.keycode == KEY_I:
+			crafting_ui.call("close_crafting")
 			inventory_ui.call("toggle_inventory")
+			get_viewport().set_input_as_handled()
+			return
+
+		if key_event.keycode == KEY_C:
+			inventory_ui.call("close_inventory")
+			crafting_ui.call("toggle_crafting")
 			get_viewport().set_input_as_handled()
 			return
 
@@ -65,11 +74,54 @@ func _process(_delta: float) -> void:
 	interaction_label.text = prompt
 	interaction_panel.visible = not prompt.is_empty()
 
+func _on_craft_requested(item_key: String) -> void:
+	var success: bool = bool(player.call("craft_item", item_key))
+	var item_name: String = _get_item_name(item_key)
+	crafting_ui.call("show_result", success, item_name)
+
+func _get_item_name(item_key: String) -> String:
+	match item_key:
+		"axe":
+			return "Machado"
+		"pickaxe":
+			return "Picareta"
+		"sword":
+			return "Espada"
+		_:
+			return "Item"
+
 func _update_inventory() -> void:
 	inventory_label.text = str(player.call("get_inventory_text"))
 
 	var wood_amount: int = int(player.call("get_inventory_amount", "wood"))
 	var stone_amount: int = int(player.call("get_inventory_amount", "stone"))
+	var axe_amount: int = int(player.call("get_inventory_amount", "axe"))
+	var pickaxe_amount: int = int(player.call("get_inventory_amount", "pickaxe"))
+	var sword_amount: int = int(player.call("get_inventory_amount", "sword"))
 
-	inventory_ui.call("refresh_inventory", wood_amount, stone_amount)
-	hotbar_ui.call("refresh_hotbar", wood_amount, stone_amount)
+	inventory_ui.call(
+		"refresh_inventory",
+		wood_amount,
+		stone_amount,
+		axe_amount,
+		pickaxe_amount,
+		sword_amount
+	)
+
+	hotbar_ui.call(
+		"refresh_hotbar",
+		wood_amount,
+		stone_amount,
+		axe_amount,
+		pickaxe_amount,
+		sword_amount
+	)
+
+	crafting_ui.call(
+		"refresh_crafting",
+		wood_amount,
+		stone_amount,
+		axe_amount,
+		pickaxe_amount,
+		sword_amount
+	)
