@@ -10,6 +10,8 @@ var flash_time: float = 0.0
 
 func _ready() -> void:
 	add_to_group("resource_nodes")
+	if resource_type == "tree" or resource_type == "rock":
+		add_to_group("build_obstacles")
 	_configure_for_type()
 	current_hit_points = hit_points
 	_create_collision()
