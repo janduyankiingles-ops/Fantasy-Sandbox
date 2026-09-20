@@ -144,7 +144,7 @@ func take_damage(amount: int) -> Dictionary:
 		queue_redraw()
 		return {
 			"killed": true,
-			"xp": 25
+			"xp": 35
 		}
 
 	queue_redraw()
