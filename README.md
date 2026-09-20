@@ -1,118 +1,133 @@
-# Fantasy Sandbox — V0.0.14
+# Fantasy Sandbox — V0.0.15
 
-## Sistema desta versão: construção básica
+## Revisão e balanceamento do primeiro loop
 
-A última grande etapa do primeiro loop agora existe: o jogador pode usar Madeira e Pedra para construir uma pequena base diretamente no mundo.
+A V0.0.15 não adiciona um sistema grande novo. Ela revisa o primeiro ciclo completo do jogo depois da implementação de coleta, crafting, combate, caça, fome, cozinha, armadura e construção.
 
-## Modo de construção
+## Fome
 
-Pressione **B** para entrar ou sair do modo construção.
+O ritmo anterior era rápido demais para jogar o loop completo.
 
-Enquanto estiver ativo:
+Antes:
 
-- **Q** troca a peça selecionada;
-- **R** gira Parede ou Porta;
-- **Enter** coloca a peça;
-- **Esc** sai do modo construção.
+- 100 de Fome duravam aproximadamente 100 segundos.
 
-Abrir o Inventário (**I**) ou Crafting (**C**) também encerra automaticamente o modo construção.
+Agora:
 
-## Grade e preview
+- a perda é de **0,20 por segundo**;
+- 100 de Fome duram aproximadamente **8 minutos e 20 segundos** até chegar a zero.
 
-A construção usa uma grade de **64 px**.
+Continuam iguais:
 
-A peça aparece à frente do personagem antes de ser colocada.
+- Carne Crua: +20 de Fome e -5 de Vida;
+- Carne Assada: +45 de Fome e sem dano;
+- Fome em zero: 5 de dano a cada aproximadamente 2 segundos.
 
-- preview verde = posição válida;
-- preview vermelho = posição bloqueada.
+## XP
 
-O HUD também informa:
+Cada Lobo agora concede **35 XP**.
 
-- peça selecionada;
-- custo;
-- VÁLIDO ou BLOQUEADO.
+Com os três lobos iniciais:
 
-## Peças
+- Lobo 1: 35 XP;
+- Lobo 2: 70 XP acumulados;
+- Lobo 3: 105 XP acumulados.
 
-### Chão de Madeira
+Assim, completar a caça dos três lobos permite chegar ao **Nível 2** e ainda ficar com 5 XP no novo nível.
 
-Custo:
+Isso torna possível testar a progressão dentro do primeiro mapa.
 
-- **1 Madeira**.
+## Recursos do mundo
 
-Características:
+Foi criada uma margem maior para o jogador não ficar apertado depois de fabricar ferramentas, fogueira e começar a construir.
 
-- peça de 1 célula;
-- não possui colisão;
-- o personagem pode caminhar sobre ela.
+O mapa agora possui:
 
-### Parede
+- **8 árvores**;
+- **7 rochas grandes**;
+- **10 cipós**;
+- os mesmos 8 gravetos iniciais;
+- as mesmas 8 pedras pequenas iniciais.
 
-Custo:
+As novas árvores, rochas e cipós ficam um pouco mais afastados do ponto inicial para incentivar exploração curta.
 
-- **2 Madeira + 1 Pedra**.
+## Construção
 
-Características:
+O sistema de construção agora explica melhor por que o preview está vermelho.
 
-- possui colisão;
-- pode ser girada com **R**;
-- bloqueia o jogador e os lobos.
+O HUD pode mostrar:
 
-### Porta
+- **SEM RECURSOS**;
+- **ESPAÇO OCUPADO**;
+- **MUITO PERTO**;
+- ou **VÁLIDO**.
 
-Custo:
+Os custos permanecem:
 
-- **2 Madeira + 1 Pedra**.
+- Chão de Madeira: 1 Madeira;
+- Parede: 2 Madeira + 1 Pedra;
+- Porta: 2 Madeira + 1 Pedra.
 
-Características:
+## Fogueira
 
-- pode ser girada com **R**;
-- possui estrutura lateral;
-- o vão central é atravessável.
+A fogueira agora respeita os obstáculos do mundo.
 
-Nesta primeira versão a Porta funciona como uma entrada permanentemente aberta. Abrir/fechar portas poderá ser aprofundado depois.
+Ela não pode mais ser colocada:
 
-## Bloqueios de construção
-
-O jogo não permite colocar uma nova peça:
-
-- em cima do jogador;
 - em cima de árvore;
 - em cima de rocha;
-- em cima de lobo vivo ou cadáver;
-- em cima de uma fogueira;
-- em cima de outra peça construída;
-- quando os recursos necessários não estão disponíveis.
+- em cima de lobo/cadáver;
+- em cima de outra fogueira;
+- em cima de peça construída.
 
-Gravetos, Pedras Pequenas e Cipós no chão não bloqueiam construção.
+Se a posição estiver bloqueada, o kit não é consumido.
 
-Os recursos são descontados **somente quando a peça é efetivamente colocada**.
+## HUD
 
-## Primeiro loop jogável
+Os indicadores de depuração:
 
-O protótipo agora permite completar o ciclo planejado:
+- Posição;
+- Estado.
 
-Coletar Graveto/Pedra Pequena/Cipó
+foram ocultados do HUD principal.
+
+O jogador continua vendo apenas informações úteis para o gameplay:
+
+- Vida;
+- Fome;
+- Armadura;
+- Construção;
+- Nível/XP;
+- recursos;
+- controles.
+
+## Estado do primeiro loop
+
+O primeiro loop jogável está funcional:
+
+Coletar recursos primitivos
 → fabricar ferramentas improvisadas
-→ obter Madeira e Pedra
-→ fabricar Machado, Picareta e Espada
+→ obter Madeira/Pedra
+→ fabricar ferramentas e Espada
 → caçar Lobos
 → ganhar XP
 → obter Carne e Pele
 → controlar Fome
 → fabricar Fogueira
 → cozinhar Carne
-→ fabricar Armadura de Pele
-→ construir uma pequena base.
+→ fabricar Armadura
+→ construir uma base.
 
-## Próximo passo
+## Próxima fase
 
-Depois de validar a V0.0.14, o primeiro loop pode ser considerado funcional.
+Com a V0.0.15 validada, o próximo desenvolvimento já pode aprofundar o jogo.
 
-A próxima etapa deve ser uma revisão do loop completo para identificar:
+Prioridades recomendadas para a segunda camada:
 
-- bugs;
-- problemas de balanceamento;
-- partes pouco intuitivas;
-- melhorias de interface;
-- sistemas que precisam ser aprofundados antes de expandir o jogo.
+- sistema de salvar/carregar;
+- respawn de recursos;
+- respawn/ecologia de animais;
+- baús e armazenamento;
+- porta que abre e fecha;
+- equipamentos melhores;
+- expansão do mundo e biomas.
