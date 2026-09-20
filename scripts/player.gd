@@ -15,7 +15,7 @@ signal health_changed
 @export var attack_range: float = 72.0
 @export var attack_facing_dot: float = 0.15
 @export var max_hunger: float = 100.0
-@export var hunger_loss_per_second: float = 1.0
+@export var hunger_loss_per_second: float = 0.20
 @export var starvation_damage: int = 5
 @export var starvation_interval: float = 2.0
 
@@ -396,13 +396,24 @@ func place_campfire() -> bool:
 	if parent_node == null:
 		return false
 
-	parent_node.add_child(campfire)
-
 	var placement_direction: Vector2 = facing.normalized()
 	if placement_direction == Vector2.ZERO:
 		placement_direction = Vector2.DOWN
 
-	campfire.global_position = global_position + placement_direction * 82.0
+	var target_position: Vector2 = global_position + placement_direction * 82.0
+
+	for node in get_tree().get_nodes_in_group("build_obstacles"):
+		if not is_instance_valid(node):
+			continue
+		if node is not Node2D:
+			continue
+
+		var obstacle: Node2D = node
+		if obstacle.global_position.distance_to(target_position) < 46.0:
+			return false
+
+	parent_node.add_child(campfire)
+	campfire.global_position = target_position
 	inventory["campfire_kit"] = kit_amount - 1
 	inventory_changed.emit()
 	return true
