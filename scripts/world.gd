@@ -52,10 +52,16 @@ func _ready() -> void:
 
 func _spawn_resources() -> void:
 	for entry in resource_positions:
+		var position_value: Variant = entry.get("pos", Vector2.ZERO)
+		var type_name: String = str(entry.get("type", ""))
+
+		if position_value is not Vector2:
+			continue
+
 		var node: StaticBody2D = StaticBody2D.new()
 		node.set_script(ResourceNodeScript)
-		node.position = entry["pos"]
-		node.set("resource_type", entry["type"])
+		node.position = position_value
+		node.set("resource_type", type_name)
 		node.z_index = 2
 		add_child(node)
 
