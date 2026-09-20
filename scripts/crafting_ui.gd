@@ -10,6 +10,7 @@ signal craft_requested(item_key: String)
 @onready var pickaxe_button: Button = $CraftingPanel/Margin/VBox/Recipes/PickaxeButton
 @onready var sword_button: Button = $CraftingPanel/Margin/VBox/Recipes/SwordButton
 @onready var campfire_button: Button = $CraftingPanel/Margin/VBox/Recipes/CampfireButton
+@onready var wolf_armor_button: Button = $CraftingPanel/Margin/VBox/Recipes/WolfArmorButton
 @onready var status_label: Label = $CraftingPanel/Margin/VBox/Status
 
 var snapshot: Dictionary = {}
@@ -21,7 +22,8 @@ var recipe_costs: Dictionary = {
 	"axe": {"wood": 3, "stone": 2},
 	"pickaxe": {"wood": 2, "stone": 3},
 	"sword": {"wood": 2, "stone": 4},
-	"campfire_kit": {"wood": 3, "stone": 3}
+	"campfire_kit": {"wood": 3, "stone": 3},
+	"wolf_armor": {"wolf_hide": 3, "vine": 2}
 }
 
 func _ready() -> void:
@@ -34,6 +36,7 @@ func _ready() -> void:
 	pickaxe_button.pressed.connect(_on_pickaxe_pressed)
 	sword_button.pressed.connect(_on_sword_pressed)
 	campfire_button.pressed.connect(_on_campfire_pressed)
+	wolf_armor_button.pressed.connect(_on_wolf_armor_pressed)
 
 	_refresh_buttons()
 
@@ -48,12 +51,13 @@ func close_crafting() -> void:
 func refresh_crafting(new_snapshot: Dictionary) -> void:
 	snapshot = new_snapshot.duplicate()
 
-	resources_label.text = "Chão: Graveto %d | Pedra Pequena %d | Cipó %d\nGrandes: Madeira %d | Pedra %d" % [
+	resources_label.text = "Chão: Graveto %d | Pedra Pequena %d | Cipó %d\nGrandes: Madeira %d | Pedra %d | Pele %d" % [
 		int(snapshot.get("stick", 0)),
 		int(snapshot.get("small_stone", 0)),
 		int(snapshot.get("vine", 0)),
 		int(snapshot.get("wood", 0)),
-		int(snapshot.get("stone", 0))
+		int(snapshot.get("stone", 0)),
+		int(snapshot.get("wolf_hide", 0))
 	]
 
 	_refresh_buttons()
@@ -72,6 +76,7 @@ func _refresh_buttons() -> void:
 	pickaxe_button.disabled = not _can_craft("pickaxe")
 	sword_button.disabled = not _can_craft("sword")
 	campfire_button.disabled = not _can_craft("campfire_kit")
+	wolf_armor_button.disabled = not _can_craft("wolf_armor")
 
 	improvised_axe_button.text = "Machado Improvisado — 2 Gravetos + 1 Pedra Pequena + 1 Cipó" + _crafted_suffix("improvised_axe")
 	improvised_pickaxe_button.text = "Picareta Improvisada — 2 Gravetos + 2 Pedras Pequenas + 1 Cipó" + _crafted_suffix("improvised_pickaxe")
@@ -80,6 +85,7 @@ func _refresh_buttons() -> void:
 	pickaxe_button.text = "Picareta — 2 Madeira + 3 Pedra" + _crafted_suffix("pickaxe")
 	sword_button.text = "Espada — 2 Madeira + 4 Pedra" + _crafted_suffix("sword")
 	campfire_button.text = "Fogueira — 3 Madeira + 3 Pedra" + _crafted_suffix("campfire_kit")
+	wolf_armor_button.text = "Armadura de Pele — 3 Peles de Lobo + 2 Cipós" + _crafted_suffix("wolf_armor")
 
 func _can_craft(item_key: String) -> bool:
 	if int(snapshot.get(item_key, 0)) > 0:
@@ -126,3 +132,6 @@ func _on_sword_pressed() -> void:
 
 func _on_campfire_pressed() -> void:
 	craft_requested.emit("campfire_kit")
+
+func _on_wolf_armor_pressed() -> void:
+	craft_requested.emit("wolf_armor")
