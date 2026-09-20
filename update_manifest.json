@@ -1,70 +1,62 @@
 {
-  "schema": 1,
+  "schema": 2,
   "app": "Fantasy Sandbox",
   "channel": "stable",
   "version": "0.0.2",
-  "minimum_updater": "1.0.0",
-  "source_commit": "09916f27546806be1e18e59f3483d5c1f0fa14db",
+  "minimum_updater": "1.1.0",
+  "source_commit": "891474c853e02197eeabcf387b4233ba0964f1b9",
   "files": [
     {
       "path": ".gitignore",
-      "sha256": "2851ec43dae7dac3a8782c1eddbfe53c664930c0456a27cd19b4bdf93c1eaa39",
-      "url": "https://raw.githubusercontent.com/janduyankiingles-ops/Fantasy-Sandbox/09916f27546806be1e18e59f3483d5c1f0fa14db/.gitignore"
+      "sha256": "2851ec43dae7dac3a8782c1eddbfe53c664930c0456a27cd19b4bdf93c1eaa39"
     },
     {
       "path": "ATUALIZAR_JOGO.bat",
-      "sha256": "07ee82a749982fd8987864db15c96b38ee1f22cfd4f3a0b1c1b310826310042c",
-      "url": "https://raw.githubusercontent.com/janduyankiingles-ops/Fantasy-Sandbox/09916f27546806be1e18e59f3483d5c1f0fa14db/ATUALIZAR_JOGO.bat"
+      "sha256": "65fa78d04dee61ff712481878ca3a19b0c98bb84f2923cf69fa06d607d0b9e07"
     },
     {
       "path": "README.md",
-      "sha256": "a9ccde358cac3cac53e45913f0d5575972d49716d96613bf5e067726dfb7e661",
-      "url": "https://raw.githubusercontent.com/janduyankiingles-ops/Fantasy-Sandbox/09916f27546806be1e18e59f3483d5c1f0fa14db/README.md"
+      "sha256": "a9ccde358cac3cac53e45913f0d5575972d49716d96613bf5e067726dfb7e661"
     },
     {
       "path": "project.godot",
-      "sha256": "60d9fb0bfa230aabb70a3ce5fbf44417fec6bd7757dce88b70b189a71a11022c",
-      "url": "https://raw.githubusercontent.com/janduyankiingles-ops/Fantasy-Sandbox/09916f27546806be1e18e59f3483d5c1f0fa14db/project.godot"
+      "sha256": "60d9fb0bfa230aabb70a3ce5fbf44417fec6bd7757dce88b70b189a71a11022c"
     },
     {
       "path": "scenes/main.tscn",
-      "sha256": "b9ebb53fbb1f6303095d5ee647bf393d7b941013d09e8d6435cf00e8921d2696",
-      "url": "https://raw.githubusercontent.com/janduyankiingles-ops/Fantasy-Sandbox/09916f27546806be1e18e59f3483d5c1f0fa14db/scenes/main.tscn"
+      "sha256": "b9ebb53fbb1f6303095d5ee647bf393d7b941013d09e8d6435cf00e8921d2696"
     },
     {
       "path": "scenes/player.tscn",
-      "sha256": "90e62a85a377f6bd9689a8bfb6bf2a6fdaf8d5baac7c89ec2ffb06c5cd43be5a",
-      "url": "https://raw.githubusercontent.com/janduyankiingles-ops/Fantasy-Sandbox/09916f27546806be1e18e59f3483d5c1f0fa14db/scenes/player.tscn"
+      "sha256": "90e62a85a377f6bd9689a8bfb6bf2a6fdaf8d5baac7c89ec2ffb06c5cd43be5a"
     },
     {
       "path": "scripts/main.gd",
-      "sha256": "8931ddf5a733cae5e0cff2b1c90119fbb634d124cf98d004ba59ccb45d69efa6",
-      "url": "https://raw.githubusercontent.com/janduyankiingles-ops/Fantasy-Sandbox/09916f27546806be1e18e59f3483d5c1f0fa14db/scripts/main.gd"
+      "sha256": "8931ddf5a733cae5e0cff2b1c90119fbb634d124cf98d004ba59ccb45d69efa6"
     },
     {
       "path": "scripts/player.gd",
-      "sha256": "5c5346ffd93082c63d2494f0e64883dc85cc9b556bb1cbbd12564d4035c383a7",
-      "url": "https://raw.githubusercontent.com/janduyankiingles-ops/Fantasy-Sandbox/09916f27546806be1e18e59f3483d5c1f0fa14db/scripts/player.gd"
+      "sha256": "5c5346ffd93082c63d2494f0e64883dc85cc9b556bb1cbbd12564d4035c383a7"
     },
     {
       "path": "scripts/resource_node.gd",
-      "sha256": "a1911dda3aaa3637d5cf62ac162d5ea8f917bde543e98ec2f50f07194b487fac",
-      "url": "https://raw.githubusercontent.com/janduyankiingles-ops/Fantasy-Sandbox/09916f27546806be1e18e59f3483d5c1f0fa14db/scripts/resource_node.gd"
+      "sha256": "a1911dda3aaa3637d5cf62ac162d5ea8f917bde543e98ec2f50f07194b487fac"
     },
     {
       "path": "scripts/world.gd",
-      "sha256": "f77794092afc760c36b0e815a6efe6c8e444f5303edbfa9ca28e00818fe56628",
-      "url": "https://raw.githubusercontent.com/janduyankiingles-ops/Fantasy-Sandbox/09916f27546806be1e18e59f3483d5c1f0fa14db/scripts/world.gd"
+      "sha256": "f77794092afc760c36b0e815a6efe6c8e444f5303edbfa9ca28e00818fe56628"
     },
     {
       "path": "update_config.json",
-      "sha256": "e79938873d63f9b3a13d4c8c2f9d209fd2b2571e3485b1dfef15ca2c37646ca2",
-      "url": "https://raw.githubusercontent.com/janduyankiingles-ops/Fantasy-Sandbox/09916f27546806be1e18e59f3483d5c1f0fa14db/update_config.json"
+      "sha256": "e79938873d63f9b3a13d4c8c2f9d209fd2b2571e3485b1dfef15ca2c37646ca2"
     },
     {
       "path": "updater/update.ps1",
-      "sha256": "81142048073f087512ca8ae038e8ccdb0da39f6ce7ed7e58c02b1263de4027d6",
-      "url": "https://raw.githubusercontent.com/janduyankiingles-ops/Fantasy-Sandbox/09916f27546806be1e18e59f3483d5c1f0fa14db/updater/update.ps1"
+      "sha256": "48f1f288030e09e2a709b42db7092956ac0749b1556485e880d95179272b17e9"
+    },
+    {
+      "path": "updater/healthcheck.txt",
+      "sha256": "ff0c46ab1e9a010622488e23fbdff7480806b53bb4370146be97398095516acd"
     }
   ],
   "delete": []
