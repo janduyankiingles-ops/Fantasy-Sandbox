@@ -4,6 +4,7 @@ var pulse_time: float = 0.0
 
 func _ready() -> void:
 	add_to_group("resource_nodes")
+	add_to_group("build_obstacles")
 	z_index = 3
 	queue_redraw()
 
