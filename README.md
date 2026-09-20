@@ -1,64 +1,59 @@
-# Fantasy Sandbox — V0.0.7
+# Fantasy Sandbox — V0.0.8
 
-## Sistema desta versão: sobrevivência primitiva
+## Sistema desta versão: combate básico
 
-O início do jogo agora tem duas etapas de progressão.
+O ataque com **Espaço** agora causa dano real em alvos próximos.
 
-### 1. Coleta do chão
+### Regras do ataque
 
-O jogador começa sem ferramentas e **não consegue retirar Madeira de árvores nem Pedra de rochas grandes com as mãos**.
+- O ataque é corpo a corpo.
+- O alvo precisa estar dentro do alcance.
+- O alvo precisa estar à frente do personagem, considerando a última direção em que ele se moveu.
+- Apenas o alvo válido mais próximo recebe o golpe.
 
-Primeiro precisa procurar no chão:
+### Dano por item
 
-- Graveto.
-- Pedra Pequena.
-- Cipó.
+- Mãos vazias: 1.
+- Machado Improvisado: 2.
+- Picareta Improvisada: 2.
+- Faca Improvisada: 3.
+- Machado: 4.
+- Picareta: 4.
+- Espada: 7.
 
-Esses itens são coletados com **E**.
+A Espada é atualmente a melhor arma de combate.
 
-### 2. Ferramentas improvisadas
+## Vida do jogador
 
-No crafting (**C**):
+O jogador agora possui:
 
-- Machado Improvisado = 2 Gravetos + 1 Pedra Pequena + 1 Cipó.
-- Picareta Improvisada = 2 Gravetos + 2 Pedras Pequenas + 1 Cipó.
-- Faca Improvisada = 1 Graveto + 1 Pedra Pequena + 1 Cipó.
+- Vida máxima: 100.
+- Vida atual exibida no HUD.
 
-O Machado Improvisado libera a coleta de Madeira em árvores.
+Nesta versão ainda não existe inimigo causando dano ao jogador. Essa base será utilizada pelos lobos.
 
-A Picareta Improvisada libera a coleta de Pedra em rochas.
+## Boneco de treino
 
-A Faca Improvisada será usada mais adiante para retirar pele/carne de animais.
+Foi colocado um boneco de treino próximo ao ponto inicial.
 
-### 3. Ferramentas melhores
+- Vida: 20.
+- Possui barra de vida.
+- Pisca ao receber dano.
+- Ao chegar a 0 HP, fica destruído.
+- Reaparece automaticamente após aproximadamente 1,5 segundo.
 
-Depois de obter Madeira e Pedra:
+O boneco existe apenas para validar alcance, direção e dano antes da implementação dos lobos.
 
-- Machado = 3 Madeira + 2 Pedra.
-- Picareta = 2 Madeira + 3 Pedra.
-- Espada = 2 Madeira + 4 Pedra.
+## Sistemas anteriores preservados
 
-Machado e Picareta normais trabalham mais rápido que suas versões improvisadas.
-
-## Hotbar
-
-- 1: Machado Improvisado.
-- 2: Picareta Improvisada.
-- 3: Faca Improvisada.
-- 4: Machado.
-- 5: Picareta.
-- 6: Espada.
-
-Um slot permanece como **Vazio** enquanto o item correspondente não tiver sido fabricado.
-
-## Inventário
-
-O inventário agora é dinâmico.
-
-**Itens com quantidade zero não aparecem.**
-
-Se o jogador pegar um Graveto, somente então Graveto aparece no inventário. O mesmo vale para recursos e ferramentas.
+- Coleta de Graveto, Pedra Pequena e Cipó.
+- Ferramentas improvisadas.
+- Bloqueio de árvores/rochas sem ferramenta.
+- Crafting em duas etapas.
+- Inventário dinâmico.
+- Hotbar com 6 ferramentas.
+- Machado/Picareta melhorando coleta.
 
 ## Próximo passo do loop
 
-A próxima versão passa a ser o combate básico, preparando a entrada dos lobos.
+Após validar o combate básico, a próxima versão adicionará o primeiro inimigo real: **Lobo**, com movimentação, perseguição, ataque e morte.
