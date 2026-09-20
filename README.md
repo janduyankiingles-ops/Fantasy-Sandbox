@@ -1,122 +1,103 @@
-# Fantasy Sandbox — V0.0.22
+# Fantasy Sandbox — V0.0.23
 
-## Sprite original restaurado no personagem oficial
+## Personagem redesenhado e integrado
 
-A V0.0.21 integrou corretamente a ideia do novo sistema de animação, mas manteve por engano o personagem simplificado desenhado por código.
+Esta versão abandona as folhas antigas que estavam causando deslocamentos, recortes inconsistentes e animações que pareciam congeladas.
 
-A V0.0.22 corrige isso.
+O personagem foi redesenhado mantendo a identidade visual aprovada:
 
-O personagem oficial volta a usar a arte original de alta qualidade:
-
-- cabelo castanho detalhado;
+- cabelo castanho;
 - cachecol vermelho;
-- rosto original;
-- roupa escura em pixel art;
-- proporções e acabamento da arte aprovada anteriormente.
+- roupa de aventureiro em fantasia sombria;
+- pixel art detalhada;
+- frente, costas, esquerda e direita.
 
-O boneco simplificado não é mais usado como corpo do jogador.
+## Estrutura dos novos sprites
 
-## Nova forma de usar a arte original
+As animações não entram no Godot como uma folha grande irregular.
 
-Os arquivos originais continuam sendo:
+Antes de serem publicadas, elas foram processadas em tiras pequenas e regulares com células exatas de **64 x 64 pixels**.
 
-- `assets/player/idle.png`
-- `assets/player/walk.png`
+Diretório:
 
-Mas eles não são reproduzidos diretamente como uma spritesheet comum.
+`assets/player_v023/`
 
-Ao iniciar o jogador:
+Existem quatro tiras para cada estado:
 
-1. cada quadro é extraído individualmente;
-2. pixels de fundo quase transparentes são removidos;
-3. a silhueta real do personagem é localizada;
-4. o centro horizontal é recalculado;
-5. os pés são colocados sempre na mesma linha;
-6. cada quadro vira uma `ImageTexture` independente.
+- `idle_down/left/up/right.png`
+- `walk_down/left/up/right.png`
+- `attack_down/left/up/right.png`
+- `gather_down/left/up/right.png`
 
-Isso elimina o problema principal detectado na spritesheet original: o personagem se deslocava vários pixels para a esquerda entre o primeiro e o último quadro da caminhada.
+### Quantidade de frames
 
-## Caminhada
+- Idle: 4 frames por direção
+- Walk: 6 frames por direção
+- Attack: 4 frames por direção
+- Gather: 4 frames por direção
 
-A caminhada usa novamente os seis desenhos originais em cada direção.
+Todas as tiras possuem somente uma linha. Não existe cálculo de linha, detecção de silhueta ou reposicionamento da arte durante o jogo.
 
-- 6 frames;
-- 10 FPS;
-- quatro direções;
-- troca manual das texturas;
-- nenhuma dependência de `AnimatedSprite2D`;
-- nenhum recorte de atlas durante a renderização.
+## Novo controlador visual
 
-Os quadros são recentralizados antes de serem exibidos.
+O personagem oficial usa:
 
-## Idle
+`scripts/player_v023_visual.gd`
 
-O idle também usa a arte original:
+Ele é um `Sprite2D` simples.
 
-- 4 frames;
-- 4 FPS;
-- quatro direções;
-- alinhamento automático.
+No carregamento, cada tira é dividida somente em retângulos fixos de 64 x 64. Como os arquivos já foram preparados e alinhados antes da publicação, o Godot não precisa corrigir os sprites em tempo de execução.
 
-## Ataque e coleta
+O avanço de frames também é controlado manualmente pelo script.
 
-Nesta versão, ataque e coleta preservam o corpo original do personagem.
+Velocidades:
 
-Durante essas ações:
+- Idle: 4 FPS
+- Walk: 10 FPS
+- Attack: 17 FPS
+- Gather: 12 FPS
 
-- o sprite original permanece como base;
-- o corpo avança alguns pixels na direção da ação;
-- espada, machado, picareta ou faca aparecem em uma camada separada;
-- os tempos continuam sincronizados com o gameplay atual.
+## O que foi removido do personagem oficial
 
-Essa solução evita voltar a usar quadros completos inconsistentes enquanto mantém a aparência original do personagem.
+O personagem oficial não usa mais:
 
-## Escala
+- o alinhamento automático da V0.0.22;
+- análise de alpha em tempo de execução;
+- personagem modular desenhado com retângulos;
+- ferramenta modular separada;
+- folhas grandes antigas para as animações atuais.
 
-O sprite original volta ao tamanho que já havia sido visualmente aprovado:
-
-- frame base: 64 x 64;
-- escala: 1,25x;
-- filtro Nearest;
-- posição visual equivalente ao sistema antigo.
+Os arquivos antigos permanecem no repositório apenas como segurança de rollback.
 
 ## Gameplay
 
 Nenhuma regra de gameplay foi alterada.
 
-Continuam iguais:
+Continuam funcionando normalmente:
 
-- movimento;
-- corrida;
+- movimento e corrida;
 - combate;
 - coleta;
-- lobos;
-- XP;
-- fome;
 - crafting;
+- fome;
+- vida;
+- XP;
+- lobos;
 - fogueira;
 - armadura;
 - construção.
 
-## Arquivos principais
-
-- `scripts/player_original_visual.gd`
-- `scenes/player.tscn`
-- `scripts/player.gd`
-
-O arquivo `player_modular_part.gd` permanece sendo usado apenas para sombra e ferramenta. Ele não desenha mais o corpo do personagem oficial.
+O `player.gd` continua enviando ao visual os estados `idle`, `walk`, `attack` e `gather`.
 
 ## Teste
 
-Ao abrir o jogo normalmente, o personagem deve ser novamente o aventureiro original detalhado.
+Após atualizar, abra o jogo normalmente e teste:
 
-Teste:
+1. Idle nas quatro direções.
+2. Caminhada contínua usando W, A, S e D.
+3. Corrida com Shift.
+4. Mudanças rápidas de direção.
+5. Ataque com Espaço.
+6. Coleta com E.
 
-1. parado nas quatro direções;
-2. caminhada em W/A/S/D;
-3. corrida com Shift;
-4. transição entre direções;
-5. ataque;
-6. coleta.
-
-O ponto principal desta versão é confirmar que a arte original voltou e que a caminhada não desloca mais o corpo lateralmente entre os frames.
+O corpo deve permanecer no mesmo ponto dentro de todos os frames, sem pedaços de células vizinhas e sem deslizar como uma imagem congelada.
