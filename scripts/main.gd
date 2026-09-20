@@ -21,43 +21,6 @@ func _ready() -> void:
 	crafting_ui.connect("craft_requested", Callable(self, "_on_craft_requested"))
 	_update_inventory()
 
-func _input(event: InputEvent) -> void:
-	if event is not InputEventKey:
-		return
-
-	var key_event: InputEventKey = event as InputEventKey
-	if not key_event.pressed or key_event.echo:
-		return
-
-	var prototype_key: bool = (
-		key_event.keycode == KEY_P
-		or key_event.physical_keycode == KEY_P
-	)
-
-	if not prototype_key:
-		return
-
-	var viewport: Viewport = get_viewport()
-	if viewport != null:
-		viewport.set_input_as_handled()
-
-	# Troca a cena somente depois que o processamento deste evento terminar.
-	# Isso evita que a cena atual seja desmontada no meio de _input().
-	call_deferred("_open_player_v2_demo")
-
-
-func _open_player_v2_demo() -> void:
-	var change_error: Error = get_tree().change_scene_to_file(
-		"res://scenes/player_v2_demo.tscn"
-	)
-
-	if change_error != OK:
-		push_error(
-			"Falha ao abrir o protótipo Player V2. Código: %d"
-			% int(change_error)
-		)
-
-
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey:
 		var key_event: InputEventKey = event as InputEventKey
