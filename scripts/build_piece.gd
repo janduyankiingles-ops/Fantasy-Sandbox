@@ -8,6 +8,11 @@ func setup(new_piece_type: String, new_rotation_quarters: int) -> void:
 	rotation_quarters = posmod(new_rotation_quarters, 4)
 	rotation = float(rotation_quarters) * PI / 2.0
 
+	if piece_type == "floor":
+		z_index = 1
+	else:
+		z_index = 3
+
 func _ready() -> void:
 	add_to_group("build_pieces")
 	add_to_group("build_obstacles")
