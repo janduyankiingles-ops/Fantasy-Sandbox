@@ -2,6 +2,8 @@ extends CharacterBody2D
 
 const CampfireScene = preload("res://scenes/campfire.tscn")
 
+@onready var visual: AnimatedSprite2D = $Visual as AnimatedSprite2D
+
 signal inventory_changed
 signal health_changed
 
@@ -22,6 +24,8 @@ signal health_changed
 var facing: Vector2 = Vector2.DOWN
 var is_attacking: bool = false
 var attack_time: float = 0.0
+var is_gathering: bool = false
+var gather_time: float = 0.0
 var attack_was_down: bool = false
 var interact_was_down: bool = false
 var interact_cooldown_left: float = 0.0
@@ -75,6 +79,7 @@ func _physics_process(delta: float) -> void:
 		if respawn_time_left <= 0.0:
 			_respawn()
 
+		_update_visual_state()
 		move_and_slide()
 		queue_redraw()
 		return
@@ -103,8 +108,10 @@ func _physics_process(delta: float) -> void:
 
 	var attack_down: bool = Input.is_key_pressed(KEY_SPACE)
 	if attack_down and not attack_was_down and not is_attacking:
+		is_gathering = false
+		gather_time = 0.0
 		is_attacking = true
-		attack_time = 0.18
+		attack_time = 0.23
 		_perform_attack()
 	attack_was_down = attack_down
 
@@ -112,6 +119,11 @@ func _physics_process(delta: float) -> void:
 		attack_time -= delta
 		if attack_time <= 0.0:
 			is_attacking = false
+
+	if is_gathering:
+		gather_time -= delta
+		if gather_time <= 0.0:
+			is_gathering = false
 
 	_update_nearby_resource()
 
@@ -125,8 +137,31 @@ func _physics_process(delta: float) -> void:
 		_try_eat_food()
 	eat_food_was_down = eat_food_down
 
+	_update_visual_state()
 	move_and_slide()
 	queue_redraw()
+
+func _update_visual_state() -> void:
+	if visual == null:
+		return
+
+	var state_name: String = "idle"
+
+	if is_attacking:
+		state_name = "attack"
+	elif is_gathering:
+		state_name = "gather"
+	elif velocity.length() > 1.0:
+		state_name = "walk"
+
+	visual.call("set_visual_state", state_name, facing)
+
+func _start_gather_animation() -> void:
+	if is_attacking:
+		return
+
+	is_gathering = true
+	gather_time = 0.34
 
 func _update_hunger(delta: float) -> void:
 	if current_hunger > 0.0:
@@ -265,6 +300,8 @@ func _respawn() -> void:
 	global_position = spawn_position
 	is_attacking = false
 	attack_time = 0.0
+	is_gathering = false
+	gather_time = 0.0
 	attack_was_down = false
 	interact_was_down = false
 	eat_food_was_down = false
@@ -370,6 +407,7 @@ func _try_harvest() -> void:
 
 	inventory[inventory_key] = int(inventory.get(inventory_key, 0)) + amount
 	interact_cooldown_left = interaction_cooldown
+	_start_gather_animation()
 	inventory_changed.emit()
 
 func _try_cook_raw_meat() -> void:
@@ -548,46 +586,15 @@ func _get_recipe_costs(item_key: String) -> Dictionary:
 			return {}
 
 func _draw() -> void:
-	draw_circle(Vector2(0, 13), 14.0, Color(0.05, 0.05, 0.06, 0.35))
-
-	var cape: PackedVector2Array = PackedVector2Array([
-		Vector2(-14, -10), Vector2(14, -10), Vector2(17, 17),
-		Vector2(5, 12), Vector2(0, 20), Vector2(-6, 12), Vector2(-17, 17)
-	])
-	draw_colored_polygon(cape, Color("6d0f1f"))
-
-	draw_rect(Rect2(-10, -14, 20, 30), Color("15151a"), true)
+	draw_circle(Vector2(0, 17), 13.0, Color(0.03, 0.03, 0.03, 0.32))
 
 	if armor_equipped and int(inventory.get("wolf_armor", 0)) > 0:
-		var armor_shape: PackedVector2Array = PackedVector2Array([
-			Vector2(-12, -13),
-			Vector2(12, -13),
-			Vector2(10, 12),
-			Vector2(0, 16),
-			Vector2(-10, 12)
-		])
-		draw_colored_polygon(armor_shape, Color("705846"))
-		draw_line(Vector2(-8, -7), Vector2(8, 8), Color("a3886c"), 3.0)
-
-	draw_circle(Vector2(0, -23), 9.5, Color("e5d7d2"))
-	draw_rect(Rect2(-9, -34, 18, 8), Color("111117"), true)
-
-	var eye_pos: Vector2 = facing.normalized() * 5.0 + Vector2(0, -23)
-	draw_circle(eye_pos, 2.2, Color("e32636"))
-
-	if is_attacking:
-		var dir: Vector2 = facing.normalized()
-		if dir == Vector2.ZERO:
-			dir = Vector2.RIGHT
-
-		var center: Vector2 = dir * 30.0
-		var attack_angle: float = dir.angle()
 		draw_arc(
-			center,
-			24.0,
-			attack_angle - 1.1,
-			attack_angle + 1.1,
-			18,
-			Color("ef3340"),
-			5.0
+			Vector2(0, 17),
+			15.0,
+			0.0,
+			TAU,
+			24,
+			Color("9b7655"),
+			2.0
 		)
