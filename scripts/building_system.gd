@@ -112,23 +112,23 @@ func try_place_piece() -> bool:
 		return false
 
 	var costs: Dictionary = costs_value
+
+	var piece_node: Node = BuildPieceScene.instantiate()
+	if piece_node is not Node2D:
+		return false
+
+	var parent_node: Node = get_parent()
+	if parent_node == null:
+		return false
+
 	var paid: bool = bool(player.call("consume_build_resources", costs))
 	if not paid:
 		current_valid = false
 		_refresh_preview()
 		return false
 
-	var piece_node: Node = BuildPieceScene.instantiate()
-	if piece_node is not Node2D:
-		return false
-
 	var piece: Node2D = piece_node
 	piece.call("setup", piece_type, rotation_quarters)
-
-	var parent_node: Node = get_parent()
-	if parent_node == null:
-		return false
-
 	parent_node.add_child(piece)
 	piece.global_position = current_position
 
