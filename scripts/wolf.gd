@@ -142,8 +142,9 @@ func _die() -> void:
 	velocity = Vector2.ZERO
 	remove_from_group("damageable")
 
-	var collision: CollisionShape2D = get_node_or_null("CollisionShape2D") as CollisionShape2D
-	if collision != null:
+	var collision_node: Node = get_node_or_null("CollisionShape2D")
+	if collision_node is CollisionShape2D:
+		var collision: CollisionShape2D = collision_node
 		collision.set_deferred("disabled", true)
 
 func is_dead() -> bool:
@@ -158,7 +159,7 @@ func _draw() -> void:
 	var dark_color: Color = Color("3d4144")
 
 	draw_circle(Vector2(0, 14), 19.0, Color(0.03, 0.03, 0.03, 0.28))
-	draw_ellipse_shape(Vector2(0, 0), Vector2(25, 14), body_color)
+	_draw_flat_ellipse(Vector2(0, 0), Vector2(25, 14), body_color)
 	draw_circle(Vector2(19, -5), 11.0, body_color)
 
 	var ear_left: PackedVector2Array = PackedVector2Array([
@@ -181,11 +182,11 @@ func _draw() -> void:
 	draw_rect(Rect2(-21, -30, 42.0 * ratio, 4), Color("b83a3a"), true)
 
 func _draw_corpse() -> void:
-	draw_ellipse_shape(Vector2(0, 8), Vector2(27, 12), Color("4e5052"))
+	_draw_flat_ellipse(Vector2(0, 8), Vector2(27, 12), Color("4e5052"))
 	draw_circle(Vector2(21, 7), 10.0, Color("4e5052"))
 	draw_line(Vector2(-10, 2), Vector2(15, 15), Color("7b2626"), 4.0)
 
-func draw_ellipse_shape(center: Vector2, radius: Vector2, color: Color) -> void:
+func _draw_flat_ellipse(center: Vector2, radius: Vector2, color: Color) -> void:
 	var points: PackedVector2Array = PackedVector2Array()
 
 	for index in range(24):
