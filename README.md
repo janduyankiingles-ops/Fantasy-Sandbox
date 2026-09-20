@@ -1,74 +1,77 @@
-# Fantasy Sandbox — V0.0.18.2
+# Fantasy Sandbox — V0.0.19
 
-## Correção estrutural do personagem
+## Protótipo do novo personagem modular
 
-Esta versão troca completamente a forma como o personagem é desenhado.
+A V0.0.19 inicia uma nova abordagem para o personagem principal.
 
-A análise dos pixels reais da folha de caminhada mostrou que os quadros estavam deslocados dentro das células de 64 x 64. O personagem mudava de posição interna entre um frame e outro, causando sensação de recorte incorreto, tremor e uma caminhada visualmente parecida com uma imagem deslizando.
+Depois dos problemas recorrentes de spritesheet — recortes, deslocamento entre frames e animação parecendo uma imagem congelada — o novo sistema deixa de depender de sequências de imagens para a caminhada.
 
-## Sprite2D simples
+O personagem oficial atual continua intacto.
 
-O nó visual do jogador não é mais um AnimatedSprite2D.
+## Como testar
 
-Agora ele é um Sprite2D simples e o jogo troca diretamente a propriedade `texture`.
+1. Abra o jogo normalmente.
+2. Pressione **F8**.
+3. Será aberta a cena de demonstração do novo personagem.
+4. Use **WASD** ou as setas para mover.
+5. Pressione **ESC** para voltar ao jogo normal.
 
-Isso remove da cadeia:
+## Estrutura modular
 
-- playback automático do AnimatedSprite2D;
-- SpriteFrames do Godot;
-- AtlasTexture;
-- recortes por região durante a renderização.
+O protótipo é formado por peças independentes:
 
-## Frames independentes
+- cabeça e cabelo;
+- tronco;
+- braço esquerdo;
+- braço direito;
+- perna esquerda;
+- perna direita;
+- duas partes do cachecol;
+- sombra.
 
-As folhas PNG de alta qualidade continuam sendo usadas apenas como fonte.
+As peças são desenhadas diretamente pelo Godot em pixel art.
 
-Ao iniciar o jogo, cada célula é extraída para uma nova imagem 64 x 64 e transformada em uma ImageTexture independente.
+Não existe PNG, spritesheet ou recorte de atlas nessa demonstração.
 
-Portanto, na renderização, um frame não tem qualquer acesso aos pixels do frame vizinho.
+## Animação
 
-## Limpeza de transparência
+A caminhada é feita transformando as mesmas peças do personagem.
 
-Os PNGs possuíam pixels de fundo com alpha extremamente baixo.
+Durante o movimento:
 
-A V0.0.18.2 remove esses pixels antes de montar cada frame:
+- pernas se alternam em sentidos opostos;
+- braços acompanham o passo de forma inversa;
+- tronco e cabeça sobem 1 pixel;
+- cachecol reage ao ciclo;
+- sombra acompanha discretamente o movimento.
 
-- alpha abaixo de 0,15 vira transparência total;
-- pixels reais da arte são preservados.
+Todas as posições são arredondadas para pixels inteiros antes de serem aplicadas.
 
-Isso elimina halos e resíduos que podiam parecer falhas de recorte.
+A arte é exibida em escala inteira de **3x**, preservando pixels uniformes.
 
-## Alinhamento dos frames
+## Idle
 
-Cada quadro é realinhado usando a parte inferior do personagem como âncora.
+Quando parado, o personagem mantém a mesma anatomia e realiza apenas uma respiração discreta de 1 pixel.
 
-O algoritmo:
+## Objetivo deste protótipo
 
-1. encontra os pixels visíveis;
-2. encontra a região dos pés;
-3. calcula o centro dessa região;
-4. move o quadro para manter os pés no mesmo ponto;
-5. mantém uma linha de chão consistente.
+Nesta etapa existe apenas uma aparência frontal.
 
-Assim o personagem não percorre a própria célula enquanto a animação avança.
+Antes de produzir esquerda, direita, costas, ataque, coleta e equipamentos, precisamos validar três pontos:
 
-## Caminhada
+1. a anatomia permanece consistente enquanto anda;
+2. não existem falhas de recorte;
+3. a animação transmite caminhada de forma clara e agradável.
 
-A caminhada continua sendo decidida diretamente pelo input WASD/setas.
+Se essa técnica for aprovada, ela substituirá gradualmente o sistema antigo sem precisar redesenhar uma imagem completa para cada frame.
 
-O script troca diretamente entre seis texturas independentes a 10 FPS.
+## Arquivos novos
 
-Também existe um movimento vertical de apenas 1 pixel durante o ciclo para reforçar visualmente o passo sem deformar a arte.
-
-## Qualidade
-
-A arte de 64 x 64 da V0.0.18 foi mantida.
-
-- filtro Nearest;
-- escala 1,25x;
-- nenhuma nova compressão dos PNGs;
-- cores e detalhes preservados.
+- `scenes/player_v2_demo.tscn`
+- `scripts/player_v2_demo.gd`
+- `scripts/player_v2_visual.gd`
+- `scripts/player_v2_part.gd`
 
 ## Gameplay
 
-Nenhuma regra de gameplay foi alterada.
+O gameplay principal da V0.0.18.2 não foi alterado. O protótipo é uma cena separada acessível por F8.
